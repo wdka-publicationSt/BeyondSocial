@@ -12,6 +12,7 @@ settings.configure() # We have to do this to use django templates standalone - s
 sid = '1234'
 useragent = "Mozilla/5.001 (windows; U; NT4.0; en-US; rv:1.0) Gecko/25250101"
 endpoint = "http://localhost/wiki/api.php?format=json&"
+#endpoint = "http://en.wikipedia.org/w/api.php?format=json&"
 
 #query='action=query&list=categorymembers&cmtitle=Category:project'
 #http://localhost/wiki/api.php?format=json&action=query&list=categorymembers&cmtitle=Category:project
@@ -45,17 +46,17 @@ def template(title, content):
     c = Context({"title": title,
              "body":content})
     html_page = t.render(c)
-    html = open('page.html', 'w') #write mediawiki content to content.mw
+    html = open('page_wiki.html', 'w') #write mediawiki content to content.mw
     html.write(html_page.encode('utf-8'))
     return html_page
 
 def pandoc(mw_content):
     '''uses pandoc to convert mediawiki syntax to html'''
 
-    mw = open('content.mw', 'w') #write mediawiki content to content.mw
-    mw.write(mw_content)
+    mw = open('content.mw', 'w') 
+    mw.write(mw_content.encode('utf-8'))
     mw.close()
-    pandoc = 'pandoc -f mediawiki -t html content.mw -o content.html'
+    pandoc = 'pandoc -f mediawiki -t html5  content.mw -o content.html'
     subprocess.call(pandoc, shell=True) # saved in content.html html
     html = open('content.html', 'r') #write mediawiki content to content.mw
     html = html.read()
@@ -63,8 +64,13 @@ def pandoc(mw_content):
  
 
 
-def api_page(pagename):
-    url = endpoint + 'action=query&titles={}&prop=revisions&rvprop=content'.format(pagename)
+def api_page(pagename, info):
+    if info == 'content':        
+        url = endpoint + 'action=query&titles={}&prop=revisions&rvprop=content'.format(pagename) #no protection info in this url
+    elif info == 'protection':
+        url = endpoint + 'action=query&titles={}&prop=info&inprop=protection'.format(pagename)
+
+    print url
     request = urllib2.urlopen(url)
     jsonp = json.loads(request.read() )
     json_dic= (jsonp.get('query').get('pages'))
@@ -74,7 +80,7 @@ def api_page(pagename):
 
 
 def api_page_content(pagename):
-    page = api_page(pagename)
+    page = api_page(pagename, 'content')
     print 'PAGE', page
     # get title
     content = ((page.get('revisions'))[0])['*']
@@ -82,23 +88,16 @@ def api_page_content(pagename):
 #    print json.dumps( revisions, sort_keys=True, indent=4) ## see response
     
 
-
 def api_page_protection(pagename):
-    page = api_page(pagename)              
+    page = api_page(pagename, 'protection')
+    print 'Keys', page.keys()
     page_protection = page.get('protection')
-    print 'protection',  page_protection
-    print json.dumps( page, sort_keys=True, indent=4) ## see response        
-# TODO check protection
-#    if page_protection: # page is protected
-#       content = ((page.get('revisions'))[0])['*']
-        # print '--------------------------------------------'
-        # print content
-        # print '--------------------------------------------'
-    # else:
-    #     print 'nothing to show :('
-
-
-
+    print 'page_protection', page_protection
+    if page_protection: # page is protected
+        print "PROTECTED PAGE"
+        api_page_content(pagename)
+    else:       
+        print 'PAGE NOT PROTECTED :('
 
 
 def api_pagesInCategory( category):
@@ -112,12 +111,18 @@ def api_pagesInCategory( category):
         print json.dumps(item, sort_keys=True, indent=4)
 
 #api_pagesInCategory('project')
-#api_page_protection('WDKA/BeyondSocial')
+
+
 
 mw_page = sys.argv[1]
-content_mw=api_page_content(mw_page) 
-#print content_mw
-content_html = pandoc(content_mw)
-full_html = template(mw_page, content_html) 
-print full_html
+content_mw = api_page_protection(mw_page) #only retreive content if page is protected
+# if not interested in Protection use
+#content_mw=api_page_content(mw_page) 
+
+if content_mw:    
+    content_html = pandoc(content_mw)
+    # TODO: parse content_html 
+    # TO: replace relative file paths with  full url
+    full_html = template(mw_page, content_html) 
+    print full_html
 
