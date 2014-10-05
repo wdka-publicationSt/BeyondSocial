@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import urllib, urllib2, json, subprocess
-import sys
+import sys, os
 from django.template import Template, Context
 from django.conf import settings
 settings.configure() # We have to do this to use django templates standalone - see
@@ -99,6 +99,7 @@ def api_page_protection(pagename):
         return api_page_content(pagename)
     else:       
         print 'PAGE NOT PROTECTED :('
+    print
 #        api_page_content(pagename, page_title)
 
 
@@ -115,40 +116,64 @@ def api_pagesInCategory( category):
 #api_pagesInCategory('project')
 #########
 
+
+##### MODIFY THE HTML OUTPUT
 from xml.etree import ElementTree as ET
 
-
 def api_file_url(filename):
-    query = endpoint + "action=query&titles=File:{}&prop=imageinfo&iiprop=url".format(filename)
+    filename = filename.replace(' ', '_')
+    query =  "action=query&titles=File:{}&prop=imageinfo&iiprop=url".format(filename)
     url = endpoint + query
+    print 'file:',  url
     request = urllib2.urlopen(url)
     jsonp = json.loads(request.read())    
-    json_dic= (jsonp.get('query').get('pages'))
+    json_dic= ((jsonp.get('query').get('pages')))
     page_id =  json_dic.keys()[0]
-    page_url = json_dic.get(page_id)
-    page_url = (page_url['imageinfo'][0]).get('url')
+    page_url = (json_dic.get(page_id).get('imageinfo'))[0].get('url')
+    print 'page_url', page_url        
     return page_url 
+# ATTENTION:
+# imgs with captions become embed objects
 
 def parse_html(): #(pagename)
     htmlpage = 'page_wiki.html'
     tree = ET.parse(htmlpage)
     root = tree.getroot()
 
+    print 'FILES'
     for img in tree.findall('.//img'):
         src = img.get('src')
         url = api_file_url(src)# find url of file
         img.set('src', url)
-        print ET.tostring(img)
-    
+        print 'img:', ET.tostring(img)
     # embed: audio & video
-    for embed in tree.findall('.//embed'):
-        src = embed.get('src')
-        print ET.tostring(embed), 'SRC:', src
-        # FIND URL OF FILE!
-        url = api_file_url(src)
+
+    for figure in tree.findall('.//figure'): #'.//figure/embed/
+        for element in list(figure):
+            if element.tag == 'embed':
+                src = element.get('src')
+                ext = os.path.splitext(src)[1][1:]
+                url = api_file_url(src)# find url of file
+                caption = figure.find('.//figcaption')
+                caption_text = caption.text
+                av_tag = '''<div class="{medium}">
+'<{medium} src="{src}" controls="controls">
+Sorry, your browser does not support embedded videos. You can download it from <a href="{src}">{src}</a>
+</{medium}>
+<figcaption>{caption}</figcaption>
+</div>'''
+                # if video or audio
+                if ext in ['ogv', 'mp4', 'webm'] :                    
+                    av = av_tag.format(src=url, caption=caption_text, medium="video")
+                elif ext in ['ogg', 'mp3']:                     
+                    av = av_tag.format(src=url, caption=caption_text, medium="audio")
+
+                av = ET.fromstring(av)
+                figure.clear()
+                figure.extend(av)
 
     # WRITE FILE
-
+    tree.write(htmlpage, encoding='utf-8', )
 
 
 
