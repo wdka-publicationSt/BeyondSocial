@@ -1,7 +1,8 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from xml.etree import ElementTree as ET
+import xml.etree.ElementTree as ET
+import html5lib
 import urllib, urllib2, json, subprocess
 import sys, os
 from django.template import Template, Context
@@ -19,7 +20,105 @@ endpoint = "http://localhost/wiki/api.php?format=json&"
 #query='action=query&list=categorymembers&cmtitle=Category:project'
 #http://localhost/wiki/api.php?format=json&action=query&list=categorymembers&cmtitle=Category:project
 
-html_template = """
+
+def write_html_file(html_content, filename):
+    doctype = "<!DOCTYPE html>"
+    html = doctype + html_content #ET.tostring(tree,  encoding='utf-8', method='html')
+    edited = open(filename, 'w') #write
+    edited.write(html)
+    edited.close()
+
+
+def template(title, content, mytemplate):
+    t = Template(mytemplate)
+    c = Context({"title": title,
+             "body":content})
+    html_page = t.render(c)
+    html = open('page_wiki.html', 'w') #write mediawiki content to content.mw
+    html.write(html_page.encode('utf-8'))
+    return html_page
+
+
+################### index #######################
+
+index_template = """
+<html>
+<head>
+<title>{{ title }}</title>
+<meta charset="utf-8" />
+</head>
+<body>
+<h1>{{ title }}</h1>
+<ul>
+ {{ body | safe }}
+</ul>
+<hr/>
+</body>
+</html>
+"""
+
+def api_pagesInCategory( category): # find all pages within category
+    query = endpoint + 'action=query&list=categorymembers&cmtitle=Category:{}'.format(category)
+    print 'Category: ', query
+    url = endpoint + query
+    request = urllib2.urlopen(url)
+    jsonp = json.loads(request.read())    
+    ul = ""
+    for item in  jsonp['query']['categorymembers']:        
+        wiki_url = 'http://localhost/wiki/index.php/' +  item['title']
+        article_name = ( item['title'].split('/'))[-1]
+        article_file =  (( item['title'].split('/'))[-1])+'.html'
+        article_path = 'html_articles/'+ article_file
+        html_li = '<li><a href="{url}">{name}</li>\n'.format(url=article_path, name=article_name)
+        ul = ul+html_li
+        print html_li#article_name, wiki_url, article_file
+        print json.dumps(item, sort_keys=True, indent=4)    
+    return ul
+
+def parse_index(filepath):
+    input_file = open(filepath, 'r') 
+    tree = html5lib.parse(input_file, namespaceHTMLElements=False)
+
+    # find li
+    for ul in tree.findall('.//ul'):        
+        print len(ul), 'ul', ET.tostring(ul), type(ul), ul
+        for li in ul:
+            print 'li', ET.tostring(li)
+
+            # set attributes
+            li_id = li.get('id')
+            li.set('id', li_id+'_x')
+            li.set('class', li_id+'_zz')
+            print li_id
+            
+        #insert elements
+        child = ET.SubElement(ul, 'li')
+        child.text = 'new list item.'
+
+    print ET.tostring(tree)
+
+
+## Create index
+#index_ul = api_pagesInCategory('Issue0')
+#index = template('index', index_ul, index_template)
+#print index
+#write_html_file(index, 'issue0_index.html')
+
+parse_index('issue0_index.html')
+
+
+
+# instead of writing index from template parse exsiting index file
+
+
+# use the index a the central point to:
+# * create newpages
+# * 
+
+
+##################### content #########################
+
+article_template = """
 <html>
 <head>
 <title>{{ title }}</title>
@@ -39,19 +138,10 @@ html_template = """
 <hr/>
  {{ body | safe }}.
 <hr/>
-<p>end of page</p>
 </body>
 </html>
 """
 
-def template(title, content):
-    t = Template(html_template)
-    c = Context({"title": title,
-             "body":content})
-    html_page = t.render(c)
-    html = open('page_wiki.html', 'w') #write mediawiki content to content.mw
-    html.write(html_page.encode('utf-8'))
-    return html_page
 
 def pandoc(mw_content):
     '''uses pandoc to convert mediawiki syntax to html'''
@@ -103,23 +193,6 @@ def api_page_protection(pagename):
 #        api_page_content(pagename, page_title)
 
 
-
-########### TO DO
-def api_pagesInCategory( category): 
-    query = endpoint + 'action=query&list=categorymembers&cmtitle=Category:{}'.format(category)
-    print query
-    url = endpoint + query
-    request = urllib2.urlopen(url)
-    jsonp = json.loads(request.read())    
-    for item in  jsonp['query']['categorymembers']:
-        print item['title']
-        print json.dumps(item, sort_keys=True, indent=4)
-#api_pagesInCategory('project')
-#########
-
-api_pagesInCategory('Issue0')
-
-
 def wiki_2_html(mw_page): # convert wiki pages to html files
     html_file = ((mw_page.split('/'))[-1]) + '.html'
     content_mw = api_page_protection(mw_page) #retreive protected page mw content
@@ -127,8 +200,8 @@ def wiki_2_html(mw_page): # convert wiki pages to html files
        # content_mw = api_page_content(mw_page) 
     if content_mw:    
         content_html = pandoc(content_mw)
-        full_html = template(mw_page, content_html) 
+        full_html = template(mw_page, content_html, article_template) 
         edit_html_media(full_html , endpoint, html_file)
     #    print full_html
 
-# wiki_2_html(sys.argv[1])
+#wiki_2_html(sys.argv[1]) 

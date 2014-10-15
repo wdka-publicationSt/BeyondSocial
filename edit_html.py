@@ -39,8 +39,9 @@ def edit_html_media(page, api_endpoint, output_filename): #(pagename)
                 print  ET.tostring(child)
                 print
                 youtube_id= child.text
-                embed = '<iframe width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen" src="http://www.youtube.com/embed/{video_id}"/>'.format(video_id=youtube_id)
+                embed = '<iframe width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen" src="http://www.youtube.com/embed/{video_id}" />'.format(video_id=youtube_id)
                 embed_element = ET.fromstring(embed)
+                print embed_element, embed, p
                 p.append(embed_element)
                 p.remove(child)
     print '---- ---- END: edit_html_media  ---- ----'
@@ -73,7 +74,7 @@ def edit_html_media(page, api_endpoint, output_filename): #(pagename)
     # WRITE FILE
     doctype = "<!DOCTYPE html>"
     html = doctype + ET.tostring(tree,  encoding='utf-8', method='html')
-    edited = open(output_filename, 'w') #write
+    edited = open('html_articles/' + output_filename, 'w') #write
     edited.write(html)
     edited.close()
 #    tree.write('htmlpage.html', encoding='utf-8', )
