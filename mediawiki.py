@@ -183,18 +183,18 @@ def api_pagesInCategory(category):
 
 
 def edit_index( articles_dict, index_path ): 
-    ''' ** Compares articles_dictionary with the index file **
+    ''' Compares articles_dictionary with the index file 
     if there are new articles in mediawiki:
     def adds them to index file, and triggers the creation of the content file for that article (via wiki_2_html def)'''
 
     index_file = open(index_path, 'r') 
     index_tree = html5lib.parse(index_file, namespaceHTMLElements=False)
+    index_ul = index_tree.findall('.//ul')[0]
     index_items = index_tree.findall('.//li')
     index_items_data_name = [ (li.get('data-name')).encode('utf-8') for li in index_items]
     index_items_data_touched = [ (li.get('data-touched')).encode('utf-8') for li in index_items]
-    index_ul = index_tree.findall('.//ul')[0]
-    # compare the api results to the contents of index.html
-    for article in articles_dict.keys():
+
+    for article in articles_dict.keys():  # compare the api results to the contents of index.html
         # is article in index_items?
         if article not in index_items_data_name:
             print "ARTICLE MISSING", article
@@ -207,10 +207,7 @@ def edit_index( articles_dict, index_path ):
             grandchild_a.text = article
             grandchild_a.set('href', 'html_articles/'+((article.split('/'))[-1])+'.html' )
             
-            ### TODO
-            # CREATE article's to content file with def wiki_2_html
-            wiki_2_html(article) 
-
+            wiki_2_html(article) # CREATE article's to content file with def wiki_2_html
         else: 
             article_pos = index_items_data_name.index(article)
             print "ARTICLE PRESENT:", article, "in position:", article_pos
@@ -218,7 +215,8 @@ def edit_index( articles_dict, index_path ):
             # touched time
             if index_items_data_touched[article_pos] != articles_dict[article]['touched']:
                 print "NOT SAME TOUCHED TIME"
-                # UPDATE
+            wiki_2_html(article) # UPDATE
+
                 # if yes:    
                 # if is touched date in index.html older that the one from API?
                 # yes:
