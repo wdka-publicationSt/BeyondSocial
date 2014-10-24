@@ -261,4 +261,4 @@ pprint.pprint(articles_issue_dic, width=1)
 edit_index(articles_issue_dic, 'issue0_index.html')
 
 
-#wiki_2_html(sys.argv[1]) 
+wiki_2_html(sys.argv[1]) 

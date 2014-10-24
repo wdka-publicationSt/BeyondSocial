@@ -35,15 +35,15 @@ def edit_html_media(page, api_endpoint, output_filename): #(pagename)
     for p in tree.findall('.//p'): # youtube       
         for child in list(p):
             if child.tag == 'youtube':
-                # print '---- ---- youtube  ---- ----'
-                # print  ET.tostring(child)
-                # print
-                youtube_id= child.text
-                embed = '<iframe width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen" src="http://www.youtube.com/embed/{video_id}" />'.format(video_id=youtube_id)
-                embed_element = ET.fromstring(embed)
-                print embed_element, embed, p
-                p.append(embed_element)
-                p.remove(child)
+                print '---- ---- youtube  ---- ----'
+                print  ET.tostring(child)
+                print
+                youtube_id = child.text
+                youtube_url = "http://www.youtube.com/embed/{}".format(youtube_id)
+                ET.SubElement(p, 'iframe', 
+                              {"width":"560", "height":"315", "frameborder": "0", "allowfullscreen": "allowfullscreen", "src": youtube_url})
+#                p.append(embed_element)
+#                p.remove(child)
 #    print '---- ---- END: edit_html_media  ---- ----'
 #    print
     # WRITE FILE
