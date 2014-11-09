@@ -230,9 +230,6 @@ def edit_index(articles_dict, index_path ):
     li_data_name = [ (li.get('data-name')).encode('utf-8') for li in index_items]
     li_data_touched = [ (li.get('data-touched')).encode('utf-8') for li in index_items]
 
-    print 'data_name', li_data_name
-    print 'data_touched', li_data_touched
-    
     for article in articles_dict.keys():  # compare the api results to the contents of index.html
         if article in li_data_name:
             article_pos = li_data_name.index(article)
@@ -244,16 +241,6 @@ def edit_index(articles_dict, index_path ):
                 touched_time=articles_dict[article]['touched']
                 print 'touched_time', touched_time
                 update_element(index_tree, './/ul/li[@data-name="{}"]'.format(article), 'data-touched', touched_time)
-
-
-                # # find li_data_name item corresponding to article_post
-                # this_li = index_tree.find('.//ul/li[@data-name="{}"]'.format(article))
-                # print 'THIS LI', this_li              
-                # # change data-touched to current
-                # this_li.set('data-touched', touched_time)
-
-
-
 ##                wiki_2_html(article) # UPDATE Article
             else:
                 print "SAME TOUCHED TIME" # do nothing
@@ -266,81 +253,16 @@ def edit_index(articles_dict, index_path ):
             insert_element(index_ul, 'li', articles_dict, article) #insert li into ul
             ##wiki_2_html(article) # ADD Article
 
+    # if article is in index but Not in articles_dict: remove it
+    for li in index_items:
+        print li, ET.tostring(li), 
+        dataname =li.get('data-name')
+        if dataname not in articles_dict.keys():
+            print 'article not in articles_dict'
+            li.clear()
+
 #    print ET.tostring(index_tree)
     write_html_file(ET.tostring(index_tree), 'index.html')
-
-
-    # for li in index_items:  compare the api results to the contents of index.html
-    #     print "-----------"
-    #     print "ITEM", li.get('data-name').text 
-    #     print "-----------"
-    #     print 'li_data_name', li_data_name
-
-    #     if li.get('data-name') not in li_data_name:
-    #         print "missing article item", articles_dict[article]
-
-
-
-            # check date 
-
-    #        print "ARTICLE PRESENT:", article, "in position:", article_pos
-
-
-
-'''
-
-    for article in articles_dict.keys():  # compare the api results to the contents of index.html
-        print "***********"
-        print "ARTICLE", article
-        print "***********"
-
-        if article not in index_items_data_name:   # is article in index_items?
-            print "ARTICLE MISSING", article
-            # ADD Article  to index
-            #insert elements
-            child_li = ET.SubElement(index_ul, 'li')
-            child_li.set('data-name', article )
-            child_li.set('data-touched', articles_dict[article]['touched'])
-            child_li.set('data-section', articles_dict[article]['section'] )
-            child_li.set('data-issue', articles_dict[article]['issue'] )
-            all_categories = articles_dict[article]['topic']
-            all_categories.append( articles_dict[article]['issue'])
-            all_categories.append(articles_dict[article]['section'])
-            all_categories = " ".join(all_categories)
-            child_li.set('class', all_categories )
-            child_li.set('data-categories', all_categories )
-            grandchild_a = ET.SubElement(child_li, 'a')
-            grandchild_a.text = article
-            grandchild_a.set('href', 'html_articles/'+((article.split('/'))[-1])+'.html' )
-
-            #wiki_2_html(article) # CREATE ARTICLE'S TO CONTENT
-
-
-        else: 
-            article_pos = index_items_data_name.index(article)
-            print "ARTICLE PRESENT:", article, "in position:", article_pos
-
-            # touched time
-            if index_items_data_touched[article_pos] != articles_dict[article]['touched']:
-                print "NOT SAME TOUCHED TIME"
-#                wiki_2_html(article) # UPDATE
-
-                # if yes:    
-                # if is touched date in index.html older that the one from API?
-                # yes:
-                # UPDATE content file & index.html
-                
-                # if not: 
-                # ADD to content file & index.hmlt 
-
-        print article, articles_dict[article]
-        print 
-        print ET.tostring(index_tree)
-        write_html_file(ET.tostring(index_tree), 'index.html')
-'''
-#         for key in articles_dict[article].keys():
-#             print key, articles_dict[article][key]
-
 
 
 def parse_index(filepath):
