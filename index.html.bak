@@ -50,11 +50,14 @@
 	</div>
 
 	<div class="issueItem" id="issue01">
-          <div class="issue"><p>Issue 01: Redesigning Business</p></div>
-
-	  <!-- ADD CLASS list TO ul-->
-	  <ul class="list">
+          <div class="issue"><p>Issue 00: Testing</p></div>
+	  <ul class="list" id="list_issue0">
 	    <!-- FORMATTING FOR li elements-->    
+	  </ul>
+	</div>
+
+          <div class="issue"><p>Issue 01: Redesigning Business</p></div>
+	  <ul class="list" id="list_issue1">
 	  </ul>
 	</div>
       </div>

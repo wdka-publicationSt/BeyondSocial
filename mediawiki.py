@@ -100,11 +100,11 @@ def pandoc(mw_content):
 
 def api_page(pagename, info):
     if info == 'content':        
-        url = endpoint + 'action=query&titles={}&prop=revisions&rvprop=content'.format(pagename) #no protection info in this url
+        url = endpoint + 'action=query&titles={}&prop=revisions&rvprop=content'.format(pagename)
+#        print 'CONTENT URL', url
     elif info == 'meta':
-        url = endpoint + 'action=query&titles={}&prop=info&inprop=protection'.format(pagename)
-        print 'META URL', url
-    print url
+        url = endpoint + 'action=query&titles={}&prop=info'.format(pagename)
+#        print 'META URL', url
     request = urllib2.urlopen(url)
     jsonp = json.loads(request.read() )
     json_dic= (jsonp.get('query').get('pages'))
@@ -115,7 +115,7 @@ def api_page(pagename, info):
 
 def api_page_content(pagename):
     page = api_page(pagename, 'content')
-    print 'PAGE', pagename
+#    print 'PAGE', pagename
     content = ((page.get('revisions'))[0])['*']
     return content
 #    print json.dumps( revisions, sort_keys=True, indent=4) ## see response
@@ -147,7 +147,9 @@ def api_categoriesFromPage(page):
     query = 'action=query&titles={}&prop=categories'.format(page)
     url = endpoint + query
     request = urllib2.urlopen(url)
-#    print 'categories',url
+    print
+    print 'categories',url
+    print
     jsonp = json.loads(request.read())    
     json_dic = jsonp['query']['pages']
     page_id =  json_dic.keys()[0]
@@ -158,33 +160,39 @@ def api_categoriesFromPage(page):
             topic.append(category)
         elif category in category_section:
             section = category
-    return (topic, section)
+        elif 'Issue'in category:
+            issue = category
+    return (topic, section, issue)
 
 
 
-def api_pagesInCategory(category): 
-    '''Finds all pages within Issue N category and return a dictionary with info on those pages'''
+#def api_pagesInCategory(category): 
+
+def api_PublishMe_pages():
+    '''Finds all pages within 04_Publish_Me category and return a dictionary with info on those pages'''
     dic_categ = {}
-    query = endpoint + 'action=query&list=categorymembers&cmtitle=Category:{}&cmtitle=Category:04_Publish_Me'.format(category)
+    query = endpoint + 'action=query&list=categorymembers&cmtitle=Category:04_Publish_Me'
     print 'Category: ', query
     url = endpoint + query
     request = urllib2.urlopen(url)
     jsonp = json.loads(request.read())    
-    print 'CATEGORY MEMBERS', jsonp['query']['categorymembers']
+    print '04_Publish_Me PAGES', jsonp['query']['categorymembers']
 
     for page in  jsonp['query']['categorymembers']:      
         page['title'] = (page['title']).replace(" ", "_") #use snakecase for page titles
         print 'page', page
         article_meta = api_page(page['title'], 'meta')
         print 'article_meta', article_meta
-        category_topic = api_categoriesFromPage(page['title'])[0]
-        category_section = api_categoriesFromPage(page['title'])[1]
+        categoriesFromPage = api_categoriesFromPage(page['title'])
+        category_topic = categoriesFromPage[0]
+        category_section = categoriesFromPage[1]
+        category_issue = categoriesFromPage[2]
 
         dic_categ[ str(page['title']) ] = { 'pageid': article_meta['pageid'], 
                                             'touched': str(article_meta['touched'])[:-1],
                                             'topic': category_topic,
                                             'section': category_section,
-                                            'issue': category, #category = issue
+                                            'issue': category_issue,
                                             } 
     return dic_categ 
 
@@ -200,15 +208,65 @@ def edit_index( articles_dict, index_path ):
     ''' Compares articles_dictionary with the index file 
     if there are new articles in mediawiki:
     def adds them to index file, and triggers the creation of the content file for that article (via wiki_2_html def)'''
-
     index_file = open(index_path, 'r') 
     index_tree = html5lib.parse(index_file, namespaceHTMLElements=False)
-    index_ul = index_tree.findall('.//ul[@class="list"]')[0]
-    print 'index_ul', index_ul, #ET.tostring(index_ul)
+    index_items = index_tree.findall('.//ul/li')
 
-    index_items = index_tree.findall('.//li')
+    for article in articles_dict.keys():  # compare the api results to the contents of index.html
+        print "***********"
+        print "ARTICLE", article
+        print "***********"
+
+
+# is article in list item?
+
+    for li in index_items:  # compare the api results to the contents of index.html
+        print "-----------"
+        print "ITEM", item.text 
+        print "-----------"
+
+        if (li.text).replace(" ","_") == item.text:
+            print "existing article item"
+            # check date 
+
+
+
+            if index_items_data_touched[article_pos] != articles_dict[article]['touched']:
+                print "NOT SAME TOUCHED TIME"
+#                wiki_2_html(article) # UPDATE
+
+
+            if 
+        else
+            print "missing article item"
+            # add item
+
+'''
+    index_ul = index_tree.findall('.//ul[@class="list"]')
+#    print 'index_ul', index_ul, #ET.tostring(index_ul)
+
+    # seperate <ul></ul> for each issue
+
+    for ul in index_ul: # for all index_ul lists
+        ul_id = ul.get('id').encode('utf-8') # get their id
+#        print 'ul_id' , type(ul_id ), ul_id 
+        for child in list(ul.iter()): # for each li of ul
+            if child.tag == 'li': # check if tag is li
+#                print child.get('id')
+#                print child.tag, ET.tostring(child)
+
+                for article in articles_dict.keys(): # for article in dictionary
+                    issue_n = (( "list_"+articles_dict[article]['issue']).lower()).replace(" ", "0")
+                    if issue_n == ul_id: # if article has same issue as parent ul id
+                        print 'article', article, articles_dict[article]['issue'], ul_id
+
+
+'''
+
+'''
     index_items_data_name = [ (li.get('data-name')).encode('utf-8') for li in index_items]
     index_items_data_touched = [ (li.get('data-touched')).encode('utf-8') for li in index_items]
+
 
     for article in articles_dict.keys():  # compare the api results to the contents of index.html
         print "***********"
@@ -258,7 +316,7 @@ def edit_index( articles_dict, index_path ):
         print 
         print ET.tostring(index_tree)
         write_html_file(ET.tostring(index_tree), 'index.html')
-
+'''
 #         for key in articles_dict[article].keys():
 #             print key, articles_dict[article][key]
 
@@ -295,8 +353,9 @@ def parse_index(filepath):
 
 #parse_index('issue0_index.html')
 
-issue = 'Issue_0'
-articles_issue_dic = api_pagesInCategory(issue) 
+#issue = 'Issue_0'
 
+articles_issue_dic = api_PublishMe_pages()
 pprint.pprint(articles_issue_dic, width=1)
+
 edit_index(articles_issue_dic, 'index.html')
