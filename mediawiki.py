@@ -37,65 +37,95 @@ category_state = [ '01 Write Me', '02 Edit Me', '03 Proof Me', '04 Publish Me']
 
 
 
+
+
+# def template(title, content, mytemplate):
+#     t = Template(mytemplate)
+#     c = Context({"title": title,
+#              "body":content})
+#     html_page = t.render(c)
+#     html = open('page_wiki.html', 'w') #write mediawiki content to content.mw
+#     html.write(html_page.encode('utf-8'))
+#     return html_page
+
+
+
+
+# ##################### content #########################
+
+# article_template = """
+# <html>
+# <head>
+# <title>{{ title }}</title>
+# <meta charset="utf-8" />
+# <style type="text/css" media="screen">
+#   body{background:#cacc00;
+#   font-family: Sans;
+#    }
+    
+#   a{color:#b213ab;}
+
+#   a:visited{color:#b213ab;}
+# </style>
+# </head>
+# <body>
+# <h1>{{ title }}</h1>
+# <hr/>
+#  {{ body | safe }}.
+# <hr/>
+# </body>
+# </html>
+# """
+
+
+# def pandoc(mw_content):
+#     '''uses pandoc to convert mediawiki syntax to html'''
+#     mw = open('tmp_content.mw', 'w') 
+#     mw.write(mw_content.encode('utf-8'))
+#     mw.close()
+#     pandoc = 'pandoc -f mediawiki -t html5 tmp_content.mw -o tmp_content.html' 
+#     print 'pandoc'
+#     subprocess.call(pandoc, shell=True) # saved in tmp_content.html html
+#     html = open('tmp_content.html', 'r') #write mediawiki content to html in tmp_content.html
+#     html = html.read()
+#     return html
+ 
+
+
+# def api_page_content(pagename):
+#     page = api_page(pagename, 'content')
+# #    print 'PAGE', pagename
+#     content = ((page.get('revisions'))[0])['*']
+#     return content
+# #    print json.dumps( revisions, sort_keys=True, indent=4) ## see response
+
+
+# def wiki_2_html(mw_page): 
+#     '''convert wiki pages to html files'''
+#     html_file = ((mw_page.split('/'))[-1]) + '.html'
+#     content_mw = api_page_content(mw_page) 
+#     if content_mw:    
+#         content_html = pandoc(content_mw)
+#         full_html = template(mw_page, content_html, article_template) 
+#         edit_html_media(full_html , endpoint, html_file)
+
+#     #    print full_html
+
+# #wiki_2_html(sys.argv[1]) 
+
+
+
+
+
+
+################### index #######################
+
 def write_html_file(html_content, filename):
     doctype = "<!DOCTYPE HTML>"
     html = doctype + html_content #ET.tostring(tree,  encoding='utf-8', method='html')
     edited = open(filename, 'w') #write
     edited.write(html)
     edited.close()
-
-
-def template(title, content, mytemplate):
-    t = Template(mytemplate)
-    c = Context({"title": title,
-             "body":content})
-    html_page = t.render(c)
-    html = open('page_wiki.html', 'w') #write mediawiki content to content.mw
-    html.write(html_page.encode('utf-8'))
-    return html_page
-
-
-
-
-##################### content #########################
-
-article_template = """
-<html>
-<head>
-<title>{{ title }}</title>
-<meta charset="utf-8" />
-<style type="text/css" media="screen">
-  body{background:#cacc00;
-  font-family: Sans;
-   }
-    
-  a{color:#b213ab;}
-
-  a:visited{color:#b213ab;}
-</style>
-</head>
-<body>
-<h1>{{ title }}</h1>
-<hr/>
- {{ body | safe }}.
-<hr/>
-</body>
-</html>
-"""
-
-
-def pandoc(mw_content):
-    '''uses pandoc to convert mediawiki syntax to html'''
-    mw = open('tmp_content.mw', 'w') 
-    mw.write(mw_content.encode('utf-8'))
-    mw.close()
-    pandoc = 'pandoc -f mediawiki -t html5 tmp_content.mw -o tmp_content.html' 
-    print 'pandoc'
-    subprocess.call(pandoc, shell=True) # saved in tmp_content.html html
-    html = open('tmp_content.html', 'r') #write mediawiki content to html in tmp_content.html
-    html = html.read()
-    return html
- 
 
 
 def api_page(pagename, info):
@@ -113,33 +143,6 @@ def api_page(pagename, info):
     return page_content
 
 
-def api_page_content(pagename):
-    page = api_page(pagename, 'content')
-#    print 'PAGE', pagename
-    content = ((page.get('revisions'))[0])['*']
-    return content
-#    print json.dumps( revisions, sort_keys=True, indent=4) ## see response
-
-
-def wiki_2_html(mw_page): 
-    '''convert wiki pages to html files'''
-    html_file = ((mw_page.split('/'))[-1]) + '.html'
-    content_mw = api_page_content(mw_page) 
-    if content_mw:    
-        content_html = pandoc(content_mw)
-        full_html = template(mw_page, content_html, article_template) 
-        edit_html_media(full_html , endpoint, html_file)
-
-    #    print full_html
-
-#wiki_2_html(sys.argv[1]) 
-
-
-
-
-
-################### index #######################
-
 
 def api_categoriesFromPage(page):
     '''Find all the categories, and their parent category of a page '''
@@ -147,9 +150,9 @@ def api_categoriesFromPage(page):
     query = 'action=query&titles={}&prop=categories'.format(page)
     url = endpoint + query
     request = urllib2.urlopen(url)
-    print
-    print 'categories',url
-    print
+#    print
+#    print 'categories',url
+#    print
     jsonp = json.loads(request.read())    
     json_dic = jsonp['query']['pages']
     page_id =  json_dic.keys()[0]
@@ -165,41 +168,37 @@ def api_categoriesFromPage(page):
     return (topic, section, issue)
 
 
-
-#def api_pagesInCategory(category): 
-
 def api_PublishMe_pages():
-    '''Finds all pages within 04_Publish_Me category and return a dictionary with info on those pages'''
-    dic_categ = {}
+    '''Finds all pages within 04_Publish_Me category and returns a dictionary with info on those pages'''
+    dict_articles = {}
     query = endpoint + 'action=query&list=categorymembers&cmtitle=Category:04_Publish_Me'
-    print 'Category: ', query
+#    print 'Category: ', query
     url = endpoint + query
     request = urllib2.urlopen(url)
     jsonp = json.loads(request.read())    
-    print '04_Publish_Me PAGES', jsonp['query']['categorymembers']
+#    print '04_Publish_Me PAGES', jsonp['query']['categorymembers']
 
     for page in  jsonp['query']['categorymembers']:      
         page['title'] = (page['title']).replace(" ", "_") #use snakecase for page titles
-        print 'page', page
+#        print 'page', page
         article_meta = api_page(page['title'], 'meta')
-        print 'article_meta', article_meta
+#        print 'article_meta', article_meta
         categoriesFromPage = api_categoriesFromPage(page['title'])
         category_topic = categoriesFromPage[0]
         category_section = categoriesFromPage[1]
         category_issue = categoriesFromPage[2]
 
-        dic_categ[ str(page['title']) ] = { 'pageid': article_meta['pageid'], 
+        dict_articles[ str(page['title']) ] = { 'pageid': article_meta['pageid'], 
                                             'touched': str(article_meta['touched'])[:-1],
                                             'topic': category_topic,
                                             'section': category_section,
                                             'issue': category_issue,
                                             } 
-    return dic_categ 
-
+    return dict_articles
 
 
 def insert_element(parent_el, insert_el, articles_dict, article):
-    print 'INSERT ELEMENTS'
+    # print 'INSERT ELEMENTS'
     child_li = ET.SubElement(parent_el, insert_el)
     child_li.set('data-name', article )
     child_li.set('data-touched', articles_dict[article]['touched'])
@@ -214,15 +213,16 @@ def insert_element(parent_el, insert_el, articles_dict, article):
     grandchild_a = ET.SubElement(child_li, 'a')
     grandchild_a.text = article
     grandchild_a.set('href', 'html_articles/'+((article.split('/'))[-1])+'.html' )
-#    print ET.tostring(child_li)
+    # print ET.tostring(child_li)
 
 def update_element(tree, update_el_xpath, update_el, update):
     to_beupdated_el = tree.find(update_el_xpath)
     to_beupdated_el.set(update_el, update)
 
+
 def edit_index(articles_dict, index_path ): 
-    ''' Compares articles_dictionary with the index file 
-    if there are new articles in mediawiki:
+    ''' Compares articles_dicti with the index.html file 
+    if there are new articles or updates in wiki:
     def adds them to index file, and triggers the creation of the content file for that article (via wiki_2_html def)'''
     index_file = open(index_path, 'r') 
     index_tree = html5lib.parse(index_file, namespaceHTMLElements=False)
@@ -233,33 +233,32 @@ def edit_index(articles_dict, index_path ):
     for article in articles_dict.keys():  # compare the api results to the contents of index.html
         if article in li_data_name:
             article_pos = li_data_name.index(article)
-            print "ARTICLE IN INDEX", article, article_pos
-            # find touched time
+#            print "ARTICLE IN INDEX", article, article_pos
             if li_data_touched[article_pos] != articles_dict[article]['touched']:
-                print "NOT SAME TOUCHED TIME"
-                # update index 
+#                print "NOT SAME TOUCHED TIME", "update index"
                 touched_time=articles_dict[article]['touched']
-                print 'touched_time', touched_time
                 update_element(index_tree, './/ul/li[@data-name="{}"]'.format(article), 'data-touched', touched_time)
+                print "UPDATE:", article
 ##                wiki_2_html(article) # UPDATE Article
-            else:
-                print "SAME TOUCHED TIME" # do nothing
+
         else:
-            print "ARTICLE MISSING FROM INDEX", article
-            # add article item to index
-            # FIND UL WHERE THIS ARTICLE BELONGS TO
+#            print "ARTICLE MISSING FROM INDEX", article
             issue = 'list_' + (((articles_dict[article])['issue']).replace(" ","_")).lower()
             index_ul = index_tree.find('.//ul[@id="'+issue+'"]')
             insert_element(index_ul, 'li', articles_dict, article) #insert li into ul
+            print "INSERT:", article
             ##wiki_2_html(article) # ADD Article
 
     # if article is in index but Not in articles_dict: remove it
     for li in index_items:
-        print li, ET.tostring(li), 
         dataname =li.get('data-name')
         if dataname not in articles_dict.keys():
-            print 'article not in articles_dict'
-            li.clear()
+#            print 'article not in articles_dict', dataname
+            uls = (index_tree.findall('.//ul[@class="list"]'))
+            for ul in uls:                
+                ul_lis = ul.findall('.//li[@data-name="{}"]'.format(dataname))
+                if ul_lis:
+                    ul.remove(ul_lis[0])
 
 #    print ET.tostring(index_tree)
     write_html_file(ET.tostring(index_tree), 'index.html')
@@ -268,7 +267,6 @@ def edit_index(articles_dict, index_path ):
 def parse_index(filepath):
     input_file = open(filepath, 'r') 
     tree = html5lib.parse(input_file, namespaceHTMLElements=False)
-
     # find li
     for ul in tree.findall('.//ul'):        
         print len(ul), 'ul', ET.tostring(ul), type(ul), ul
@@ -288,17 +286,6 @@ def parse_index(filepath):
     print ET.tostring(tree)
 
 
-## Create index
-#index_ul = api_pagesInCategory('Issue0')
-#index = template('index', index_ul, index_template)
-#print index
-#write_html_file(index, 'issue0_index.htmlye')
-
-#parse_index('issue0_index.html')
-
-#issue = 'Issue_0'
-
 articles_issue_dic = api_PublishMe_pages()
-pprint.pprint(articles_issue_dic, width=1)
-
+#pprint.pprint(articles_issue_dic, width=1)
 edit_index(articles_issue_dic, 'index.html')
