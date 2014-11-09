@@ -17,15 +17,7 @@
 
 #
 import xml.etree.ElementTree as ET
-import html5lib
-import urllib, urllib2, json, subprocess
-import sys, os, pprint
-from django.template import Template, Context
-from django.conf import settings
-settings.configure() # We have to do this to use django templates standalone - see
-# http://stackoverflow.com/questions/98135/how-do-i-use-django-templates-without-the-rest-of-django
-import edit_html #  
-from edit_html import edit_html_media
+import html5lib, urllib2, json
 
 sid = '1234'
 useragent = "Mozilla/5.001 (windows; U; NT4.0; en-US; rv:1.0) Gecko/25250101"
@@ -38,87 +30,6 @@ category_state = [ '01 Write Me', '02 Edit Me', '03 Proof Me', '04 Publish Me']
 
 
 
-
-# def template(title, content, mytemplate):
-#     t = Template(mytemplate)
-#     c = Context({"title": title,
-#              "body":content})
-#     html_page = t.render(c)
-#     html = open('page_wiki.html', 'w') #write mediawiki content to content.mw
-#     html.write(html_page.encode('utf-8'))
-#     return html_page
-
-
-
-
-# ##################### content #########################
-
-# article_template = """
-# <html>
-# <head>
-# <title>{{ title }}</title>
-# <meta charset="utf-8" />
-# <style type="text/css" media="screen">
-#   body{background:#cacc00;
-#   font-family: Sans;
-#    }
-    
-#   a{color:#b213ab;}
-
-#   a:visited{color:#b213ab;}
-# </style>
-# </head>
-# <body>
-# <h1>{{ title }}</h1>
-# <hr/>
-#  {{ body | safe }}.
-# <hr/>
-# </body>
-# </html>
-# """
-
-
-# def pandoc(mw_content):
-#     '''uses pandoc to convert mediawiki syntax to html'''
-#     mw = open('tmp_content.mw', 'w') 
-#     mw.write(mw_content.encode('utf-8'))
-#     mw.close()
-#     pandoc = 'pandoc -f mediawiki -t html5 tmp_content.mw -o tmp_content.html' 
-#     print 'pandoc'
-#     subprocess.call(pandoc, shell=True) # saved in tmp_content.html html
-#     html = open('tmp_content.html', 'r') #write mediawiki content to html in tmp_content.html
-#     html = html.read()
-#     return html
- 
-
-
-# def api_page_content(pagename):
-#     page = api_page(pagename, 'content')
-# #    print 'PAGE', pagename
-#     content = ((page.get('revisions'))[0])['*']
-#     return content
-# #    print json.dumps( revisions, sort_keys=True, indent=4) ## see response
-
-
-# def wiki_2_html(mw_page): 
-#     '''convert wiki pages to html files'''
-#     html_file = ((mw_page.split('/'))[-1]) + '.html'
-#     content_mw = api_page_content(mw_page) 
-#     if content_mw:    
-#         content_html = pandoc(content_mw)
-#         full_html = template(mw_page, content_html, article_template) 
-#         edit_html_media(full_html , endpoint, html_file)
-
-#     #    print full_html
-
-# #wiki_2_html(sys.argv[1]) 
-
-
-
-
-
-
-################### index #######################
 
 def write_html_file(html_content, filename):
     doctype = "<!DOCTYPE HTML>"
@@ -212,12 +123,15 @@ def insert_element(parent_el, insert_el, articles_dict, article):
     child_li.set('data-categories', all_categories )
     grandchild_a = ET.SubElement(child_li, 'a')
     grandchild_a.text = article
-    grandchild_a.set('href', 'html_articles/'+((article.split('/'))[-1])+'.html' )
+    grandchild_a.set('href', 'articles/'+((article.split('/'))[-1])+'.html' )
+    print article, articles_dict[article]['section']
+
     # print ET.tostring(child_li)
 
 def update_element(tree, update_el_xpath, update_el, update):
     to_beupdated_el = tree.find(update_el_xpath)
     to_beupdated_el.set(update_el, update)
+    return to_beupdated_el.get('data-section')#template_article.html)
 
 
 def edit_index(articles_dict, index_path ): 
@@ -237,17 +151,15 @@ def edit_index(articles_dict, index_path ):
             if li_data_touched[article_pos] != articles_dict[article]['touched']:
 #                print "NOT SAME TOUCHED TIME", "update index"
                 touched_time=articles_dict[article]['touched']
-                update_element(index_tree, './/ul/li[@data-name="{}"]'.format(article), 'data-touched', touched_time)
-                print "UPDATE:", article
-##                wiki_2_html(article) # UPDATE Article
+                section = update_element(index_tree, './/ul/li[@data-name="{}"]'.format(article), 'data-touched', touched_time)
+                print article, section
 
         else:
 #            print "ARTICLE MISSING FROM INDEX", article
             issue = 'list_' + (((articles_dict[article])['issue']).replace(" ","_")).lower()
             index_ul = index_tree.find('.//ul[@id="'+issue+'"]')
             insert_element(index_ul, 'li', articles_dict, article) #insert li into ul
-            print "INSERT:", article
-            ##wiki_2_html(article) # ADD Article
+
 
     # if article is in index but Not in articles_dict: remove it
     for li in index_items:
@@ -262,7 +174,6 @@ def edit_index(articles_dict, index_path ):
 
 #    print ET.tostring(index_tree)
     write_html_file(ET.tostring(index_tree), 'index.html')
-
 
 def parse_index(filepath):
     input_file = open(filepath, 'r') 
@@ -282,10 +193,10 @@ def parse_index(filepath):
         #insert elements
         child = ET.SubElement(ul, 'li')
         child.text = 'new list item.'
-
     print ET.tostring(tree)
 
 
+
+
 articles_issue_dic = api_PublishMe_pages()
-#pprint.pprint(articles_issue_dic, width=1)
 edit_index(articles_issue_dic, 'index.html')

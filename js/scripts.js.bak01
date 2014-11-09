@@ -1,0 +1,245 @@
+$(document).ready(function(){
+
+  var $container = $('.list')
+  var sectionSpacing = 7
+  var thisSAVED;
+  var scrollToIssue;
+  
+  function adjustIssues(){
+
+    if($(window).width()>1024){
+      $('.list li, .issue').css({"padding-left":"","margin-left":"", "width":""})
+
+    }else{
+      $('.list li, .issue').css({"padding-left":"0px","margin-left":"0px", "width":"100%"})
+
+    }
+
+  }
+
+
+  function calculateSection(){
+
+    $(".section-div").remove()
+    setTimeout(function(){
+      $container.each(function(){
+        
+        //// GET TOTAL HEIGHT OF SECTION ////
+        jsonHeight = []
+
+        $(this).children("li:visible").each(function(){
+          section = $(this).attr("data-section")
+          jsonVariable = {}
+          jsonVariable[section] = $(this).height()
+          
+          
+          jsonHeight.push(jsonVariable);
+        })
+
+        //// ATTACH SECTION DEVIDER TO FIRST LI IN SECTION ////
+
+        $(this).children("li:visible").each(function(){
+          section = $(this).attr("data-section")
+          totalH = 0 
+          for (var i = 0; i < jsonHeight.length; i++) {
+            if (isNaN(jsonHeight[i][section]) == false){   
+              totalH = totalH + jsonHeight[i][section]
+            }
+          }
+
+          
+          if ($(this).prevAll("li:visible:first").attr("data-section") != section){
+            $(this).prepend("<div class='section-div section-wide'>"+section+"</div>").find(".section-div").css({"height":totalH-sectionSpacing+"px", "line-height":totalH-sectionSpacing+"px"})
+          }
+
+        })
+
+        $(".section-div").fadeIn(250)
+
+      })
+
+      
+
+    },500);
+
+
+  }
+
+  function calculateSectionNarrow(){
+
+    // setTimeout(function(){
+
+        $(".section-div").remove()
+
+        $container.each(function(){
+
+          $(this).children("li:visible").each(function(){
+            section = $(this).attr("data-section")
+            
+            if ($(this).prevAll("li:visible:first").attr("data-section") != section){
+              $(this).prepend("<div class='section-div section-narrow'>"+section+"</div>")
+            }
+
+            //$(this).attr("data-section").prevAll("li:visible:last")
+
+
+            // if ($(this).prevAll("li:visible:last").attr("data-section") == section){
+            //   $(this).css({"margin-bottom":"50px"})
+            // }
+
+            
+
+          })
+
+          $(".section-div").fadeIn(250)
+
+
+
+        })
+
+    // },500);
+      
+  }
+
+  setTimeout(function(){
+
+    if($(window).width()>1024){
+
+      $container.isotope({
+          itemSelector: 'li'
+      })
+      calculateSection()
+
+    }else{
+
+      calculateSectionNarrow()
+      $container.isotope({
+          itemSelector: 'li'
+      })
+
+    }
+
+
+    $container.isotope( 'on', 'layoutComplete', function() {
+        if($(window).width()>1024){
+
+          calculateSection()
+
+        }else{
+
+          calculateSectionNarrow()
+
+        }
+  
+//        alert("hi")
+        // scrollToIssue
+        // $(document.body).animate({
+        // 'scrollTop': $("#"+scrollToIssue).offset().top-parseInt($("body").css("margin-top"))
+        // }, 250);
+
+    });
+
+
+    var $checkboxes = $('.themes input');
+        
+      $checkboxes.change( function() {
+
+          setTimeout(function(){
+            $container.isotope({
+                itemSelector: 'li'
+            })
+          },600)
+
+          scrollTopPx = $(window).scrollTop()
+          console.log(scrollTopPx)
+
+          // if($(window).width()>1024){
+          //   $(".section-div").remove()
+          // }
+          //$(".section-div").remove()
+
+          var checkboxesCheck = $('.themes input:checked');
+
+          thisSAVED = $(this).parents(".issueWrapper")
+
+          $('input.'+$(this).attr("class")+'').next("p").toggleClass("underlineFilter")
+          $('input.'+$(this).attr("class")+'').prop('checked', $(this).is(':checked'));
+         
+          var exclusives = [];
+          var inclusives = [];
+
+          // inclusive filters from checkboxes
+          $checkboxes.each( function( i, elem ) {
+            // if checkbox, use value if checked
+            if ( elem.checked ) {
+              inclusives.push( elem.value );
+              exclusives.push( elem.value );
+            }
+          });
+
+          // combine exclusive and inclusive filters
+          // first combine exclusives
+          exclusives = exclusives.join('');
+          
+          var filterValue;
+          if ( inclusives.length ) {
+            // map inclusives with exclusives for
+            filterValue = $.map( inclusives, function( value ) {
+              return value + exclusives;
+            });
+            filterValue = filterValue.join(', ');
+          } else {
+            filterValue = exclusives;
+          }
+
+          $container.isotope({ 
+            filter: filterValue 
+          })
+
+    });
+
+
+    var sortAreaOffset = $("#sortArea").offset().top
+
+    $(window).scroll(function(){
+          
+        if ($(window).scrollTop() > sortAreaOffset) {
+          $("#sortArea").addClass("fixedSort")
+          $(".issueWrapper").css({"margin-top":$("#sortArea").outerHeight()+"px"})
+
+        } else{
+          $("#sortArea").removeClass("fixedSort")
+          $(".issueWrapper").css({"margin-top":"0px"})
+        }
+    
+    });
+
+
+
+  },400);
+
+  // $(document).on('mousewheel DOMMouseScroll', 'a', function(e) {
+  //     console.log("walla asssaaaaaaaaaaaaaaaaaaaaaaaaaaaaassssss")
+  //     scrollToIssue = $(".issueItem:in-viewport").attr("id")
+  //     console.log($(".issueItem:in-viewport").attr("id"))
+  // });
+
+
+  $(window).resize(function(){
+    $(".section-div").remove()
+    console.log("hoooooooooooo")
+
+  setTimeout(function(){
+    $container.isotope({
+        itemSelector: 'li'
+    })
+  },600)
+
+  adjustIssues()
+
+  })
+
+  adjustIssues()
+
+
+})
