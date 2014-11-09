@@ -119,27 +119,12 @@ def api_page_content(pagename):
     content = ((page.get('revisions'))[0])['*']
     return content
 #    print json.dumps( revisions, sort_keys=True, indent=4) ## see response
-    
-
-def api_page_protection(pagename):
-    page = api_page(pagename, 'meta')
-#    print 'Keys', page.keys()
-    page_protection = page.get('protection')
-    if page_protection: # page is protected
-        print "PROTECTED PAGE"
-        return api_page_content(pagename)
-    else:       
-        print 'PAGE NOT PROTECTED :('
-
-#        api_page_content(pagename, page_title)
 
 
 def wiki_2_html(mw_page): 
     '''convert wiki pages to html files'''
     html_file = ((mw_page.split('/'))[-1]) + '.html'
-    content_mw = api_page_protection(mw_page) #retreive protected page mw content
-    # if not interested in protected pages, use: 
-       # content_mw = api_page_content(mw_page) 
+    content_mw = api_page_content(mw_page) 
     if content_mw:    
         content_html = pandoc(content_mw)
         full_html = template(mw_page, content_html, article_template) 
