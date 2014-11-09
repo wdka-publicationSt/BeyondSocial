@@ -49,20 +49,31 @@
           <label><input class="Critique" name="Critique" type="checkbox" value=".Critique" /><p>Critique</p></label>                
 	</div>
 
-	<div class="issueItem" id="issue01">
+	<div class="issueItem" id="issue_0">
           <div class="issue"><p>Issue 00: Testing</p></div>
-	  <ul class="list" id="list_issue0">
-	    <!-- FORMATTING FOR li elements-->    
+	  <ul class="list" id="list_issue_0">
 	  </ul>
 	</div>
 
-          <div class="issue"><p>Issue 01: Redesigning Business</p></div>
-	  <ul class="list" id="list_issue1">
+          <div class="issueItem" id="issue_1"><p>Issue 01: Redesigning Business</p></div>
+	  <ul class="list" id="list_issue_1">
 	  </ul>
 	</div>
+
+      <div class="issueItem" id="issue_2"><p>Issue 02</p></div>
+	  <ul class="list" id="list_issue_1">
+	  </ul>
+	</div>
+
       </div>
-    </div>
+    
   
+
+
+
+
+
+
 
 
 

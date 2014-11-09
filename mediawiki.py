@@ -198,75 +198,96 @@ def api_PublishMe_pages():
 
 
 
+def insert_element(parent_el, insert_el, articles_dict, article):
+    print 'INSERT ELEMENTS'
+    child_li = ET.SubElement(parent_el, insert_el)
+    child_li.set('data-name', article )
+    child_li.set('data-touched', articles_dict[article]['touched'])
+    child_li.set('data-section', articles_dict[article]['section'] )
+    child_li.set('data-issue', articles_dict[article]['issue'] )
+    all_categories = articles_dict[article]['topic']
+    all_categories.append( articles_dict[article]['issue'])
+    all_categories.append(articles_dict[article]['section'])
+    all_categories = " ".join(all_categories)
+    child_li.set('class', all_categories )
+    child_li.set('data-categories', all_categories )
+    grandchild_a = ET.SubElement(child_li, 'a')
+    grandchild_a.text = article
+    grandchild_a.set('href', 'html_articles/'+((article.split('/'))[-1])+'.html' )
+#    print ET.tostring(child_li)
 
+def update_element(tree, update_el_xpath, update_el, update):
+    to_beupdated_el = tree.find(update_el_xpath)
+    to_beupdated_el.set(update_el, update)
 
-
-
-
-
-def edit_index( articles_dict, index_path ): 
+def edit_index(articles_dict, index_path ): 
     ''' Compares articles_dictionary with the index file 
     if there are new articles in mediawiki:
     def adds them to index file, and triggers the creation of the content file for that article (via wiki_2_html def)'''
     index_file = open(index_path, 'r') 
     index_tree = html5lib.parse(index_file, namespaceHTMLElements=False)
     index_items = index_tree.findall('.//ul/li')
+    li_data_name = [ (li.get('data-name')).encode('utf-8') for li in index_items]
+    li_data_touched = [ (li.get('data-touched')).encode('utf-8') for li in index_items]
 
+    print 'data_name', li_data_name
+    print 'data_touched', li_data_touched
+    
     for article in articles_dict.keys():  # compare the api results to the contents of index.html
-        print "***********"
-        print "ARTICLE", article
-        print "***********"
+        if article in li_data_name:
+            article_pos = li_data_name.index(article)
+            print "ARTICLE IN INDEX", article, article_pos
+            # find touched time
+            if li_data_touched[article_pos] != articles_dict[article]['touched']:
+                print "NOT SAME TOUCHED TIME"
+                # update index 
+                touched_time=articles_dict[article]['touched']
+                print 'touched_time', touched_time
+                update_element(index_tree, './/ul/li[@data-name="{}"]'.format(article), 'data-touched', touched_time)
 
 
-# is article in list item?
+                # # find li_data_name item corresponding to article_post
+                # this_li = index_tree.find('.//ul/li[@data-name="{}"]'.format(article))
+                # print 'THIS LI', this_li              
+                # # change data-touched to current
+                # this_li.set('data-touched', touched_time)
 
-    for li in index_items:  # compare the api results to the contents of index.html
-        print "-----------"
-        print "ITEM", item.text 
-        print "-----------"
 
-        if (li.text).replace(" ","_") == item.text:
-            print "existing article item"
+
+##                wiki_2_html(article) # UPDATE Article
+            else:
+                print "SAME TOUCHED TIME" # do nothing
+        else:
+            print "ARTICLE MISSING FROM INDEX", article
+            # add article item to index
+            # FIND UL WHERE THIS ARTICLE BELONGS TO
+            issue = 'list_' + (((articles_dict[article])['issue']).replace(" ","_")).lower()
+            index_ul = index_tree.find('.//ul[@id="'+issue+'"]')
+            insert_element(index_ul, 'li', articles_dict, article) #insert li into ul
+            ##wiki_2_html(article) # ADD Article
+
+#    print ET.tostring(index_tree)
+    write_html_file(ET.tostring(index_tree), 'index.html')
+
+
+    # for li in index_items:  compare the api results to the contents of index.html
+    #     print "-----------"
+    #     print "ITEM", li.get('data-name').text 
+    #     print "-----------"
+    #     print 'li_data_name', li_data_name
+
+    #     if li.get('data-name') not in li_data_name:
+    #         print "missing article item", articles_dict[article]
+
+
+
             # check date 
 
+    #        print "ARTICLE PRESENT:", article, "in position:", article_pos
 
-
-            if index_items_data_touched[article_pos] != articles_dict[article]['touched']:
-                print "NOT SAME TOUCHED TIME"
-#                wiki_2_html(article) # UPDATE
-
-
-            if 
-        else
-            print "missing article item"
-            # add item
-
-'''
-    index_ul = index_tree.findall('.//ul[@class="list"]')
-#    print 'index_ul', index_ul, #ET.tostring(index_ul)
-
-    # seperate <ul></ul> for each issue
-
-    for ul in index_ul: # for all index_ul lists
-        ul_id = ul.get('id').encode('utf-8') # get their id
-#        print 'ul_id' , type(ul_id ), ul_id 
-        for child in list(ul.iter()): # for each li of ul
-            if child.tag == 'li': # check if tag is li
-#                print child.get('id')
-#                print child.tag, ET.tostring(child)
-
-                for article in articles_dict.keys(): # for article in dictionary
-                    issue_n = (( "list_"+articles_dict[article]['issue']).lower()).replace(" ", "0")
-                    if issue_n == ul_id: # if article has same issue as parent ul id
-                        print 'article', article, articles_dict[article]['issue'], ul_id
 
 
 '''
-
-'''
-    index_items_data_name = [ (li.get('data-name')).encode('utf-8') for li in index_items]
-    index_items_data_touched = [ (li.get('data-touched')).encode('utf-8') for li in index_items]
-
 
     for article in articles_dict.keys():  # compare the api results to the contents of index.html
         print "***********"
