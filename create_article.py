@@ -47,7 +47,7 @@ def pandoc(mw_content, pagename, in_section, in_topic, in_issue, in_issuename ):
     mw = open('articles/tmp_content.mw', 'w') 
     mw.write(mw_content.encode('utf-8'))
     mw.close()
-    pandoc = 'pandoc -s -f mediawiki -t html5 --template template_article.html --variable title="{title}" --variable section="{section}" --variable topics="{topics}" --variable issueName="{name}" --variable issueNumber="{issue}" articles/tmp_content.mw -o articles/{htmlfile}.html'.format(title=pagename, section=in_section, topics=in_topic, issueName=in_issuename, issueNumber=in_issue, htmlfile=title)
+    pandoc = 'pandoc -s -f mediawiki -t html5 --template template_article.html --variable title="{title}" --variable section="{section}" --variable topics="{topics}" --variable issueName="{iname}" --variable issueNumber="{inum}" articles/tmp_content.mw -o articles/{htmlfile}.html'.format(title=pagename, section=in_section, topics=in_topic, iname=in_issuename, inum=in_issue, htmlfile=pagename)
     print 'pandoc'
     subprocess.call(pandoc, shell=True) # saved in tmp_content.html html
     html = open('tmp_content.html', 'r') #write mediawiki content to html in tmp_content.html
@@ -59,7 +59,8 @@ def wiki_2_html(mw_page, section , topic, issue):
     html_file = ((mw_page.split('/'))[-1]) + '.html'
     content_mw = api_page_content(mw_page) 
     if content_mw:    
-        issuename = issue_names[int(issue)]
+        issuenumber = int(issue[-1])
+        issuename = issue_names[issuenumber]
         content_html = pandoc(content_mw, mw_page,  section , topic, issue, issuename)
 #        print content_html
 #        full_html = template(mw_page, content_html, article_template) 
@@ -69,6 +70,7 @@ def wiki_2_html(mw_page, section , topic, issue):
 
 for line in sys.stdin.readlines():
     stdin_input = (line.replace("\n","")).split(" ; ")
+    print stdin_input
     article = stdin_input[0]
     issue = stdin_input[1]
     section = stdin_input[2]
