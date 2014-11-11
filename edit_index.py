@@ -104,6 +104,7 @@ def api_PublishMe_pages():
                                             'topic': category_topic,
                                             'section': category_section,
                                             'issue': category_issue,
+                                            'all': [],
                                             } 
     return dict_articles
 
@@ -115,16 +116,18 @@ def insert_element(parent_el, insert_el, articles_dict, article):
     child_li.set('data-touched', articles_dict[article]['touched'])
     child_li.set('data-section', articles_dict[article]['section'] )
     child_li.set('data-issue', articles_dict[article]['issue'] )
-    all_categories = articles_dict[article]['topic']
+    all_categories = articles_dict[article]['all']
     all_categories.append( articles_dict[article]['issue'])
     all_categories.append(articles_dict[article]['section'])
+#    all_categories.append(articles_dict[article]['topic'])
     all_categories = " ".join(all_categories)
     child_li.set('class', all_categories )
     child_li.set('data-categories', all_categories )
     grandchild_a = ET.SubElement(child_li, 'a')
     grandchild_a.text = article
     grandchild_a.set('href', 'articles/'+((article.split('/'))[-1])+'.html' )
-    print article, articles_dict[article]['section']
+    # where is articles_dict being inserted all the categories into the topic key? 
+    print article, ";", (articles_dict[article]['issue']).replace(" ","_"), ";", (articles_dict[article]['section']).replace(" ","_"), ";", " ".join(articles_dict[article]['topic'])
 
     # print ET.tostring(child_li)
 

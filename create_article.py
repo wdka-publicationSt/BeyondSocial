@@ -67,9 +67,13 @@ def wiki_2_html(mw_page, section):
 
 
 for line in sys.stdin.readlines():
-    stdin_input = (line.replace("\n","")).split(" ")
+    stdin_input = (line.replace("\n","")).split(" ; ")
     article = stdin_input[0]
-    section = stdin_input[1]
+    issue = stdin_input[1]
+    section = stdin_input[2]
+    topic = stdin_input[3]
+    
+
     print article, section
     wiki_2_html(article, section) # ADD Article
 
