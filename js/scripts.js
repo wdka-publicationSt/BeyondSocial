@@ -4,6 +4,7 @@ $(document).ready(function(){
   var sectionSpacing = 7
   var thisSAVED;
   var scrollToIssue;
+  var hashOptions = window.location.hash.replace('#', '')
   // var sortAreaOffset = $("#sortArea").offset().top;
   $(window).load(function() {
     var sortAreaOffset = $("#sortArea").offset().top;
@@ -103,28 +104,68 @@ $(document).ready(function(){
 
   setTimeout(function(){
 
+  startfilter = window.location.hash.replace('#', '')
+  startfilterArray = startfilter.split(".")
+  startfilterArray.shift()
+
+  startfilterArray.forEach(function(afilter) {
+      // console.log('//////////////////////////////////////');
+      // console.log(afilter);
+      $('input.'+afilter+'').next("p").toggleClass("underlineFilter")
+      $('input.'+afilter+'').prop('checked', $(this).is(':checked'));
+      $('input.'+afilter+'').prop( "checked", true )
+  });
+
+
+
     if($(window).width()>1024){
 
+
+      $container.isotope({ 
+        itemSelector: 'li',
+        filter: hashOptions
+      })
       calculateSection()
       calculateSectionWide()
-      $container.isotope({
-          itemSelector: 'li'
-      })
 
     }else{
 
+
+      $container.isotope({ 
+        itemSelector: 'li',
+        filter: hashOptions
+      })
+
+      setTimeout(function(){
+        $container.isotope({ 
+          itemSelector: 'li',
+          // filter: hashOptions
+        })
+      },500)
+
+      setTimeout(function(){
+        $container.isotope({ 
+          itemSelector: 'li',
+          // filter: hashOptions
+        })
+      },1000)
+
+      setTimeout(function(){
+        $container.isotope({ 
+          itemSelector: 'li',
+          // filter: hashOptions
+        })
+      },2000)
+
       calculateSection()
       calculateSectionNarrow()
-      $container.isotope({
-          itemSelector: 'li'
-      })
     }
 
     var $checkboxes = $('.themes input');
         
       $checkboxes.change( function() {
-      
 
+      scrollFromTop = $(window).scrollTop()
 
         $container.isotope( 'on', 'layoutComplete', function() {
 
@@ -141,8 +182,11 @@ $(document).ready(function(){
                 calculateSectionNarrow()
 
                 }
+
+
         
         });
+
 
 
           var checkboxesCheck = $('.themes input:checked');
@@ -153,76 +197,97 @@ $(document).ready(function(){
           $('input.'+$(this).attr("class")+'').prop('checked', $(this).is(':checked'));
          
           var exclusives = [];
-          var inclusives = [];
+          //var inclusives = [];
 
           // inclusive filters from checkboxes
           $checkboxes.each( function( i, elem ) {
             // if checkbox, use value if checked
             if ( elem.checked ) {
-              inclusives.push( elem.value );
+              //  inclusives.push( elem.value );
+
               exclusives.push( elem.value );
             }
           });
 
+          //console.log(inclusives)
+          // console.log(exclusives)
           // combine exclusive and inclusive filters
           // first combine exclusives
           exclusives = exclusives.join('');
           
           var filterValue;
-          if ( inclusives.length ) {
-            // map inclusives with exclusives for
-            filterValue = $.map( inclusives, function( value ) {
-              return value + exclusives;
-            });
-            filterValue = filterValue.join(', ');
-          } else {
-            filterValue = exclusives;
-          }
+          filterValue = exclusives;
+          // if ( inclusives.length ) {
+          //   // map inclusives with exclusives for
+          //   filterValue = $.map( inclusives, function( value ) {
+          //     return value + exclusives;
+          //   });
+          //   filterValue = filterValue.join(', ');
+          // } else {
+          //   filterValue = exclusives;
+          // }
+
+          //$.bbq.pushState();
+          //filterValue = filterValue.replace('+', ' ').replace('#', '').replace('=', '')
+          //$.bbq.pushState(filterValue);
+          location.hash = filterValue
+          //hashOptions = window.location.hash.replace('+', ' ').replace('#', '').replace('=', '')
+          hashOptions = window.location.hash.replace('#', '')
+
+            // do not animate first call
+           
+            // apply defaults where no option was specified
+
+        // apply options from hash
+          //$container.isotope( options );
 
           $container.isotope({ 
-            filter: filterValue 
+            itemSelector: 'li',
+            filter: hashOptions
           })
+
 
           if($(window).width()>1024){
 
             setTimeout(function(){
-              $container.isotope({
-                itemSelector: 'li'
+              $container.isotope({ 
+                itemSelector: 'li',
+                // filter: hashOptions
               })
             },500)
 
           }else{
 
             setTimeout(function(){
-              $container.isotope({
-                itemSelector: 'li'
+              $container.isotope({ 
+                itemSelector: 'li',
+                // filter: hashOptions
               })
             },500)
 
             setTimeout(function(){
-              $container.isotope({
-                itemSelector: 'li'
+              $container.isotope({ 
+                itemSelector: 'li',
+                // filter: hashOptions
               })
             },1000)
 
             setTimeout(function(){
-              $container.isotope({
-                itemSelector: 'li'
+              $container.isotope({ 
+                itemSelector: 'li',
+                // filter: hashOptions
               })
             },2000)
 
           }
 
 
+          $(window).scrollTop(scrollFromTop)
 
-
-    });
-
-
-    
+    }); 
 
     $(window).scroll(function(){
-          console.log(sortAreaOffset)
+        // console.log(sortAreaOffset)
         if ($(window).scrollTop() > sortAreaOffset) {
           $("#sortArea").addClass("fixedSort")
           $(".issueWrapper").css({"margin-top":$("#sortArea").outerHeight()+"px"})
@@ -234,14 +299,20 @@ $(document).ready(function(){
     
     });
 
+  // $('input.'+'Politics'+'').next("p").toggleClass("underlineFilter")
+  // $('input.'+'Politics'+'').prop('checked', $(this).is(':checked'));
+
 
   },400);
-
+  
+  sortAreaOffset = $("#sortArea").offset().top
 
   $(window).resize(function(){
 
+    $("html, body").animate({ scrollTop: "0" },200);
+
     sortAreaOffset = $("#sortArea").offset().top
-    console.log(sortAreaOffset)
+    // console.log(sortAreaOffset)
 
     if($(window).width()>1024){
 

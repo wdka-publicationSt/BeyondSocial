@@ -24,62 +24,71 @@ $('document').ready(function() {
 
 		function initLayout(){
 
-			
-			if ($(window).width()>1024 && flip == true){
+			if($('figure').length>0){
 
-				$('.content').removeClass('fullWidth')
-				$('figure').css({"display":"block"})
+				console.log('has images')
 
-				$('.content').before('<div class="attachment"></div>')
+				if ($(window).width()>1024 && flip == true){
 
-				$('figure').appendTo('.attachment')
+					$('.content').removeClass('fullWidth')
+					$('figure').css({"display":"block"})
 
-				$(".attachment").css({"height":$('.content').height()+"px"})
+					$('.content').before('<div class="attachment"></div>')
 
-				$.fn.vAlign = function() {
-						return this.each(function(i){
-					var ah = $(this).height();
-					var ph = $(this).parent().height();
-					var mh = Math.ceil((ph-ah) / ($("figure").length*2));
-					$(this).css('margin-bottom', mh);
-					});
-				};
-			
+					$('figure').appendTo('.attachment')
+
+					$(".attachment").css({"height":$('.content').height()+"px"})
+
+					$.fn.vAlign = function() {
+							return this.each(function(i){
+						var ah = $(this).height();
+						var ph = $(this).parent().height();
+						var mh = Math.ceil((ph-ah) / ($("figure").length*2));
+						$(this).css('margin-bottom', mh);
+						});
+					};
 				
-				$('.content').show()
-				$(".attachment figure").vAlign()
+					
+					$('.content').show()
+					$(".attachment figure").vAlign()
 
-				flip = false
-			} 
+					flip = false
+				} 
 
-			if ($(window).width()<=1024 && flip == false){
-				
-				$('.attachment').remove()
-				$('.content').html(savedContent)
-				$('.content').addClass('fullWidth')
-				$('figure').css({"display":"inline"})
-				$('.content').show()
-	
+				if ($(window).width()<=1024 && flip == false){
+					
+					$('.attachment').remove()
+					$('.content').html(savedContent)
+					$('.content').addClass('fullWidth')
+					$('figure').css({"display":"inline"})
+					$('.content').show()
+		
+					flip = true
+				} 
 
-
-				flip = true
-			} 
-
-			// else {
-			// 	//flip = true;
-			// 	console.log("smallllllller than")
-			// 	console.log(flip)
-			// 	$('.attachment').remove()
-			// 	$('.content').html(savedContent)
-			// 	$('.content').addClass('fullWidth')
-			// 	$('.content').show()
-				
-			// }	
+				// else {
+				// 	//flip = true;
+				// 	console.log("smallllllller than")
+				// 	console.log(flip)
+				// 	$('.attachment').remove()
+				// 	$('.content').html(savedContent)
+				// 	$('.content').addClass('fullWidth')
+				// 	$('.content').show()
+					
+				// }	
 
 
-			$('figcaption').each(function(){
-					$(this).css({"width":$(this).prev().width()+"px"})
-			})
+				$('figcaption').each(function(){
+						$(this).css({"width":$(this).prev().width()+"px"})
+				})
+
+			}
+
+			else{
+
+				$('.content').css({"width":"100%","display":"block"})
+			}
+
 		}
 		
 
