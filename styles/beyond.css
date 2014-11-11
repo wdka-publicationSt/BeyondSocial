@@ -168,7 +168,7 @@ body {
 	font-size: 40px;
 	color: rgba(200, 0, 0, 1);
 	margin: 5%;
-	background-color: rgba(238, 239, 228, 1);
+	background-color: rgba(240, 240, 240, 1);
 }
 
 .intro {
@@ -409,7 +409,7 @@ a.arrow:hover {
 	width: 100%;
 	padding-bottom: 20px;
 	padding-top: 20px;
-	background-color: rgba(238, 239, 228, 1);
+	background-color: rgba(240, 240, 240, 1);
 	z-index: 11111111;
 }
 
@@ -429,7 +429,7 @@ a.arrow:hover {
 	width: 100%;
 	padding-bottom: 20px;
 	padding-top: 20px;
-	background-color: rgba(238, 239, 228, 1);
+	background-color: rgba(240, 240, 240, 1);
 	z-index: 11111111;
 	overflow: hidden;
 }
