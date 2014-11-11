@@ -14,7 +14,7 @@ import sys, os, pprint
 sid = '1234'
 useragent = "Mozilla/5.001 (windows; U; NT4.0; en-US; rv:1.0) Gecko/25250101"
 endpoint = "http://beyond-social.org/wiki/api.php?format=json&"
-
+issue_names = ["Test", "Beyond Social"] 
 
 def api_page(pagename, info):
     if info == 'content':        
@@ -42,24 +42,25 @@ def api_page_content(pagename):
 
 
 
-def pandoc(mw_content, title, section):
+def pandoc(mw_content, pagename, in_section, in_topic, in_issue, in_issuename ):
     '''uses pandoc to convert mediawiki syntax to html'''
     mw = open('articles/tmp_content.mw', 'w') 
     mw.write(mw_content.encode('utf-8'))
     mw.close()
-    pandoc = 'pandoc -s -f mediawiki -t html5 --template template_article.html --variable title="{t}" --variable section="{s}" --variable topics="{top}" --variable issueName="{iNa}" --variable issueNumber="{iNu}" articles/tmp_content.mw -o articles/{htmlfile}.html'.format(t=title, s=section, htmlfile=title)
+    pandoc = 'pandoc -s -f mediawiki -t html5 --template template_article.html --variable title="{title}" --variable section="{section}" --variable topics="{topics}" --variable issueName="{name}" --variable issueNumber="{issue}" articles/tmp_content.mw -o articles/{htmlfile}.html'.format(title=pagename, section=in_section, topics=in_topic, issueName=in_issuename, issueNumber=in_issue, htmlfile=title)
     print 'pandoc'
     subprocess.call(pandoc, shell=True) # saved in tmp_content.html html
     html = open('tmp_content.html', 'r') #write mediawiki content to html in tmp_content.html
     html = html.read()
     return html
 
-def wiki_2_html(mw_page, section): 
+def wiki_2_html(mw_page, section , topic, issue): 
     '''convert wiki pages to html files'''
     html_file = ((mw_page.split('/'))[-1]) + '.html'
     content_mw = api_page_content(mw_page) 
     if content_mw:    
-        content_html = pandoc(content_mw, mw_page, section)
+        issuename = issue_names[int(issue)]
+        content_html = pandoc(content_mw, mw_page,  section , topic, issue, issuename)
 #        print content_html
 #        full_html = template(mw_page, content_html, article_template) 
 #       edit_html_media(full_html , endpoint, html_file)
@@ -75,7 +76,7 @@ for line in sys.stdin.readlines():
     
 
     print article, section
-    wiki_2_html(article, section) # ADD Article
+    wiki_2_html(article, section , topic, issue) # ADD Article
 
 
 
