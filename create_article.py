@@ -47,7 +47,7 @@ def pandoc(mw_content, title, section):
     mw = open('articles/tmp_content.mw', 'w') 
     mw.write(mw_content.encode('utf-8'))
     mw.close()
-    pandoc = 'pandoc -s -f mediawiki -t html5 --template template_article.html --variable title="{t}" --variable section="{s}" articles/tmp_content.mw -o articles/{htmlfile}.html'.format(t=title, s=section, htmlfile=title)
+    pandoc = 'pandoc -s -f mediawiki -t html5 --template template_article.html --variable title="{t}" --variable section="{s}" --variable issue="{i}" articles/tmp_content.mw -o articles/{htmlfile}.html'.format(t=title, s=section, htmlfile=title)
     print 'pandoc'
     subprocess.call(pandoc, shell=True) # saved in tmp_content.html html
     html = open('tmp_content.html', 'r') #write mediawiki content to html in tmp_content.html
