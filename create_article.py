@@ -1,12 +1,8 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys
+import sys, urllib2, json, subprocess
 
-import xml.etree.ElementTree as ET
-import html5lib
-import urllib, urllib2, json, subprocess
-import sys, os, pprint
 
 #import edit_html #  
 #from edit_html import edit_html_media
