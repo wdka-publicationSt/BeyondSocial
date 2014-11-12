@@ -1,5 +1,16 @@
-# Beyond Social
-## From Wiki To Front-end
+# Beyond Social:  from wiki To front-end
+
+## clone this git
+`git clone https://gitlab.com/Castro0o/beyond-social.git`
+Files will be kept inside beyond-social/ directory.
+
+**On server:** 
+`cd beyond-social.org/html`
+
+Run: `./copy2parentdir.sh` - it will copy the html,js,css to ../beyond-social/
+
+
+## scripts
 Uses the following scripts:
 * `edit_index.py` - responsible for updating the index with wiki articles tagged: 04_Publish_Me
 * `create_articles.py` - generates the html files mentioned in index
