@@ -155,7 +155,9 @@ def edit_index(articles_dict, index_path ):
 #                print "NOT SAME TOUCHED TIME", "update index"
                 touched_time=articles_dict[article]['touched']
                 section = update_element(index_tree, './/ul/li[@data-name="{}"]'.format(article), 'data-touched', touched_time)
-                print article, section
+                print article, ";", (articles_dict[article]['issue']).replace(" ","_"), ";", (articles_dict[article]['section']).replace(" ","_"), ";", " ".join(articles_dict[article]['topic'])
+
+
 
         else:
 #            print "ARTICLE MISSING FROM INDEX", article

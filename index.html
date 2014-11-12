@@ -1,13 +1,8 @@
 <!DOCTYPE HTML><html><head>
     <meta charset="utf-8" />
     <meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type" />
-    <!-- Andre: Changed script from self-closing, to open-close tags (w/ "a" as content). 
-	 Selfclosing or empty script mess the parsing
-	 http://stackoverflow.com/questions/69913/why-dont-self-closing-script-tags-work
-	 soemthing to do with xhtml ... 
-	 And why does that break the html page -->
 
-    <script src="./js/jquery-1.11.1.min.js" type="text/javascript">a</script>
+    <script src="./js/jquery-1.11.1.min.js" type="text/javascript">a</script> <!--@Andre: Keep "a"s wrapped by script-->
     <script src="./js/isotope.js" type="text/javascript">a</script>
     <script src="./js/scripts.js" type="text/javascript">a</script>
 
@@ -17,78 +12,87 @@
     <title> Beyond social: Redesigning business </title>
   </head>
   <body>
-	    <div id="BeyondHeader">
-	      <div class="top">
-	        <div class="title-beyond">
+    <div id="BeyondHeader">
+      <div class="top">
+        <div class="title-beyond">
+          Beyond<br />Social
+        </div>
 
-	          <h1>Beyond<br>Social</h1>
-	          <!-- <p>Online Magazine Investigating Social Art and Design</p> -->
-	          <p>Online Magazine<br>Investigating<br>Social Art and Design</p>
-	        </div>
-	      </div>
+	<div class="intro">
+          <p>
+	    <i>Beyond Social</i> ...</p>
+	</div>  
 
-	      <div class="intro">
-	        <p>Beyond Social is an international and collaborative research and publishing platform developed by the Social Practices and the Publication Station of the Willem de Kooning Academy, Rotterdam University of Applied Sciences. This magazine is an international and collaborative research and publishing platform; a pacesetter for creators of the social practice.  </p>
-	       </div>  
+      </div>
 
-	    </div>
+      <br />
+      <div class="issueWrapper">
 
-      	<div class="issueWrapper">
+	<label>
+	<div class="themes" id="sortArea">
+          <label>
+	    <p>Sort: </p> </label>
+          <label>
+	    <input class="Aesthetics" name="Aesthetics" type="checkbox" value=".Aesthetics" />
+	    <p>Aesthetics</p>
+	  </label>
+          <label>
+	    <input class="Bottom-up" name="Bottom-up" type="checkbox" value=".Bottom-up" />
+	    <p>Bottom-up</p>
+	  </label>
+          <label>
+	    <input class="Economics" name="Economics" type="checkbox" value=".Economics" />
+	    <p>Economics</p>
+	  </label>
+          <label>
+	    <input class="Failures" name="Failures" type="checkbox" value=".Failures" />
+	    <p>Failures</p>
+	  </label>
+          <label>
+	    <input class="Participation" name="Participation" type="checkbox" value=".Participation" />
+	    <p>Participation</p>
+	  </label>
+          <label>
+	    <input class="Politics" name="Politics" type="checkbox" value=".Politics" />
+	    <p>Politics</p>
+	  </label>
+          <label>
+	    <input class="Business" name="Business" type="checkbox" value=".Business" />
+	    <p>Business</p>
+	  </label>
+          <label>
+	    <input class="Transformation" name="Transformation" type="checkbox" value=".Transformation" />
+	    <p>Transformation</p>
+	  </label>
+          <label>
+	    <input class="Visions" name="Visions" type="checkbox" value=".Visions" />
+	    <p>Visions</p>
+	  </label>   
+	</div>
 
-			<div id="sortArea" class="themes">
-				<label><p>Topics: </p></label>
-				<label><input name="Strategies" class="Strategies" value=".Strategies" type="checkbox"><p>Strategies</p></label>
-				<label><input name="Participation" class="Participation" value=".Participation" type="checkbox"><p>Participation</p></label>
-				<label><input name="Politics" class="Politics" value=".Politics" type="checkbox"><p>Politics</p></label>
-				<label><input name="Bottom-up" class="Bottom-up" value=".Bottom-up" type="checkbox"><p>Bottom-up</p></label>
-				<label><input name="Transformation" class="Transformation" value=".Transformation" type="checkbox"><p>Transformation</p></label>
-				<label><input name="Visions" class="Visions" value=".Visions" type="checkbox"><p>Visions</p></label>
-				<label><input name="Economics" class="Economics" value=".Economics" type="checkbox"><p>Economics</p></label>
-				<label><input name="Aesthetics" class="Aesthetics" value=".Aesthetics" type="checkbox"><p>Aesthetics</p></label>
-				<label><input name="Failures" class="Failures" value=".Failures" type="checkbox"><p>Failures</p></label>                
-			</div>
+	<div class="issueItem" id="issue_0">
+          <div class="issue">
+	    <p>Issue 00: Testing</p>
+	  </div>
+	  <ul class="list" id="list_issue_0">
+	  <li class="Issue 0 Discourses" data-categories="Issue 0 Discourses" data-issue="Issue 0" data-name="Test_page_03" data-section="Discourses" data-touched="2014-11-11T21:54:07"><a href="articles/Test_page_03.html">Test_page_03</a></li></ul>
+	</div>
 
-			<div class="issueItem" id="issue_0">
-		    	<div class="issue">
-			    	<p>Issue 00: Testing</p>
-				</div>
-				<ul class="list" id="list_issue_0">
-			  		<li class="Aesthetics Issue 0 Discourses" data-categories="Aesthetics Issue 0 Discourses" data-issue="Issue 0" data-name="Test_page_01" data-section="Discourses" data-touched="2014-11-09T22:41:18"><a href="articles/Test_page_01.html">Test_page_01</a></li>
-			  </ul>
-			</div>
+        <div class="issueItem" id="issue_1">
+	  <p>Issue 01: Redesigning Business</p>
+	</div>
+	<ul class="list" id="list_issue_1">
+	<li class="Issue 1 Proposals" data-categories="Issue 1 Proposals" data-issue="Issue 1" data-name="Test_page_02" data-section="Proposals" data-touched="2014-11-11T18:49:26"><a href="articles/Test_page_02.html">Test_page_02</a></li><li class="Issue 1 Introduction" data-categories="Issue 1 Introduction" data-issue="Issue 1" data-name="Lexicon" data-section="Introduction" data-touched="2014-11-11T19:24:56"><a href="articles/Lexicon.html">Lexicon</a></li></ul>
 
-		    <div class="issueItem" id="issue_1">
-			    <div class="issue">
-				  <p>Issue 01: Redesigning Business</p>
-				</div>
-				<ul class="list" id="list_issue_1">
-					<li class="Aesthetics Visions Issue 1 Proposals" data-categories="Aesthetics Visions Issue 1 Proposals" data-issue="Issue 1" data-name="Test_page_02" data-section="Proposals" data-touched="2014-11-09T16:05:15"><a href="articles/Test_page_02.html">Test_page_02</a></li>
-				</ul>
-			</div>
+      </label></div>
 
-		    <div class="issueItem" id="issue_2">
-		    	<div class="issue">
-					<p>Issue 02</p>
-		      	</div>
-		    	<ul class="list" id="list_issue_1">
-		      
-		    	</ul>
-		    </div>
-		</div>
+      <div class="issueItem" id="issue_2">
+	<p>Issue 02</p>
+      </div>
+      <ul class="list" id="list_issue_1">
+      </ul>
+    </div>
 
-	    <div id="BeyondFooter">
-	      <div class="top">
-	      </div>
 
-	      <div class="intro">
-	        <p>
-	          <b>Initiative:</b> Iris Schutten, Social Practices WdKA
-	          <b>Web Development:</b> André Castro, Publication Station WdKA
-	          <b>Visual Design/Web Development:</b> Marlon Harder & Lasse van den Bosch Christnesen, TEMPLATE
-	          <b>Contact:</b> Iris Schutten / Deanna Herst contact@beyond-social.org 
-	        </p>
-	       </div>  
-
-	    </div>
 
 </body></html>

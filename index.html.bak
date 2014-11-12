@@ -1,13 +1,8 @@
 <!DOCTYPE HTML><html><head>
     <meta charset="utf-8" />
     <meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type" />
-    <!-- Andre: Changed script from self-closing, to open-close tags (w/ "a" as content). 
-	 Selfclosing or empty script mess the parsing
-	 http://stackoverflow.com/questions/69913/why-dont-self-closing-script-tags-work
-	 soemthing to do with xhtml ... 
-	 And why does that break the html page -->
 
-    <script src="./js/jquery-1.11.1.min.js" type="text/javascript">a</script>
+    <script src="./js/jquery-1.11.1.min.js" type="text/javascript">a</script> <!--@Andre: Keep "a"s wrapped by script-->
     <script src="./js/isotope.js" type="text/javascript">a</script>
     <script src="./js/scripts.js" type="text/javascript">a</script>
 
@@ -25,7 +20,7 @@
 
 	<div class="intro">
           <p>
-	    <i>Beyond Social</i> of the site must register and create a personal online profi</p>
+	    <i>Beyond Social</i> ...</p>
 	</div>  
 
       </div>
@@ -34,56 +29,45 @@
       <div class="issueWrapper">
 
 	<label>
-	  <!-- Andre: Not sure what this is so, commented 
-	  <input class="{CATEGORY NAME}" name="{CATEGORY NAME}" type="checkbox" value=".{CATEGORY NAME}" />
-	  <p>{CATEGORY NAME}</p>
-	</label>
-	-->
-
 	<div class="themes" id="sortArea">
-	  REPLACE W/ NEW TOPICS
           <label>
 	    <p>Sort: </p> </label>
           <label>
-	    <input class="Design" name="Design" type="checkbox" value=".Design" />
-	    <p>Design</p>
+	    <input class="Aesthetics" name="Aesthetics" type="checkbox" value=".Aesthetics" />
+	    <p>Aesthetics</p>
 	  </label>
           <label>
-	    <input class="Economy" name="Economy" type="checkbox" value=".Economy" />
-	    <p>Economy</p>
+	    <input class="Bottom-up" name="Bottom-up" type="checkbox" value=".Bottom-up" />
+	    <p>Bottom-up</p>
 	  </label>
           <label>
-	    <input class="Social" name="Social" type="checkbox" value=".Social" />
-	    <p>Social</p>
+	    <input class="Economics" name="Economics" type="checkbox" value=".Economics" />
+	    <p>Economics</p>
 	  </label>
           <label>
-	    <input class="Technology" name="Technology" type="checkbox" value=".Technology" />
-	    <p>Technology</p>
+	    <input class="Failures" name="Failures" type="checkbox" value=".Failures" />
+	    <p>Failures</p>
 	  </label>
           <label>
-	    <input class="Utopia" name="Utopia" type="checkbox" value=".Utopia" />
-	    <p>Utopia</p>
+	    <input class="Participation" name="Participation" type="checkbox" value=".Participation" />
+	    <p>Participation</p>
 	  </label>
           <label>
-	    <input class="Crisis" name="Crisis" type="checkbox" value=".Crisis" />
-	    <p>Crisis</p>
+	    <input class="Politics" name="Politics" type="checkbox" value=".Politics" />
+	    <p>Politics</p>
 	  </label>
           <label>
 	    <input class="Business" name="Business" type="checkbox" value=".Business" />
 	    <p>Business</p>
 	  </label>
           <label>
-	    <input class="Change" name="Change" type="checkbox" value=".Change" />
-	    <p>Change</p>
+	    <input class="Transformation" name="Transformation" type="checkbox" value=".Transformation" />
+	    <p>Transformation</p>
 	  </label>
           <label>
-	    <input class="Value" name="Value" type="checkbox" value=".Value" />
-	    <p>Value</p>
+	    <input class="Visions" name="Visions" type="checkbox" value=".Visions" />
+	    <p>Visions</p>
 	  </label>   
-          <label>
-	    <input class="Critique" name="Critique" type="checkbox" value=".Critique" />
-	    <p>Critique</p>
-	  </label>                
 	</div>
 
 	<div class="issueItem" id="issue_0">

@@ -2,12 +2,22 @@
 
 ## clone this git
 `git clone https://gitlab.com/Castro0o/beyond-social.git`
-Files will be kept inside beyond-social/ directory.
+Files will be kept inside beyond-social.org/html/beyond-social
 
-**On server:** 
-`cd beyond-social.org/html`
+You can now make git pull from within beyond-social.org/html/beyond-social to keep your cloned repository updated. 
+@Template: You cannot do `git push` from the server, only from you own machine!
 
-Run: `./copy2parentdir.sh` - it will copy the html,js,css to ../beyond-social/
+The workflow shall be:
+* Work on you local machine
+* Push from local machine to Gitlab
+* In the server: Pull updates 
+
+## Update index and articles
+`./update.sh`
+It will:
+* run python scripts to update index and articles
+* copy the html,js,css to ../beyond-social/
+
 
 
 ## scripts
