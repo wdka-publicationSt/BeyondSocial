@@ -2,17 +2,7 @@
 # -*- coding: utf-8 -*-
 
 ##############
-# TO DO
-# bulding index
-# 
-#
-# place index.html.bak in git
-
-
-# wiki_2_html(article)  # TO BE DEALT WITH 
-#
-# Bugs 
-# iframe creation in youtube tag
+# Edit the index sorting articles according to topic, section and issue
 #####
 
 #
@@ -23,8 +13,8 @@ sid = '1234'
 useragent = "Mozilla/5.001 (windows; U; NT4.0; en-US; rv:1.0) Gecko/25250101"
 endpoint = "http://beyond-social.org/wiki/api.php?format=json&"
 
-category_topic = ['Aesthetics', 'Bottom-up', 'Economics', 'Failures', 'Participation', 'Politics', 'Strategies', 'Transformation', 'Visions']
-category_section = ['Discourses', 'Introduction', 'Projects', 'Proposals' ]
+category_topic = ['Aesthetics', 'Bottom-up', 'Economics', 'Failures', 'Participation', 'Politics', 'Strategies', 'Transformation', 'Visions', 'Technology']
+category_section = ['Discourse', 'Introduction', 'Projects', 'Proposals' ]
 category_state = [ '01 Write Me', '02 Edit Me', '03 Proof Me', '04 Publish Me']
 
 
@@ -61,6 +51,7 @@ def api_categoriesFromPage(page):
     query = 'action=query&titles={}&prop=categories'.format(page)
     url = endpoint + query
     request = urllib2.urlopen(url)
+#    issue="Issue 2"
 #    print
 #    print 'categories',url
 #    print
@@ -70,11 +61,13 @@ def api_categoriesFromPage(page):
     page_categories = json_dic[page_id][u'categories']
     for entry in page_categories:
         category =  (entry[u'title'].encode('utf-8')).replace('Category:', '')
+        print category
         if category in category_topic:
             topic.append(category)
         elif category in category_section:
             section = category
-        elif 'Issue'in category:
+        elif 'Issue' in category:            
+#            print "ISSUE" ## ERROR
             issue = category
     return (topic, section, issue)
 
