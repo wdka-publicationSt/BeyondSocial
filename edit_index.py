@@ -110,11 +110,16 @@ def insert_element(parent_el, insert_el, articles_dict, article):
     child_li.set('data-touched', articles_dict[article]['touched'])
     child_li.set('data-section', articles_dict[article]['section'] )
     child_li.set('data-issue', articles_dict[article]['issue'] )
+    keys = articles_dict[article].keys()
+#    all_categories = [item for item in keys if item in  ]
     all_categories = articles_dict[article]['all']
-    all_categories.append( articles_dict[article]['issue'])
-    all_categories.append(articles_dict[article]['section'])
-    for entry in articles_dict[article]['topic']:
-        all_categories.append(entry)
+    categories = ['issue', 'section', 'topic'] 
+    for item in categories:
+        if type(articles_dict[article][item]) is str:
+            all_categories.append(articles_dict[article][item])
+        elif type(articles_dict[article][item]) is list:
+            for entry in articles_dict[article][item]:
+                all_categories.append(entry)
     all_categories = " ".join(all_categories)
     child_li.set('class', all_categories )
     child_li.set('data-categories', all_categories )
