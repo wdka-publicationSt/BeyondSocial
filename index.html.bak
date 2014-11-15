@@ -68,6 +68,11 @@
 	    <input class="Visions" name="Visions" type="checkbox" value=".Visions" />
 	    <p>Visions</p>
 	  </label>   
+          <label>
+	    <input class="Technology" name="Technology" type="checkbox" value=".Technology" />
+	    <p>Technology</p>
+	  </label>   
+
 	</div>
 
 	<div class="issueItem" id="issue_0">

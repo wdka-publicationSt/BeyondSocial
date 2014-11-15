@@ -7,7 +7,7 @@
 
 #
 import xml.etree.ElementTree as ET
-import html5lib, urllib2, json
+import html5lib, urllib2, json, pprint
 
 sid = '1234'
 useragent = "Mozilla/5.001 (windows; U; NT4.0; en-US; rv:1.0) Gecko/25250101"
@@ -61,7 +61,6 @@ def api_categoriesFromPage(page):
     page_categories = json_dic[page_id][u'categories']
     for entry in page_categories:
         category =  (entry[u'title'].encode('utf-8')).replace('Category:', '')
-        print category
         if 'Issue' in category:  
             issue = category          
         elif category in category_topic:
@@ -114,7 +113,8 @@ def insert_element(parent_el, insert_el, articles_dict, article):
     all_categories = articles_dict[article]['all']
     all_categories.append( articles_dict[article]['issue'])
     all_categories.append(articles_dict[article]['section'])
-#    all_categories.append(articles_dict[article]['topic'])
+    for entry in articles_dict[article]['topic']:
+        all_categories.append(entry)
     all_categories = " ".join(all_categories)
     child_li.set('class', all_categories )
     child_li.set('data-categories', all_categories )
