@@ -62,13 +62,15 @@ def api_categoriesFromPage(page):
     for entry in page_categories:
         category =  (entry[u'title'].encode('utf-8')).replace('Category:', '')
         print category
-        if category in category_topic:
+        if 'Issue' in category:  
+            issue = category          
+        elif category in category_topic:
             topic.append(category)
         elif category in category_section:
             section = category
-        elif 'Issue' in category:            
-#            print "ISSUE" ## ERROR
-            issue = category
+    # print 'issue:', issue
+    # print (topic, section, issue)        
+    # print
     return (topic, section, issue)
 
 
