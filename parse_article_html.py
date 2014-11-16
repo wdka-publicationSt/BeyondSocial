@@ -56,6 +56,7 @@ def replace_youtube(parent, youtube_id):
 def replace_anchor_img(parent):
     for anchor in parent.findall('.//a'):
         if re.findall(regex_img, anchor.text):
+            ## ERRor with Empty figures
             parent.remove(anchor)
             figure = ET.SubElement(parent, 'figure', {"id":"test"}) 
             ET.SubElement(figure, 'img', {"src": anchor.text } )
