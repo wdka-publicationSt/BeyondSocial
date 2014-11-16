@@ -75,14 +75,6 @@
 
 	</div>
 
-	<div class="issueItem" id="issue_0">
-          <div class="issue">
-	    <p>Issue 00: Testing</p>
-	  </div>
-	  <ul class="list" id="list_issue_0">
-	  <li class="Issue 0 Proposals Aesthetics" data-categories="Issue 0 Proposals Aesthetics" data-issue="Issue 0" data-name="I'm_not_a_Robot" data-section="Proposals" data-touched="2014-11-15T21:31:37"><a href="articles/I'm_not_a_Robot.html">I'm_not_a_Robot</a></li><li class="Issue 0 Discourse Aesthetics Technology" data-categories="Issue 0 Discourse Aesthetics Technology" data-issue="Issue 0" data-name="Test_page_03" data-section="Discourse" data-touched="2014-11-15T20:14:05"><a href="articles/Test_page_03.html">Test_page_03</a></li></ul>
-	</div>
-
         <div class="issueItem" id="issue_1">
 	  <p>Issue 01: Redesigning Business</p>
 	</div>
