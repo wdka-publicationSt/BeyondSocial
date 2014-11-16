@@ -1,12 +1,10 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 #################
-##  imported by mediawiki.py 
 ##  MODIFY THE HTML OUTPUT TO BE DISPLAYED IN THE BROWSER
 ###########
 from xml.etree import ElementTree as ET
 import urllib2, json, html5lib, sys, re
-import pprint
 
 sid = '1234'
 useragent = "Mozilla/5.001 (windows; U; NT4.0; en-US; rv:1.0) Gecko/25250101"
@@ -41,16 +39,15 @@ def video_tag(url, extension):
 
 
 def replace_img(parent):
-    img = parent.findall('.//figure/img')[0]
-    src = img.get('src')
-    fileurl = api_file_url(src, endpoint)# find url of file
-    if fileurl != None:            
-        print 'fileurl', fileurl
-        img.set('src', fileurl)
+    imgs = parent.findall('.//figure/img')
+    for img in imgs:
+        src = img.get('src')
+        fileurl = api_file_url(src, endpoint)# find url of file
+        if fileurl != None:            
+            img.set('src', fileurl)
 
-def replace_youtube(parent): 
+def replace_youtube(parent, youtube_id): 
     youtube = parent.findall('.//youtube')[0]
-    youtube_id = youtube.text
     youtube.text=""
     youtube_url = "http://www.youtube.com/embed/{}".format(youtube_id)
     ET.SubElement(parent, 'iframe', {"width":"560", "height":"315", "frameborder": "0", "allowfullscreen": "allowfullscreen", "src": youtube_url})
@@ -63,13 +60,10 @@ def replace_anchor_img(parent):
             figure = ET.SubElement(parent, 'figure', {"id":"test"}) 
             ET.SubElement(figure, 'img', {"src": anchor.text } )
 
-
-
-
-def replace_av(parent):    
+def replace_av(parent, tree):    
     for figure in parent.findall('.//figure'):
         if figure.findall('.//embed'):
-            print 'figure', ET.tostring(figure)
+#            print 'figure', ET.tostring(figure)
             embed=figure.findall('.//embed')[0]
             src = embed.get('src')
             extension = (src.split("."))[-1]
@@ -77,14 +71,16 @@ def replace_av(parent):
             title = embed.get('tilte')
 
             if extension in ['mp4', 'ogv', 'webm']:
-                video = ET.SubElement(parent, 'video', {"controls":"controls", "preload": "metadata", "width": "100%", "src": fileurl} ) 
-                paragraph = ET.SubElement(parent, 'p', {"class": "av"})
+                div =  ET.SubElement(parent, 'div', {"width": "100%", "class": "av"} ) 
+                video = ET.SubElement(div, 'video', {"controls":"controls", "preload": "metadata", "width": "100%", "src": fileurl} ) 
+                paragraph = ET.SubElement(div, 'p', {"class": "av"})
                 link = ET.SubElement(paragraph, 'a',  {"href":fileurl} ) 
                 link.text = "Download video"
 
             elif extension in ['mp3', 'ogg']:
-                audio = ET.SubElement(parent, 'audio', {"controls":"controls", "preload": "metadata", "width": "100%", "src": fileurl} ) 
-                paragraph = ET.SubElement(parent, 'p', {"class": "av"})
+                div =  ET.SubElement(parent, 'div', {"width": "100%", "class": "av"} ) 
+                audio = ET.SubElement(div, 'audio', {"controls":"controls", "preload": "metadata", "width": "100%", "src": fileurl} ) 
+                paragraph = ET.SubElement(div, 'p', {"class": "av"})
                 link = ET.SubElement(paragraph, 'a',  {"href":fileurl} ) 
                 link.text = "Download audio"
 
@@ -94,19 +90,21 @@ def replace_av(parent):
 def edit_article( article_path ): 
     htmlfile = open(article_path, 'r') 
     tree = html5lib.parse(htmlfile, namespaceHTMLElements=False)
-    #print ET.tostring(tree)
+
     content = tree.findall('.//div[@class="content"]')[0]
+
     for figure in content.findall('.//figure'):
-        if figure.findall('.//img'):
+        if figure.findall('.//img'):            
+            print 'Replacing image'
             replace_img(content)
         elif figure.findall('.//embed'):
-            print 'embed found'
-            replace_av(content)
+            replace_av(content, tree)
                     
     for p in content.findall('.//p'): 
         if p.findall('.//youtube'):
-            print 'youtube found'
-            replace_youtube(p)
+            youtube_id = (p.findall('.//youtube')[0]).text
+#            print 'youtube found', youtube_id , len(p.findall('.//youtube'))
+            replace_youtube(p, youtube_id )
         if p.findall('.//a'): # EXTERNAL IMAGES
             replace_anchor_img(p)
                 
@@ -120,32 +118,32 @@ def edit_article( article_path ):
 
 
 
-def edit_html_media(page, api_endpoint, output_filename): #(pagename)
-    tree = html5lib.parse(page, namespaceHTMLElements=False)
-    for img in tree.findall('.//img'): # images
-        src = img.get('src')
-        url = api_file_url(src, api_endpoint)# find url of file
-        img.set('src', url)
-    for p in tree.findall('.//p'): # youtube       
-        for child in list(p):
-            if child.tag == 'youtube':
-                print '---- ---- youtube  ---- ----'
-                print  ET.tostring(child)
-                print
-                youtube_id = child.text
-                youtube_url = "http://www.youtube.com/embed/{}".format(youtube_id)
-                ET.SubElement(p, 'iframe', 
-                              {"width":"560", "height":"315", "frameborder": "0", "allowfullscreen": "allowfullscreen", "src": youtube_url})
-    # WRITE FILE
-    doctype = "<!DOCTYPE HTML>"
-    html = doctype + ET.tostring(tree,  encoding='utf-8', method='html')
-    edited = open('html_articles/' + output_filename, 'w') #write
-    edited.write(html)
-    edited.close()
+# def edit_html_media(page, api_endpoint, output_filename): #(pagename)
+#     tree = html5lib.parse(page, namespaceHTMLElements=False)
+#     for img in tree.findall('.//img'): # images
+#         src = img.get('src')
+#         url = api_file_url(src, api_endpoint)# find url of file
+#         img.set('src', url)
+#     for p in tree.findall('.//p'): # youtube       
+#         for child in list(p):
+#             if child.tag == 'youtube':
+#                 print '---- ---- youtube  ---- ----'
+#                 print  ET.tostring(child)
+#                 print
+#                 youtube_id = child.text
+#                 youtube_url = "http://www.youtube.com/embed/{}".format(youtube_id)
+#                 ET.SubElement(p, 'iframe', 
+#                               {"width":"560", "height":"315", "frameborder": "0", "allowfullscreen": "allowfullscreen", "src": youtube_url})
+#     # WRITE FILE
 
+#     doctype = "<!DOCTYPE HTML>"
+#     html = doctype + ET.tostring(tree,  encoding='utf-8', method='html')
+#     edited = open('html_articles/' + output_filename, 'w') #write
+#     edited.write(html)
+#     edited.close()
 
-line = sys.stdin.read()
-print line
-article = ("articles/{}".format(line) ).replace("\n", "")
-print article
-edit_article(article)
+for line in sys.stdin.readlines():
+    print line
+    article = (("articles/{}".format(line) ).replace("\n", ""))+".html"
+    print article
+    edit_article(article)

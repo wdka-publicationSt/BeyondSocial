@@ -19,10 +19,9 @@ def api_page(pagename, info):
         url = endpoint + 'action=query&titles={}&prop=info'.format(pagename)
 #        print 'META URL', url
 
-    print url
     request = urllib2.urlopen(url)
     jsonp = json.loads(request.read() )
-    print jsonp
+#    print jsonp
     json_dic= (jsonp.get('query').get('pages'))
     page_id =  json_dic.keys()[0]
     page_content = json_dic.get(page_id)
@@ -39,9 +38,6 @@ def api_page_content(pagename):
 
 
 def pandoc(mw_content, pagename, in_section, in_topic, in_issue, in_issuename ):
-    print 'PAGENAME:', pagename
-    print mw_content
-    print 
     '''uses pandoc to convert mediawiki syntax to html'''
     mw = open('articles/tmp_content.mw', 'w') 
     mw.write(mw_content.encode('utf-8'))
@@ -54,7 +50,6 @@ def pandoc(mw_content, pagename, in_section, in_topic, in_issue, in_issuename ):
 --variable issueName="{iname}" \
 --variable issueNumber="{inum}" \
 "articles/tmp_content.mw" -o "articles/{htmlfile}.html"'.format(title=pagename, section=in_section, topics=in_topic, iname=in_issuename, inum=in_issue, htmlfile=pagename)
-    print 'pandoc'
     subprocess.call(pandoc, shell=True) # saved in tmp_content.html html
     html = open('tmp_content.html', 'r') #write mediawiki content to html in tmp_content.html
     html = html.read()
@@ -76,14 +71,13 @@ def wiki_2_html(mw_page, section , topic, issue):
 
 for line in sys.stdin.readlines():
     stdin_input = (line.replace("\n","")).split(" ; ")
-    print stdin_input
     article = stdin_input[0]
     issue = stdin_input[1]
     section = stdin_input[2]
     topic = stdin_input[3]
     
 
-    print article, section
+    print article
     wiki_2_html(article, section , topic, issue) # ADD Article
 
 
