@@ -81,6 +81,23 @@ input{
   display: none;
 }
 
+.content iframe{
+	margin: 0px auto;
+	display: mome;
+	width: 80% !important;
+	/*height: auto !important;*/
+}
+
+iframe{
+	margin: 0px auto;
+	display: block;
+	width: 100% !important;
+	/*height: auto !important;*/
+}
+
+audio{
+	display: inline-block !important; 
+}
 .section-wide{
 	position: absolute;
 	top: 0px;
@@ -269,6 +286,13 @@ body {
 	margin: 0;
 }
 
+figcaption a:link, figcaption a:visited, figcaption a:active {
+	text-decoration: none;
+	border-bottom: 6px solid rgba(200, 0, 0, 1);
+	color: rgba(200, 0, 0, 1);
+}
+
+
 .attachment figcaption {
 	font-size: 15px;
 	line-height: 25px;
@@ -285,7 +309,10 @@ body {
 	/*max-height: 350px;*/
 	display: block;
 	margin: 0;
+	margin-top: 40px;
 }
+
+
 
 .content figcaption {
 	font-size: 15px;
@@ -293,6 +320,7 @@ body {
 	text-align: left;
 	margin: 0 auto;
 	line-height: 25px;
+	margin-bottom: 40px;
 }
 
 .content img {

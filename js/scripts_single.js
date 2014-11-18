@@ -9,6 +9,13 @@ var savedContent;
 var flip;
 
 $('document').ready(function() {
+
+		$('p.av').each(function(){
+		$(this).replaceWith($('<figcaption>' + this.innerHTML + '</figcaption>'));
+		})
+
+		$('.av').wrap("<figure></figure>")
+		$('iframe').wrap("<figure></figure>")
 	
 		if ($(window).width()>1024){
 			flip = true
@@ -24,6 +31,7 @@ $('document').ready(function() {
 
 		function initLayout(){
 
+			//if($('figure').length>0 || $('.av').length>0 || $('iframe').length>0){
 			if($('figure').length>0){
 
 				console.log('has images')
@@ -45,7 +53,7 @@ $('document').ready(function() {
 						var ph = $(this).parent().height();
 						var mh = Math.ceil((ph-ah) / ($("figure").length*2));
 						$(this).css('margin-bottom', mh);
-						});
+						});	
 					};
 				
 					
@@ -60,7 +68,9 @@ $('document').ready(function() {
 					$('.attachment').remove()
 					$('.content').html(savedContent)
 					$('.content').addClass('fullWidth')
-					$('figure').css({"display":"inline"})
+					// $('figure').css({"display":"inline"})
+					//$('audio').css({"display":"inline"})
+					//$('iframe').css({"display":"inline"})
 					$('.content').show()
 		
 					flip = true
