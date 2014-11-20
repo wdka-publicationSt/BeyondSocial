@@ -96,7 +96,7 @@ def edit_article( article_path ):
 
     for figure in content.findall('.//figure'):
         if figure.findall('.//img'):            
-            print 'Replacing image'
+#            print 'Replacing image'
             replace_img(content)
         elif figure.findall('.//embed'):
             replace_av(content, tree)
@@ -113,7 +113,7 @@ def edit_article( article_path ):
     doctype = "<!DOCTYPE html>"
     html = doctype + ET.tostring(tree,  encoding='utf-8', method='html')
     edited = open(article_path, 'w') #write
-    print edited
+#    print edited
     edited.write(html)
     edited.close()
 
@@ -144,7 +144,7 @@ def edit_article( article_path ):
 #     edited.close()
 
 for line in sys.stdin.readlines():
-    print line
+#    print line
     article = (("articles/{}".format(line) ).replace("\n", ""))+".html"
-    print article
+#    print article
     edit_article(article)
