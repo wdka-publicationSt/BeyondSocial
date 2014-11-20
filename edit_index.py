@@ -7,7 +7,7 @@
 
 #
 import xml.etree.ElementTree as ET
-import html5lib, urllib2, json, pprint
+import html5lib, urllib2, json, pprint, subprocess
 
 sid = '1234'
 useragent = "Mozilla/5.001 (windows; U; NT4.0; en-US; rv:1.0) Gecko/25250101"
@@ -141,6 +141,10 @@ def edit_index(articles_dict, index_path ):
     ''' Compares articles_dicti with the index.html file 
     if there are new articles or updates in wiki:
     def adds them to index file, and triggers the creation of the content file for that article (via wiki_2_html def)'''
+
+    # dirty hack to have the sections ordered
+    subprocess.call('cp index.html.bak index.html', shell=True) 
+    #
     index_file = open(index_path, 'r') 
     index_tree = html5lib.parse(index_file, namespaceHTMLElements=False)
     index_items = index_tree.findall('.//ul/li')
