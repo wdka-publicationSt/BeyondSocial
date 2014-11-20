@@ -58,10 +58,6 @@
 	    <p>Politics</p>
 	  </label>
           <label>
-	    <input class="Business" name="Business" type="checkbox" value=".Business" />
-	    <p>Business</p>
-	  </label>
-          <label>
 	    <input class="Transformation" name="Transformation" type="checkbox" value=".Transformation" />
 	    <p>Transformation</p>
 	  </label>
@@ -101,10 +97,10 @@
 
       <div class="intro">
         <p>
-          <b>Initiative:</b> Iris Schutten, Social Practices WdKA
-          <b>Web Development:</b> André Castro, publication Station WdKA
+          <b>Initiative:</b> <a href="http://www.irisschutten.net/">Iris Schutten</a>, Social Practices WdKA
+          <b>Web Development:</b> <a href="http://pinknoi.so/">André Castro</a>, <a href="http://publicationstation.wdka.hro.nl/">publication Station WdKA</a>.
           <b>Visual Design/Web Development:</b> Marlon Harder & Lasse van den Bosch Christensen, <a href="http://template01.info">TEMPLATE</a>
-          <b>Contact:</b> Iris Schutten / Deanna Herst <a href="mailto:contact@beyond-social.or">contact@beyond-social.org </a>
+          <b>Contact:</b> Iris Schutten / Deanna Herst / Tabo Goudswaard <a href="mailto:contact@beyond-social.org">contact@beyond-social.org </a>
         </p>
        </div>  
 

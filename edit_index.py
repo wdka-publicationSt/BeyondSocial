@@ -124,7 +124,7 @@ def insert_element(parent_el, insert_el, articles_dict, article):
     child_li.set('class', all_categories )
     child_li.set('data-categories', all_categories )
     grandchild_a = ET.SubElement(child_li, 'a')
-    grandchild_a.text = article
+    grandchild_a.text = (article).replace("_"," ")
     grandchild_a.set('href', 'articles/'+((article.split('/'))[-1])+'.html' )
     # where is articles_dict being inserted all the categories into the topic key? 
     print article, ";", (articles_dict[article]['issue']).replace(" ","_"), ";", (articles_dict[article]['section']).replace(" ","_"), ";", " ".join(articles_dict[article]['topic'])

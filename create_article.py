@@ -49,7 +49,7 @@ def pandoc(mw_content, pagename, in_section, in_topic, in_issue, in_issuename ):
 --variable topics="{topics}" \
 --variable issueName="{iname}" \
 --variable issueNumber="{inum}" \
-"articles/tmp_content.mw" -o "articles/{htmlfile}.html"'.format(title=pagename, section=in_section, topics=in_topic, iname=in_issuename, inum=in_issue, htmlfile=pagename)
+"articles/tmp_content.mw" -o "articles/{htmlfile}.html"'.format(title=(pagename).replace("_"," "), section=in_section, topics=in_topic, iname=in_issuename, inum=in_issue, htmlfile=pagename)
     subprocess.call(pandoc, shell=True) # saved in tmp_content.html html
     html = open('tmp_content.html', 'r') #write mediawiki content to html in tmp_content.html
     html = html.read()

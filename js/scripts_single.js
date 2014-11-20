@@ -9,6 +9,8 @@ var savedContent;
 var flip;
 
 $('document').ready(function() {
+    $('a.uri').hide();// hide categories at bottom of page
+
 
 		$('p.av').each(function(){
 		$(this).replaceWith($('<figcaption>' + this.innerHTML + '</figcaption>'));
