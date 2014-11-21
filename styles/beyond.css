@@ -228,6 +228,7 @@ body {
 	float: right;
 	width: 65%;
 	display: none;
+    margin-bottom:100px;
 }
 
 .content p {
