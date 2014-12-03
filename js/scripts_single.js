@@ -9,9 +9,7 @@ var savedContent;
 var flip;
 
 $('document').ready(function() {
-
-    $('a[title=wikilink]').hide();// hide categories at bottom of page
-
+    $('a[title=wikilink]:contains("Category:")').hide(); // hide categories at bottom of page
 		$('p.av').each(function(){
 		$(this).replaceWith($('<figcaption>' + this.innerHTML + '</figcaption>'));
 		})
