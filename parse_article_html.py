@@ -9,7 +9,8 @@ import urllib2, json, html5lib, sys, re
 sid = '1234'
 useragent = "Mozilla/5.001 (windows; U; NT4.0; en-US; rv:1.0) Gecko/25250101"
 endpoint = "http://beyond-social.org/wiki/api.php?format=json&"
-regex_img = re.compile("http[s]?://.*[\.jpg,\.png,\.gif,\.jpeg]", re.I)
+regex_img = re.compile("http[s]?://.*\.(jpg|png|gif|jpeg)", re.I)
+
 
 def api_file_url(filename, api_endpoint): # get full urls
     filename = filename.replace(' ', '_')
@@ -38,14 +39,15 @@ def video_tag(url, extension):
     return ET.fromstring(tag)
 
 
-def replace_img(parent):
-    imgs = parent.findall('.//figure/img')
+def replace_img_url(parent):
+    imgs = parent.findall('.//img')
     for img in imgs:
         src = img.get('src')
         fileurl = api_file_url(src, endpoint)# find url of file
         if fileurl != None:            
             img.set('src', fileurl)
 
+            
 def replace_youtube(parent, youtube_id): 
     youtube = parent.findall('.//youtube')[0]
     youtube.text=""
@@ -53,14 +55,23 @@ def replace_youtube(parent, youtube_id):
     ET.SubElement(parent, 'iframe', {"width":"560", "height":"315", "frameborder": "0", "allowfullscreen": "allowfullscreen", "src": youtube_url})
     parent.remove(youtube)
 
-def replace_anchor_img(parent):
-    for anchor in parent.findall('.//a'):
-        if re.findall(regex_img, anchor.text):
-            ## ERRor with Empty figures
-            parent.remove(anchor)
-            figure = ET.SubElement(parent, 'figure', {"id":"test"}) 
-            ET.SubElement(figure, 'img', {"src": anchor.text } )
+    
+def replace_anchor4fig(parent, child, src, title ):
+    parent.remove(child)
+    figure = ET.SubElement(parent, 'figure') 
+    ET.SubElement(figure, 'img', {"src": src, "title": title } )
+    figcation=ET.SubElement(figure, 'figcaption')
+    figcation.text = title
 
+    
+def wrap_img(parent, child, src, title):
+    parent.remove(child)
+    figure = ET.SubElement(parent, 'figure') 
+    ET.SubElement(figure, 'img', {"src": src, "title": title } )
+    figcation=ET.SubElement(parent, 'figcaption')
+    figcation.text = title
+
+    
 def replace_av(parent, tree):    
     for figure in parent.findall('.//figure'):
         if figure.findall('.//embed'):
@@ -97,17 +108,33 @@ def edit_article( article_path ):
     for figure in content.findall('.//figure'):
         if figure.findall('.//img'):            
 #            print 'Replacing image'
-            replace_img(content)
+            replace_img_url(content)
         elif figure.findall('.//embed'):
             replace_av(content, tree)
                     
-    for p in content.findall('.//p'): 
-        if p.findall('.//youtube'):
+    for p in content.findall('.//p'): #loop through <p>
+        
+        if p.findall('.//img'): # searching for: <img> outside figure
+            #print 'IMAGE OUTSIDE FIGURE:', 
+            for img in p.findall('.//img'):
+                src =  (img).get('src')
+                title = (img).get('title').replace('|thumbnail','')
+                wrap_img(p, img, src, title)
+            
+        elif p.findall('.//youtube'): # searching for: <youtube>
             youtube_id = (p.findall('.//youtube')[0]).text
 #            print 'youtube found', youtube_id , len(p.findall('.//youtube'))
             replace_youtube(p, youtube_id )
-        if p.findall('.//a'): # EXTERNAL IMAGES
-            replace_anchor_img(p)
+
+        elif p.findall('.//a'): # # searching for: external images as urls
+            for anchor in p.findall('.//a'):
+                href = anchor.get('href')
+                if re.match(regex_img, href):
+                    if anchor.text != href and anchor.text is not None:
+                        title = anchor.text
+                    else:
+                        title=""
+                    replace_anchor4fig(p, anchor, href, title)
                 
     # WRITE FILE
     doctype = "<!DOCTYPE html>"
@@ -117,31 +144,6 @@ def edit_article( article_path ):
     edited.write(html)
     edited.close()
 
-
-
-# def edit_html_media(page, api_endpoint, output_filename): #(pagename)
-#     tree = html5lib.parse(page, namespaceHTMLElements=False)
-#     for img in tree.findall('.//img'): # images
-#         src = img.get('src')
-#         url = api_file_url(src, api_endpoint)# find url of file
-#         img.set('src', url)
-#     for p in tree.findall('.//p'): # youtube       
-#         for child in list(p):
-#             if child.tag == 'youtube':
-#                 print '---- ---- youtube  ---- ----'
-#                 print  ET.tostring(child)
-#                 print
-#                 youtube_id = child.text
-#                 youtube_url = "http://www.youtube.com/embed/{}".format(youtube_id)
-#                 ET.SubElement(p, 'iframe', 
-#                               {"width":"560", "height":"315", "frameborder": "0", "allowfullscreen": "allowfullscreen", "src": youtube_url})
-#     # WRITE FILE
-
-#     doctype = "<!DOCTYPE HTML>"
-#     html = doctype + ET.tostring(tree,  encoding='utf-8', method='html')
-#     edited = open('html_articles/' + output_filename, 'w') #write
-#     edited.write(html)
-#     edited.close()
 
 for line in sys.stdin.readlines():
 #    print line
