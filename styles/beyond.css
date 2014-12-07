@@ -206,6 +206,7 @@ body {
 	color: rgba(200, 0, 0, 1);
 }
 
+
 .intro p a:hover {
 	text-decoration: none;
 	color: blue;
@@ -236,6 +237,13 @@ body {
 	line-height: 47px;
     font-family: 'Crimson Text';
 }
+
+.content ul{
+	font-size: 27px;
+	line-height: 47px;
+    font-family: 'Crimson Text';
+}
+
 
 .content h1 {
 	font-size: 40px;
@@ -415,6 +423,11 @@ figcaption a:link, figcaption a:visited, figcaption a:active {
 	margin: 0;
 }
 
+a#backtomain{
+    color: rgba(200, 0, 0, 1)!important;
+    text-decoration:none;
+}
+
 a.arrow {
 	background-image: url('../img/arrow.svg');
 	width: 72px;
@@ -582,3 +595,5 @@ hr, dd {
 		width: 74%;
 	}
 }
+
+
