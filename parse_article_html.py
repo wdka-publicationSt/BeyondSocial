@@ -4,7 +4,7 @@
 ##  MODIFY THE HTML OUTPUT TO BE DISPLAYED IN THE BROWSER
 ###########
 from xml.etree import ElementTree as ET
-import urllib2, json, html5lib, sys, re
+import urllib2, json, html5lib, sys, re, httplib
 
 sid = '1234'
 useragent = "Mozilla/5.001 (windows; U; NT4.0; en-US; rv:1.0) Gecko/25250101"
@@ -47,7 +47,27 @@ def replace_img_url(parent):
         if fileurl != None:            
             img.set('src', fileurl)
 
-            
+
+def replace_wikilink(link):
+    print "link", link
+    host = "beyond-social.org"
+    path =  "/articles/"+link+".html" 
+    found = 0
+    url = ""
+    connection = httplib.HTTPConnection(host)  ## Make HTTPConnection Object
+    connection.request("HEAD", path)
+    responseOb = connection.getresponse()      ## Grab HTTPResponse Object                
+    if responseOb.status == 200:
+        found = 1
+        url = "http://beyond-social.org/articles/{}".format(link)
+    else:
+        found = 0
+        url = "http://beyond-social.org/wiki/index.php/{}".format(link)
+    return url
+    # print url
+#    print 'Found', found
+
+        
 def replace_youtube(parent, youtube_id): 
     youtube = parent.findall('.//youtube')[0]
     youtube.text=""
@@ -113,7 +133,6 @@ def edit_article( article_path ):
             replace_av(content, tree)
                     
     for p in content.findall('.//p'): #loop through <p>
-        
         if p.findall('.//img'): # searching for: <img> outside figure
             #print 'IMAGE OUTSIDE FIGURE:', 
             for img in p.findall('.//img'):
@@ -129,13 +148,31 @@ def edit_article( article_path ):
         elif p.findall('.//a'): # # searching for: external images as urls
             for anchor in p.findall('.//a'):
                 href = anchor.get('href')
+                title = anchor.get('title')
+                if title == 'wikilink' and 'Category:' not in href: 
+                    href = href.replace(" ", "_")
+                    print href
+                    full_url = replace_wikilink(href)
+                    print full_url
+                    anchor.set('href',full_url)
+                    # print full_url
+                    # print ET.tostring(anchor)#['@title']
+                    # print 
+
                 if re.match(regex_img, href):
                     if anchor.text != href and anchor.text is not None:
                         title = anchor.text
                     else:
                         title=""
                     replace_anchor4fig(p, anchor, href, title)
+
+        elif p.findall('.//a'): # searching for: <youtube>
+            for wikilink in p.findall('.//a'):                
+                print "WIKILINK", ET.tostring(wikilink)
+                replace_wikilink(wikilink)
+
                 
+                    
     # WRITE FILE
     doctype = "<!DOCTYPE html>"
     html = doctype + ET.tostring(tree,  encoding='utf-8', method='html')

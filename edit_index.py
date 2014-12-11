@@ -76,7 +76,7 @@ def api_categoriesFromPage(page):
 def api_PublishMe_pages():
     '''Finds all pages within 04_Publish_Me category and returns a dictionary with info on those pages'''
     dict_articles = {}
-    query = endpoint + 'action=query&list=categorymembers&cmtitle=Category:04_Publish_Me'
+    query = endpoint + 'action=query&list=categorymembers&cmlimit=500&cmtitle=Category:04_Publish_Me'
 #    print 'Category: ', query
     url = endpoint + query
     request = urllib2.urlopen(url)
