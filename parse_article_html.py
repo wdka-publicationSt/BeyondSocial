@@ -40,13 +40,19 @@ def video_tag(url, extension):
 
 
 def replace_img_url(parent):
+    extensions_to_check = ['.jpg','.jpeg','.JPG','.JPEG','.png','.gif']
     imgs = parent.findall('.//img')
+    captions = parent.findall('.//figcaption')
     for img in imgs:
         src = img.get('src')
         fileurl = api_file_url(src, endpoint)# find url of file
         if fileurl != None:            
             img.set('src', fileurl)
 
+    for caption in captions:
+        for ext in extensions_to_check:
+            if ext in caption.text:
+                caption.text = ''
 
 def replace_wikilink(link):
     print "link", link
@@ -100,7 +106,7 @@ def replace_av(parent, tree):
             src = embed.get('src')
             extension = (src.split("."))[-1]
             fileurl = api_file_url(src, endpoint)# find url of file
-            title = embed.get('tilte')
+            title = embed.get('title')
 
             if extension in ['mp4', 'ogv', 'webm']:
                 div =  ET.SubElement(parent, 'div', {"width": "100%", "class": "av"} ) 
@@ -137,7 +143,7 @@ def edit_article( article_path ):
             #print 'IMAGE OUTSIDE FIGURE:', 
             for img in p.findall('.//img'):
                 src =  (img).get('src')
-                title = (img).get('title').replace('|thumbnail','')
+                title = 'TEST'# (img).get('title').replace('|thumbnail','')
                 wrap_img(p, img, src, title)
             
         elif p.findall('.//youtube'): # searching for: <youtube>
