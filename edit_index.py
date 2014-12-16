@@ -147,41 +147,18 @@ def edit_index(articles_dict, index_path ):
     #
     index_file = open(index_path, 'r') 
     index_tree = html5lib.parse(index_file, namespaceHTMLElements=False)
-    index_items = index_tree.findall('.//ul/li')
-    li_data_name = [ (li.get('data-name')).encode('utf-8') for li in index_items]
-    li_data_touched = [ (li.get('data-touched')).encode('utf-8') for li in index_items]
+    uls = index_tree.findall('.//ul[@class="list"]')
 
-    for article in articles_dict.keys():  # compare the api results to the contents of index.html
-        if article in li_data_name:
-            article_pos = li_data_name.index(article)
-#            print "ARTICLE IN INDEX", article, article_pos
-            if li_data_touched[article_pos] != articles_dict[article]['touched']:
-#                print "NOT SAME TOUCHED TIME", "update index"
-                touched_time=articles_dict[article]['touched']
-                section = update_element(index_tree, './/ul/li[@data-name="{}"]'.format(article), 'data-touched', touched_time)
-                print article, ";", (articles_dict[article]['issue']).replace(" ","_"), ";", (articles_dict[article]['section']).replace(" ","_"), ";", " ".join(articles_dict[article]['topic'])
-
-
-
-        else:
-#            print "ARTICLE MISSING FROM INDEX", article
-            issue = 'list_' + (((articles_dict[article])['issue']).replace(" ","_")).lower()
-            index_ul = index_tree.find('.//ul[@id="'+issue+'"]')
-            insert_element(index_ul, 'li', articles_dict, article) #insert li into ul
-
-
-    # if article is in index but Not in articles_dict: remove it
-    for li in index_items:
-        dataname =li.get('data-name')
-        if dataname not in articles_dict.keys():
-#            print 'article not in articles_dict', dataname
-            uls = (index_tree.findall('.//ul[@class="list"]'))
-            for ul in uls:                
-                ul_lis = ul.findall('.//li[@data-name="{}"]'.format(dataname))
-                if ul_lis:
-                    ul.remove(ul_lis[0])
-
-#    print ET.tostring(index_tree)
+    for article in articles_dict.keys():  
+    #       print "ARTICLE MISSING FROM INDEX", article
+        section =  articles_dict[article]['section']
+        issue =  (articles_dict[article]['issue'].replace(" ","_")).lower()
+        #print 'article', article, section, issue
+        #print '---'
+        current_ul = (index_tree.findall('.//ul[@id="section_{}"]'.format(section)))[0]
+        #print ET.tostring(current_ul)
+        #print '------------'
+        insert_element(current_ul, 'li', articles_dict, article) #insert li into ul
     write_html_file(ET.tostring(index_tree), 'index.html')
 
 def parse_index(filepath):

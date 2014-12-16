@@ -15,81 +15,92 @@
     <div id="BeyondHeader">
       <div class="top">
         <div class="title-beyond">
-          <h1>Beyond<br>Social</h1>
+          <h1>Beyond<br />Social</h1>
           <!-- <p>Online Magazine Investigating Social Art and Design</p> -->
-          <p>Online Magazine<br>Investigating<br>Social Art and Design</p>
+          <p>Online Magazine<br />Investigating<br />Social Art and Design</p>
         </div>
- 	</div>
+      </div>
 
-	<div class="intro">
+      <div class="intro">
         <p>Beyond Social is an international and collaborative research and publishing platform on social art and design. It connects professionals and students from different fields of expertise. It is a platform for trial and error, for sharing knowledge, projects, visions and opinions in order to find out what is needed to feed social practices and take them into a next stage.
         </p>
-	</div>  
+      </div>  
+
+    </div>
+
+    <div class="issueWrapper">
+
+      <div class="themes" id="sortArea">
+        <label>
+	  <p>Topics: </p> </label>
+        <label>
+	  <input class="Aesthetics" name="Aesthetics" type="checkbox" value=".Aesthetics" />
+	  <p>Aesthetics</p>
+	</label>
+        <label>
+	  <input class="Bottom-up" name="Bottom-up" type="checkbox" value=".Bottom-up" />
+	  <p>Bottom-up</p>
+	</label>
+        <label>
+	  <input class="Economics" name="Economics" type="checkbox" value=".Economics" />
+	  <p>Economics</p>
+	</label>
+        <label>
+	  <input class="Failures" name="Failures" type="checkbox" value=".Failures" />
+	  <p>Failures</p>
+	</label>
+        <label>
+	  <input class="Participation" name="Participation" type="checkbox" value=".Participation" />
+	  <p>Participation</p>
+	</label>
+        <label>
+	  <input class="Politics" name="Politics" type="checkbox" value=".Politics" />
+	  <p>Politics</p>
+	</label>
+        <label>
+	  <input class="Transformation" name="Transformation" type="checkbox" value=".Transformation" />
+	  <p>Transformation</p>
+	</label>
+        <label>
+	  <input class="Visions" name="Visions" type="checkbox" value=".Visions" />
+	  <p>Visions</p>
+	</label>   
+        <label>
+	  <input class="Technology" name="Technology" type="checkbox" value=".Technology" />
+	  <p>Technology</p>
+	</label>   
 
       </div>
 
-      <div class="issueWrapper">
 
-	<div class="themes" id="sortArea">
-          <label>
-	    <p>Topics: </p> </label>
-          <label>
-	    <input class="Aesthetics" name="Aesthetics" type="checkbox" value=".Aesthetics" />
-	    <p>Aesthetics</p>
-	  </label>
-          <label>
-	    <input class="Bottom-up" name="Bottom-up" type="checkbox" value=".Bottom-up" />
-	    <p>Bottom-up</p>
-	  </label>
-          <label>
-	    <input class="Economics" name="Economics" type="checkbox" value=".Economics" />
-	    <p>Economics</p>
-	  </label>
-          <label>
-	    <input class="Failures" name="Failures" type="checkbox" value=".Failures" />
-	    <p>Failures</p>
-	  </label>
-          <label>
-	    <input class="Participation" name="Participation" type="checkbox" value=".Participation" />
-	    <p>Participation</p>
-	  </label>
-          <label>
-	    <input class="Politics" name="Politics" type="checkbox" value=".Politics" />
-	    <p>Politics</p>
-	  </label>
-          <label>
-	    <input class="Transformation" name="Transformation" type="checkbox" value=".Transformation" />
-	    <p>Transformation</p>
-	  </label>
-          <label>
-	    <input class="Visions" name="Visions" type="checkbox" value=".Visions" />
-	    <p>Visions</p>
-	  </label>   
-          <label>
-	    <input class="Technology" name="Technology" type="checkbox" value=".Technology" />
-	    <p>Technology</p>
-	  </label>   
-
-	</div>
-
-
-    <div class="issueItem" id="issue_1">
+      <div class="issueItem" id="issue_1">
     	<div class="issue">
 	  <p>Issue 01: Redesigning Business</p>
 	</div>
-	<ul class="list" id="list_issue_1">
+
+	<ul class="list" id="section_Introduction">
 	</ul>
-     </div>
+	
+	<ul class="list" id="section_Discourse">
+	</ul>
+
+	<ul class="list" id="section_Projects">
+	</ul>
+
+	<ul class="list" id="section_Proposals">
+	</ul>
+
+      </div>
 
       <div class="issueItem" id="issue_2">
       	<div class="issue">
-		<!-- <p>Issue 02</p> -->
+	  <!-- <p>Issue 02</p> -->
+	</div>
+	<ul class="list" id="list_issue_1">
+	</ul>
       </div>
-      <ul class="list" id="list_issue_1">
-      </ul>
-    </div>
 
- </div>
+    </div>
 
     <div id="BeyondFooter">
       <div class="top">
@@ -98,13 +109,14 @@
       <div class="intro">
         <p>
           <b>Initiative:</b> <a href="http://www.irisschutten.net/">Iris Schutten</a>, Social Practices WdKA
-          <b>Web Development:</b> <a href="http://pinknoi.so/">André Castro</a>, <a href="http://publicationstation.wdka.hro.nl/">publication Station WdKA</a>.
-          <b>Visual Design/Web Development:</b> Marlon Harder & Lasse van den Bosch Christensen, <a href="http://template01.info">TEMPLATE</a>
+          <b>Web Development:</b> <a href="http://pinknoi.so/">Andr&#233; Castro</a>, <a href="http://publicationstation.wdka.hro.nl/">publication Station WdKA</a>.
+          <b>Visual Design/Web Development:</b> Marlon Harder &amp; Lasse van den Bosch Christensen, <a href="http://template01.info">TEMPLATE</a>
           <b>Contact:</b> Iris Schutten / Deanna Herst / Tabo Goudswaard <a href="mailto:contact@beyond-social.org">contact@beyond-social.org </a>
         </p>
-       </div>  
+      </div>  
 
     </div>
+
 
 
 </body></html>
