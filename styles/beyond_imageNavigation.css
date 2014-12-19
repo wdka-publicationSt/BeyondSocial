@@ -66,7 +66,7 @@ label *{
    -webkit-user-select: none;
 }
 
-label:hover:not(:first-child){
+#sortTopics label:hover:not(:first-child){
 	cursor:pointer;
 	color: blue;
 /*
@@ -138,7 +138,16 @@ audio{
 	 -moz-transition: y .5s linear;
      -webkit-transition:y .5s linear;
      transition: y .5s linear;
-     margin-bottom: 40px;
+	 -moz-transition: x .5s linear;
+     -webkit-transition:x .5s linear;
+     transition: x .5s linear;
+
+     margin-bottom: 20px;
+}
+
+
+.issueImage{
+	margin-left: 5px !important;
 }
 
 .issue p{
@@ -356,12 +365,22 @@ figcaption a:link, figcaption a:visited, figcaption a:active {
 	margin-right: 6px;
 }
 
+
 .top {
 	width: 100%;
 	float: left;
 	position: relative;
 	border-bottom: 6px solid blue;
 }
+
+#BeyondHeader .top {
+	width: 100%;
+	float: left;
+	position: relative;
+	border-bottom: 0px solid blue;
+}
+
+
 
 .article {
 	border: 0;
@@ -545,6 +564,19 @@ a.arrow:hover {
 	line-height: 70px; 
 }
 
+.liNoMargin{
+	margin-left: 0% !important;
+	width: auto !important;
+	display: inline-block !important;
+
+}
+
+.ulNoMargin{
+	width: 15% !important;
+
+}
+
+
 .list {
 	text-indent: 0px;
 	/*padding-bottom:20px !important;*/
@@ -557,6 +589,34 @@ a.arrow:hover {
 	transition: all 0.3s ease-in-out 0s;
 	margin-top: 0px;
 }
+
+.list img{
+	width: 15%;
+	/*position: absolute;*/
+	
+}
+
+.imageNavigation{
+	display: block;
+	list-style: none;
+	display: none;
+
+}
+
+.imageNavigation img{
+	width: 100%;
+	/*float:left;*/
+	/*display: none;*/
+}
+
+.imageNavigation li{
+	float:left;
+	display: inline-block;
+	vertical-align: top;
+	width: 160px;
+	margin: 1%;
+}
+
 
 .category {
 	border-right: 6px solid blue;
