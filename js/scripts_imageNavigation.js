@@ -135,6 +135,44 @@ $(document).ready(function(){
 
   }
 
+// console.log('hiiiiiiiiii')
+  function addTitleHoverImage(){
+    $('.imageNavigation').children('li')
+  .mouseover(function() {
+    stringa = $(this).attr('data-name')
+    // $(this).find('img').addClass('hoverImg')
+    // $(this).find('a').addClass('hoverImgLink')
+
+    $('.imageNavigation').children('li').each(function(){
+      if(stringa == $(this).attr('data-name')){
+        console.log('same')
+        $(this).find('img').addClass('hoverImg')
+        $(this).find('a').addClass('hoverImgLink')
+      }
+    })
+
+    $(this).append('<p class="title">'+stringa.replace(/_/g, ' ')+'</p>')
+    $('.imageNavigation').isotope()
+    // alert('over')
+  })
+  .mouseout(function() {
+    // alert('out')
+
+    $('.imageNavigation').children('li').each(function(){
+      if(stringa == $(this).attr('data-name')){
+        console.log('same')
+        $(this).find('a').removeClass('hoverImgLink')
+        $(this).find('img').removeClass('hoverImg')
+      }
+    })
+    
+    $(this).find('.title').remove()
+    $('.imageNavigation').isotope()
+  });
+
+  }
+
+  addTitleHoverImage()
 
   function calculateSection(){
 
