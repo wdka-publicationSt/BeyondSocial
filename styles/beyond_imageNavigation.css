@@ -822,6 +822,10 @@ padding: 0;
     -moz-column-count: 2; /* Firefox */
     column-count: 2;
 	 margin-top: 30px;
+	column-fill: balance;
+	-moz-column-fill: balance;
+	-webkit-column-fill: balance;
+	/*height: 1000px;*/
 	}
 
 	.top{
