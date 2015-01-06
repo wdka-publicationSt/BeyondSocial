@@ -17,7 +17,7 @@ $('document').ready(function() {
 		$('.av').wrap("<figure></figure>")
 		$('iframe').wrap("<figure></figure>")
 	
-		if ($(window).width()>1024){
+		if ($('html').width()>1024){
 			flip = true
 		}else{
 			flip = false
@@ -36,7 +36,7 @@ $('document').ready(function() {
 
 				console.log('has images')
 
-				if ($(window).width()>1024 && flip == true){
+				if ($('html').width()>1024 && flip == true){
 
 					$('.content').removeClass('fullWidth')
 					$('figure').css({"display":"block"})
@@ -63,7 +63,7 @@ $('document').ready(function() {
 					flip = false
 				} 
 
-				if ($(window).width()<=1024 && flip == false){
+				if ($('html').width()<=1024 && flip == false){
 					
 					$('.attachment').remove()
 					$('.content').html(savedContent)
@@ -119,6 +119,30 @@ $('document').ready(function() {
 		$(window).load(function() {
 				   initLayout()
 		});
+
+		var beforePrint = function() {
+		    $('html').css({"width":"1020px"})
+		    $(window).resize()
+		};
+		var afterPrint = function() {
+			$('html').css({"width":"auto"})
+		};
+
+
+		if (window.matchMedia) {
+		    var mediaQueryList = window.matchMedia('print');
+		    mediaQueryList.addListener(function(mql) {
+		        if (mql.matches) {
+		            beforePrint();
+		        } else {
+		            afterPrint();
+		        }
+		    });
+		}
+
+		window.onbeforeprint = beforePrint;
+		window.onafterprint = afterPrint;
+
 
 });
 
