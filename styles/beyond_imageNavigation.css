@@ -380,8 +380,6 @@ figcaption a:link, figcaption a:visited, figcaption a:active {
 	border-bottom: 0px solid blue;
 }
 
-
-
 .article {
 	border: 0;
 }
@@ -711,10 +709,12 @@ hr, dd {
 @page  
 { 
     size: auto;
-    margin: 20mm 20mm 20mm 20mm;  
+/*    margin: 10mm 10mm 10mm 10mm;  */
+
+	@bottom-right {
+		content: counter(page) " of " counter(pages);
+	}
 } 
-
-
 
 @media print {
 
@@ -723,11 +723,49 @@ body
     /* this affects the margin on the content before sending to printer */ 
     margin: 0px;  
 } 
-	*{
+
+* {
 		color: black;
 		background-color: white;
 	}
 
+.content img {
+
+	max-height: 70%;
+	max-width: 70%;
+}
+
+.content figure {
+	/*max-height: 350px;*/
+/*	display: block;
+	margin: 0;
+	margin-top: 40px;*/
+}
+
+figcaption {
+	font-size: 12px !important;
+	text-align: left !important;
+	line-height: 18px !important;
+	margin-left: 0 !important;
+	width: 90% !important;
+}
+
+.fullWidth {
+	width: 100%;
+	float: left;
+	text-align: center;
+}
+
+h3 {
+	margin-top: 31px;
+	margin-bottom: 0 !important;
+	padding: 0 !important;
+}
+
+/*.fullWidth p, .fullWidth h1{
+padding: 0;
+}
+*/
 
 /*
 	.content {
@@ -750,7 +788,8 @@ body
 	}
 
 	.content h1 {	
-		font-size: 20px;
+		font-size: 25px;
+		margin: 0;
 	}
 
 	.content h2, h3 {	
@@ -759,12 +798,10 @@ body
 	}
 	
 	.content{
-/* Chrome, Safari, Opera
-	    -moz-column-count: 2;
-	    column-count: 2;
-	    margin-top: 30px;
-*/
-
+    -webkit-column-count: 2; /* Chrome, Safari, Opera */
+    -moz-column-count: 2; /* Firefox */
+    column-count: 2;
+	 margin-top: 30px;
 	}
 
 	.top{
