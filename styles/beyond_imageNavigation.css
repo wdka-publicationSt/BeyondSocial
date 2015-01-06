@@ -707,18 +707,14 @@ hr, dd {
 }
 
 
+
 @page  
 { 
     size: auto;
     margin: 10mm 10mm 10mm 10mm;  
-
-	@bottom-right {
-		content: counter(page) " of " counter(pages);
-	}
-} 
+}
 
 @media print {
-
 
 
 body  
@@ -765,6 +761,11 @@ figcaption {
 	width: 100%;
 	float: left;
 	text-align: center;
+}
+
+.content h3 {
+
+	/*page-break-before: always;*/
 }
 
 h3 {
