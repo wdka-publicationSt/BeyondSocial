@@ -202,7 +202,7 @@ $(document).ready(function(){
       // $('.list').children('li').children('a:has(*)').hide()
 
 
-  if ($('#textImage input:checked').next('p').text() == "Text"){
+  if ($('#textImage input:checked').next('p').text() == "Title"){
 
       // $('.list li').removeClass('liNoMargin')
       // $('.list').removeClass('ulNoMargin')
