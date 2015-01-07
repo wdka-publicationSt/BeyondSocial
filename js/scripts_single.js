@@ -118,12 +118,32 @@ $('document').ready(function() {
 
 		$(window).load(function() {
 				   initLayout()
+
+				// if (h3offset < 1700){
+				// 	$(this).next('p').andSelf().wrapAll('<div style="display:inline-block" class="formItem"/>');
+				// 	//$(this).next("p").wrapAll('<div style="display=inline-block">')
+				// 	alert('hi')
+				// }
 		});
+
+
 
 		var beforePrint = function() {
 		    // $('html').css({"width":"676px"})
 		    $('html').css({"width":"718px"})
 		    $(window).resize()
+			$('.content').find('h3').each(function(){		
+				arrayValue = [1750,3800,5850,7900,9950,12000,14050,16100]
+				for (var i = 0; i < arrayValue.length; i++) {
+					h3offset = $(this).offset().top-$('.content').offset().top
+
+					if (h3offset > (arrayValue[i]-100) && h3offset < (arrayValue[i]+100)){
+						$(this).next('p').andSelf().wrapAll('<div style="display:inline-block" class="formItem"/>');
+
+					}    
+				}
+			})
+
 		};
 		var afterPrint = function() {
 			$('html').css({"width":"auto"})
