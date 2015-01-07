@@ -121,7 +121,8 @@ $('document').ready(function() {
 		});
 
 		var beforePrint = function() {
-		    $('html').css({"width":"720px"})
+		    // $('html').css({"width":"676px"})
+		    $('html').css({"width":"718px"})
 		    $(window).resize()
 		};
 		var afterPrint = function() {
