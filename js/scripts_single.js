@@ -127,6 +127,7 @@ $('document').ready(function() {
 		};
 		var afterPrint = function() {
 			$('html').css({"width":"auto"})
+			$(window).resize()
 		};
 
 
