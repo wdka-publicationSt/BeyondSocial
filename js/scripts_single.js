@@ -134,9 +134,9 @@ $('document').ready(function() {
 
 			var arrayValue = []
 			for (var i = 0; i < 40; i++) {
-				arrayValue.push(1750+(2050*i))
-			}
-			// console.log(arrayValue[2])
+				arrayValue.push(30+1470*i)
+			}	
+			console.log(arrayValue)
 			
 		    // $('html').css({"width":"676px"})
 		    $('html').css({"width":"718px"})
@@ -146,7 +146,7 @@ $('document').ready(function() {
 				for (var i = 0; i < arrayValue.length; i++) {
 					h3offset = $(this).offset().top-$('.content').offset().top
 
-					if (h3offset > (arrayValue[i]-100) && h3offset < (arrayValue[i]+100)){
+					if (h3offset > (arrayValue[i]-300) && h3offset < (arrayValue[i]+300)){
 						$(this).next('p').andSelf().wrapAll('<div style="display:inline-block" class="formItem"/>');
 
 					}    
