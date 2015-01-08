@@ -696,6 +696,8 @@ hr, dd {
 ul>li>a>p{
 	margin: 0px;
 
+.articleUrl {
+	display:none;
 }
 
 /* @MEDIA CSS */
@@ -723,12 +725,12 @@ ul>li>a>p{
 
 
 
-@page  
+/*@page  
 { 
     size: auto;
     margin: 10mm 10mm 10mm 10mm;  
 }
-
+*/
 @media print {
 
 
@@ -748,6 +750,7 @@ html{
 		border-bottom: black;
 	}
 
+
 .content img {
 
 /*	max-height: 70% !important;
@@ -763,6 +766,7 @@ html{
 	width: 70% !important;
 	margin-left: 15% !important;
 	/*margin-left: 0px !important;*/
+	/*margin-top: 15px;*/
 }
 
 figcaption {
@@ -814,11 +818,11 @@ padding: 0;
 		margin-right: 40px;
 	}
 
-
-	.content p {
+.content p {
 		font-size: 14px;
-		line-height: 22px;
+		line-height: 20px;
     	font-family: 'Crimson Text';
+
 -webkit-hyphens: auto;
 		-moz-hyphens: auto;
 		-ms-hyphens: auto;
@@ -829,17 +833,35 @@ padding: 0;
 	}
 
 	.content h1 {	
-		font-size: 25px;
+		font-size: 32px;
+		margin-top: 10px;
+		line-height: 35px;
 		margin: 0;
-	}
+		
+}
+
+.articleUrl {
+	font-size: 12px !important;
+	text-align: left !important;
+	line-height: 16px !important;
+	font-family: avenue !important;
+	display: block;
+	padding: 0 !important;
+
+}
+
+.content h2 {
+	margin-top: 5px !important;
+		page-break-after: always;
+}
 
 	.content h2, h3 {	
 		font-size: 16px;
 		text-align: left;
 		/*line-height: 8px !important;*/
-		page-break-after: avoid;
-page-break-inside: avoid;
-page-break-before: avoid;
+		/*page-break-after: avoid;*/
+		page-break-inside: avoid;
+		page-break-before: avoid;
 		margin-bottom: -10px !important;
 	}
 	
