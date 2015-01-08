@@ -129,11 +129,20 @@ $('document').ready(function() {
 
 
 		var beforePrint = function() {
+
+			// 1750,3800,5850,7900,9950,12000,14050,16100
+
+			var arrayValue = []
+			for (var i = 0; i < 40; i++) {
+				arrayValue.push(1750+(2050*i))
+			}
+			// console.log(arrayValue[2])
+			
 		    // $('html').css({"width":"676px"})
 		    $('html').css({"width":"718px"})
 		    $(window).resize()
 			$('.content').find('h3').each(function(){		
-				arrayValue = [1750,3800,5850,7900,9950,12000,14050,16100]
+				
 				for (var i = 0; i < arrayValue.length; i++) {
 					h3offset = $(this).offset().top-$('.content').offset().top
 
