@@ -682,6 +682,20 @@ hr, dd {
 	margin-bottom: 5%;
 }
 
+.thumbArticle{
+	display: none;
+	
+	width: 200px !important;
+}
+
+.imageSorting{
+	width: auto !important;
+	margin: 0px !important; 
+}
+
+ul>li>a>p{
+	margin: 0px;
+
 .articleUrl {
 	display:none;
 }
@@ -711,12 +725,12 @@ hr, dd {
 
 
 
-@page  
+/*@page  
 { 
     size: auto;
     margin: 10mm 10mm 10mm 10mm;  
 }
-
+*/
 @media print {
 
 
@@ -794,14 +808,11 @@ padding: 0;
 }
 */
 
-/*
+
 	.content {
-		float: right;
-		width: 65%;
-		display: none;
-	    margin-bottom:0px;
+	    margin-top:0px !important;
 	}
-*/
+
 	.title-beyond{
 		padding: 0px;
 		margin-right: 40px;
