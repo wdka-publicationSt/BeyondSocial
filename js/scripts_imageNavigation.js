@@ -213,10 +213,6 @@ $(document).ready(function(){
       $('.issue').removeClass('issueImage')
       $('.imageNavigation').hide()
 
-
-      $('.list').children('li').children('a').children('p').show()
-      $('.list').children('li').children('a').children('img').hide()
-      $('.list').children('li').removeClass('imageSorting')
               // setTimeout(function(){
               //   $container.isotope({ 
               //     itemSelector: 'li',
@@ -267,12 +263,11 @@ $(document).ready(function(){
 
       console.log('image')
 
-      // $('.list').children('li').children().hide()
+      $('.list').children('li').children().hide()
       // $('.list').children('li').children('a:not(:has(*))').hide()
       // $('.list').children('li').children('a:has(*)').show()
       // $('.list').children('li').children('a:has(*)').show()
-      // $('.imageNavigation').fadeIn(500)
-      
+      $('.imageNavigation').fadeIn(500)
       $('.issue').addClass('issueImage')
 
 
@@ -280,9 +275,6 @@ $(document).ready(function(){
       // $('.list').addClass('ulNoMargin')
 
       // $('.list').children('li').children('a:not(:has(*))').hide()
-      $('.list').children('li').addClass('imageSorting')
-      $('.list').children('li').children('a').children('p').hide()
-      $('.list').children('li').children('a').children('img').show()
       $(".section-div").remove()
     }
 
@@ -295,7 +287,7 @@ $(document).ready(function(){
 
       $('.list').children('li').find('a').fadeIn(1500)
       $('.issue').removeClass('issueImage')
-      // $('.imageNavigation').hide()
+      $('.imageNavigation').hide()
 
       //$('.list').children('li').children('a').show()
       // $('.list').children('li').children('a:has(*)').hide()
@@ -310,11 +302,11 @@ $(document).ready(function(){
 
           console.log('image')
 
-          // $('.list').children('li').children().hide()
+          $('.list').children('li').children().hide()
           // $('.list').children('li').children('a:not(:has(*))').hide()
           // $('.list').children('li').children('a:has(*)').show()
           // $('.list').children('li').children('a:has(*)').show()
-          // $('.imageNavigation').fadeIn(1500)
+          $('.imageNavigation').fadeIn(1500)
           $('.issue').addClass('issueImage')
 
 
@@ -338,7 +330,6 @@ $(document).ready(function(){
   setTimeout(function(){
 
     // $('#textImage input').prop('checked', false);
-
 
    $('#textImage input').each(function(){
     if ($(this).prop('checked')==true){
