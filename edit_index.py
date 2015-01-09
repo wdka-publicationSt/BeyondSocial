@@ -29,19 +29,59 @@ def write_html_file(html_content, filename):
     edited.close()
 
 
-def api_page(pagename, info):
-    if info == 'content':        
-        url = endpoint + 'action=query&titles={}&prop=revisions&rvprop=content'.format(pagename)
-#        print 'CONTENT URL', url
-    elif info == 'meta':
-        url = endpoint + 'action=query&titles={}&prop=info'.format(pagename)
-#        print 'META URL', url
+def api_request(action, pagename):
+    url = endpoint + action.format(pagename)
     request = urllib2.urlopen(url)
     jsonp = json.loads(request.read() )
     json_dic= (jsonp.get('query').get('pages'))
     page_id =  json_dic.keys()[0]
     page_content = json_dic.get(page_id)
     return page_content
+
+
+
+def api_page(pagename, info):
+    if info == 'content':        
+        url = endpoint + 'action=query&titles={}&prop=revisions&rvprop=content'.format(pagename)
+#        print 'CONTENT URL', url
+    elif info == 'meta':
+        page_content = api_request('action=query&titles={}&prop=info', pagename)
+
+    elif info == 'articleimgs':
+        page_content = api_request('action=query&titles={}&prop=images', pagename)
+
+    elif info == 'imageinfo':
+        page_content = api_request('action=query&titles={}&prop=imageinfo&iiprop=url&iiurlwidth=300', pagename)  # iiurlwidht dermines with of thumbnail 
+        
+    return page_content
+
+
+
+def api_thumb_url(filename):
+   '''get thumbnail url of image'''
+   page_content_dict = api_page(filename, 'imageinfo')   
+   if 'imageinfo' in page_content_dict.keys():
+       thumburl = ((page_content_dict.get('imageinfo'))[0].get('thumburl'))
+       return page_content_dict
+
+
+def find_imgs(article):
+    '''get all internal images from published articles:
+    * query all images in  a article
+    * for each image request a thumbnail
+    * get the thumburl    
+    '''
+    page_content_dict = api_page(article, 'articleimgs')
+    if 'images' in page_content_dict.keys():
+        images_list = page_content_dict.get('images')
+        for img in images_list: # all images in article
+            title = img.get('title') 
+            thumburl = api_thumb_url(title)
+            if thumburl != None:
+                print 'thumburl', thumburl
+
+            #RETURN SHOULD BE A HTML LIST (see Lasses' index page ) ALL THE IMAGE FROM THE ARTICLE
+            return thumburl 
 
 
 
@@ -103,6 +143,8 @@ def api_PublishMe_pages():
     return dict_articles
 
 
+
+
 def insert_element(parent_el, insert_el, articles_dict, article):
     # print 'INSERT ELEMENTS'
     child_li = ET.SubElement(parent_el, insert_el)
@@ -152,11 +194,9 @@ def check_index(articles_dict, index_path ):
     for article in articles_dict.keys():  # compare the api results to the contents of index.html
         if article in li_data_name:
             article_pos = li_data_name.index(article)
-            if li_data_touched[article_pos] != articles_dict[article]['touched']:
-                #print "NOT SAME TOUCHED TIME", "update index"
+            if li_data_touched[article_pos] != articles_dict[article]['touched']: # FOR TESTS REPLACE != for == than all articles wil be updated 
                 edit_index(articles_issue_dic, 'index.html')
         else:
-            #print "ARTICLE MISSING FROM INDEX", article
             edit_index(articles_issue_dic, 'index.html')
 
     
@@ -176,11 +216,16 @@ def edit_index(articles_dict, index_path ):
         current_ul = (index_tree.findall('.//ul[@id="section_{}"]'.format(section)))[0]
         #print ET.tostring(current_ul)
         #print '------------'
+
+        find_imgs(article) # THUMBNAILS # WORKING ON
+
         insert_element(current_ul, 'li', articles_dict, article) #insert li into ul
     write_html_file(ET.tostring(index_tree), 'index.html')
 
 
 
+
+            
     
 def parse_index(filepath):
     input_file = open(filepath, 'r') 
