@@ -41,6 +41,7 @@ def api_request(action, pagename):
 
 
 def api_page(pagename, info):
+    pagename = pagename.replace(" ", "_")
     if info == 'content':        
         url = endpoint + 'action=query&titles={}&prop=revisions&rvprop=content'.format(pagename)
 #        print 'CONTENT URL', url
@@ -54,8 +55,6 @@ def api_page(pagename, info):
         page_content = api_request('action=query&titles={}&prop=imageinfo&iiprop=url&iiurlwidth=300', pagename)  # iiurlwidht dermines with of thumbnail 
         
     return page_content
-
-
 
 def api_thumb_url(filename):
    '''get thumbnail url of image'''
@@ -74,14 +73,23 @@ def find_imgs(article):
     page_content_dict = api_page(article, 'articleimgs')
     if 'images' in page_content_dict.keys():
         images_list = page_content_dict.get('images')
+#        print 'images_list', images_list
+        thumbs_list = []
         for img in images_list: # all images in article
-            title = img.get('title') 
-            thumburl = api_thumb_url(title)
-            if thumburl != None:
-                print 'thumburl', thumburl
+            title = img.get('title')
+            thumburl_json = api_thumb_url(title)
+            if thumburl_json != None:
+                thumburl = (thumburl_json.get('imageinfo')[0]).get('thumburl')
+                thumbs_list.append(thumburl)
+            else:
+                thumburl = None
+                
+        return thumbs_list 
+'''
+thumburl {u'imagerepository': u'local', u'ns': 6, u'pageid': 244, u'imageinfo': [{u'url': u'http://beyond-social.org/wiki/images/c/ca/Rb-circular-dinsdag08.jpg', u'thumbheight': 200, u'thumburl': u'http://beyond-social.org/wiki/images/thumb/c/ca/Rb-circular-dinsdag08.jpg/300px-Rb-circular-dinsdag08.jpg', u'thumbwidth': 300, u'descriptionurl': u'http://beyond-social.org/wiki/index.php/File:Rb-circular-dinsdag08.jpg'}], u'title': u'File:Rb-circular-dinsdag08.jpg'}
+'''                
+                #RETURN SHOULD BE A HTML LIST (see Lasses' index page ) ALL THE IMAGE FROM THE ARTICLE
 
-            #RETURN SHOULD BE A HTML LIST (see Lasses' index page ) ALL THE IMAGE FROM THE ARTICLE
-            return thumburl 
 
 
 
@@ -145,34 +153,41 @@ def api_PublishMe_pages():
 
 
 
-def insert_element(parent_el, insert_el, articles_dict, article):
-    # print 'INSERT ELEMENTS'
+def insert_element(parent_el, insert_el, articles_dict, article, navigation, thumb):
     child_li = ET.SubElement(parent_el, insert_el)
     child_li.set('data-name', article )
     child_li.set('data-touched', articles_dict[article]['touched'])
     child_li.set('data-section', articles_dict[article]['section'] )
     child_li.set('data-issue', articles_dict[article]['issue'] )
     keys = articles_dict[article].keys()
-#    all_categories = [item for item in keys if item in  ]
     all_categories = articles_dict[article]['all']
     categories = ['issue', 'section', 'topic'] 
+
     for item in categories:
-        if type(articles_dict[article][item]) is str:
+        if type(articles_dict[article][item]) is str and articles_dict[article][item] not in all_categories :
             all_categories.append(articles_dict[article][item])
         elif type(articles_dict[article][item]) is list:
             for entry in articles_dict[article][item]:
-                all_categories.append(entry)
+                if entry not in all_categories:
+                    all_categories.append(entry)
+                    
     all_categories = " ".join(all_categories)
     child_li.set('class', all_categories )
     child_li.set('data-categories', all_categories )
     grandchild_a = ET.SubElement(child_li, 'a')
-    grandchild_a.text = (article).replace("_"," ")
     grandchild_a.set('href', 'articles/'+((article.split('/'))[-1])+'.html' )
-    # where is articles_dict being inserted all the categories into the topic key? 
-    print article, ";", (articles_dict[article]['issue']).replace(" ","_"), ";", (articles_dict[article]['section']).replace(" ","_"), ";", " ".join(articles_dict[article]['topic'])
+    
+    if navigation is "text":        
+        grandchild_a.text = (article).replace("_"," ")
+        print article, ";", (articles_dict[article]['issue']).replace(" ","_"), ";", (articles_dict[article]['section']).replace(" ","_"), ";", " ".join(articles_dict[article]['topic'])
+    elif navigation is "image":
+        grandgrandchild_img = ET.SubElement(grandchild_a, 'img')
+        grandgrandchild_img.set('src', thumb)
 
     # print ET.tostring(child_li)
+    # print
 
+    
 def update_element(tree, update_el_xpath, update_el, update):
     to_beupdated_el = tree.find(update_el_xpath)
     to_beupdated_el.set(update_el, update)
@@ -216,10 +231,13 @@ def edit_index(articles_dict, index_path ):
         current_ul = (index_tree.findall('.//ul[@id="section_{}"]'.format(section)))[0]
         #print ET.tostring(current_ul)
         #print '------------'
-
-        find_imgs(article) # THUMBNAILS # WORKING ON
-
-        insert_element(current_ul, 'li', articles_dict, article) #insert li into ul
+        insert_element(current_ul, 'li', articles_dict, article, 'text', None) #insert li into ul
+        thumbs_list  = find_imgs(article) # THUMBNAILS # WORKING ON
+        if thumbs_list:            
+            current_ul = (index_tree.findall('.//ul[@class="{}"]'.format('imageNavigation')))[0]
+            for thumb in thumbs_list:
+                insert_element(current_ul, 'li', articles_dict, article, 'image', thumb) #insert li w/ images into ul.imageNavigation
+        
     write_html_file(ET.tostring(index_tree), 'index.html')
 
 
@@ -232,7 +250,7 @@ def parse_index(filepath):
     tree = html5lib.parse(input_file, namespaceHTMLElements=False)
     # find li
     for ul in tree.findall('.//ul'):        
-        print len(ul), 'ul', ET.tostring(ul), type(ul), ul
+#        print len(ul), 'ul', ET.tostring(ul), type(ul), ul
         for li in ul:
             print 'li', ET.tostring(li)
 
@@ -245,7 +263,7 @@ def parse_index(filepath):
         #insert elements
         child = ET.SubElement(ul, 'li')
         child.text = 'new list item.'
-    print ET.tostring(tree)
+#    print ET.tostring(tree)
 
 
 
