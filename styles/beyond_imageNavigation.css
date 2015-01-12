@@ -614,7 +614,10 @@ a.arrow:hover {
 	/*display: none;*/
 }
 
-
+.imageNavigation p:hover{
+	color: green;
+	border-bottom: 10px solid black;
+}
 
 .imageNavigation .hoverImg{
 	    /*width:100%;*/
@@ -659,6 +662,10 @@ a.arrow:hover {
 	line-height: 24px
 }
 
+p.title{
+	border-bottom:0px !important;	
+	padding-top:10px;	
+}
 
 .category {
 	border-right: 6px solid blue;
