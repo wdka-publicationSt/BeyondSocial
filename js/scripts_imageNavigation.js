@@ -283,7 +283,7 @@ $(document).ready(function(){
 
     function calculateSectionNarrow(){
 
-      if ($('#textImage input:checked').next('p').text() == "Text"){
+      if ($('#textImage input:checked').next('p').text() == "Title"){
 
       $('.list').children('li').find('a').fadeIn(1500)
       $('.issue').removeClass('issueImage')
