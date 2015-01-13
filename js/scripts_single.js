@@ -9,24 +9,24 @@ var savedContent;
 var flip;
 
 $('document').ready(function() {
+
     $('a[title=wikilink]:contains("Category:")').hide(); // hide categories at bottom of page
-		$('p.av').each(function(){
-		$(this).replaceWith($('<figcaption>' + this.innerHTML + '</figcaption>'));
-		})
 
-		$('.av').wrap("<figure></figure>")
-		$('iframe').wrap("<figure></figure>")
-	
-		if ($('html').width()>1024){
-			flip = true
-		}else{
-			flip = false
-		}
+    $('.content').append('<h3 class="articleUrl" >Read online at:<br>'+window.location+'</h3>')
 
-		// $(window).load(function($){
-		// 	console.log("hiiaaaaaaaaaaa")
-		// 	console.log($('.content').height())
-		// })
+	$('p.av').each(function(){
+	$(this).replaceWith($('<figcaption>' + this.innerHTML + '</figcaption>'));
+	})
+
+	$('.av').wrap("<figure></figure>")
+	$('iframe').wrap("<figure></figure>")
+
+	if ($('html').width()>1024){
+		flip = true
+	}else{
+		flip = false
+	}
+
 		var savedContent = $('.content').html()
 
 		function initLayout(){
@@ -76,18 +76,6 @@ $('document').ready(function() {
 					flip = true
 				} 
 
-				// else {
-				// 	//flip = true;
-				// 	console.log("smallllllller than")
-				// 	console.log(flip)
-				// 	$('.attachment').remove()
-				// 	$('.content').html(savedContent)
-				// 	$('.content').addClass('fullWidth')
-				// 	$('.content').show()
-					
-				// }	
-
-
 				$('figcaption').each(function(){
 						$(this).css({"width":$(this).prev().width()+"px"})
 				})
@@ -101,23 +89,30 @@ $('document').ready(function() {
 
 		}
 		
+		function imagesNotWide(){
+			$('img').each(function(){
+				width = $(this).width()
+				height = $(this).height()
+				if (width<height){
+					console.log('high')
+					$(this).parent().addClass('highImage')
+				}
+				if (width==height){
+					console.log('sqiare')
+					$(this).parent().addClass('squareImage')
+				}
+			})	
+		}
 
 		$(window).resize(function(){
 			initLayout()
-		})
+			imagesNotWide()
 
-		// var img = $("img")[0]; // Get my img elem
-		// var pic_real_width, pic_real_height;
-		// $("<img/>") // Make in memory copy of image to avoid css issues
-		//     .attr("src", $(img).attr("src"))
-		//     .load(function() {
-		//         pic_real_width = this.width;   // Note: $(this).width() will not
-		//         pic_real_height = this.height; // work for in memory images.
-		//         console.log(pic_real_height)
-		//   })
+		})
 
 		$(window).load(function() {
 				   initLayout()
+				   imagesNotWide()
 
 				// if (h3offset < 1700){
 				// 	$(this).next('p').andSelf().wrapAll('<div style="display:inline-block" class="formItem"/>');
@@ -126,7 +121,7 @@ $('document').ready(function() {
 				// }
 		});
 
-
+		/// DETECT BEFORE AND AFTER PRINT
 
 		var beforePrint = function() {
 
