@@ -12,8 +12,25 @@ $('document').ready(function() {
 
     $('a[title=wikilink]:contains("Category:")').hide(); // hide categories at bottom of page
 
-    $('.content').append('<h3 class="articleUrl" >Read online at:<br>'+window.location+'</h3>')
+	$('.articleHeader').find('p').each(function(){
+		$(this).html($(this).html().replace("Issue_", ""))
+	})
 
+    
+    $('.content').append('<figcaption class="currentArticleUrl" >Read online at:<br>'+window.location+'</figcaption>')
+
+    $('.content').append('<br class="blankSpaceEnd">')
+
+    $('.content').attr('lang','en')
+    $('.content').find('a').each(function(){
+    	//$(this).attr('href')
+    	// alert($(this).attr('href'))
+    	if ($(this).attr('title')=='wikilink'){
+    		$(this).remove()
+    	}
+    	href = $(this).attr('href')
+    	$(this).append(" <a class='hrefPrint'>("+href+")</a>")
+    })
 	$('p.av').each(function(){
 	$(this).replaceWith($('<figcaption>' + this.innerHTML + '</figcaption>'));
 	})
@@ -127,26 +144,29 @@ $('document').ready(function() {
 
 			// 1750,3800,5850,7900,9950,12000,14050,16100
 
-			var arrayValue = []
-			for (var i = 0; i < 40; i++) {
-				arrayValue.push(30+1470*i)
-			}	
-			console.log(arrayValue)
+			// var arrayValue = []
+			// for (var i = 0; i < 40; i++) {
+			// 	arrayValue.push(30+1470*i)
+			// }	
+			// console.log(arrayValue)
 			
 		    // $('html').css({"width":"676px"})
 		    $('html').css({"width":"718px"})
+
+
 		    $(window).resize()
-			$('.content').find('h3').each(function(){		
+
+			// $('.content').find('h3').each(function(){		
 				
-				for (var i = 0; i < arrayValue.length; i++) {
-					h3offset = $(this).offset().top-$('.content').offset().top
+			// 	for (var i = 0; i < arrayValue.length; i++) {
+			// 		h3offset = $(this).offset().top-$('.content').offset().top
 
-					if (h3offset > (arrayValue[i]-300) && h3offset < (arrayValue[i]+300)){
-						$(this).next('p').andSelf().wrapAll('<div style="display:inline-block" class="formItem"/>');
+			// 		if (h3offset > (arrayValue[i]-300) && h3offset < (arrayValue[i]+300)){
+			// 			$(this).next('p').andSelf().wrapAll('<div style="display:inline-block" class="formItem"/>');
 
-					}    
-				}
-			})
+			// 		}    
+			// 	}
+			// })
 
 		};
 		var afterPrint = function() {

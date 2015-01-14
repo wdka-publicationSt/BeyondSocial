@@ -247,6 +247,14 @@ body {
     font-family: 'Crimson Text';
 }
 
+
+.content code {
+	font-size: 12px;
+	line-height: auto;
+	color: blue;
+    font-family: 'monospace';
+}
+
 .content ul{
 	font-size: 27px;
 	line-height: 47px;
@@ -708,6 +716,18 @@ hr, dd {
 	display:none;
 }
 
+.hrefPrint{
+	display: none;
+	margin:0;
+}
+
+
+.blankSpaceEnd{
+	margin-top: 800px;
+	display: none;
+}
+
+
 /* @MEDIA CSS */
 
 @media screen and (max-width: 1200px) {
@@ -758,7 +778,9 @@ html{
 		border-bottom: black;
 	}
 
-
+figure{
+	page-break-inside: avoid;
+}
 
 figcaption {
 	font-size: 12px !important;
@@ -781,7 +803,7 @@ figcaption {
 }
 
 h3 {
-	margin-top: 31px;
+	margin-top: 0px;
 	margin-bottom: 0 !important;
 	padding: 0 !important;
 }
@@ -826,6 +848,9 @@ padding: 0;
 /*page-break-after: avoid;*/
 	}
 
+.avoidPageBreak{
+	page-break-inside: avoid;
+}
 	.content h1 {	
 		font-size: 32px;
 		margin-top: 10px;
@@ -847,7 +872,7 @@ padding: 0;
 
 .content h2 {
 	margin-top: 5px !important;
-		page-break-after: always;
+		/*page-break-after: always;*/
 }
 
 	.content h2, h3 {	
@@ -858,18 +883,27 @@ padding: 0;
 		page-break-inside: avoid;
 		page-break-before: avoid;
 		margin-bottom: -10px !important;
+		na
 	}
 	
 	.content{
-    -webkit-column-count: 2; /* Chrome, Safari, Opera */
-    -moz-column-count: 2; /* Firefox */
-    column-count: 2;
+-moz-columns: 2 auto; -webkit-columns: 2 auto; columns: 2 auto;
 	 margin-top: 50px;
-	column-fill: balance;
+/*	column-fill: balance;
 	-moz-column-fill: balance;
-	-webkit-column-fill: balance;
+	-webkit-column-fill: balance;*/
 
 	/*height: 1000px;*/
+	}
+
+	.content p a:link, .content p a:visited, .content p a:active {
+		text-decoration: none;
+		border-bottom: 0px solid rgba(200, 0, 0, 1);
+		color: rgba(200, 0, 0, 1);
+	}
+
+	.content code {
+		display: none;
 	}
 
 	.top{
@@ -953,4 +987,16 @@ padding: 0;
 		display:block;
 	}
 
+	.hrefPrint{
+		display: inline-block;
+		margin:0;
+	}
+
+	.blankSpaceEnd{
+		display: block;
+	}
+
+	a{
+		word-break:break-all;
+	}
 }
