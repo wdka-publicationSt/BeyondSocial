@@ -634,7 +634,7 @@ a.arrow:hover {
 
 .imageNavigation p:hover{
 	color: green;
-	border-bottom: 10px solid black;
+	border-bottom: 0px;
 }
 
 .imageNavigation .hoverImg{
