@@ -10,11 +10,11 @@
     <script src="./js/isotope.js" type="text/javascript">
       
     </script>
-    <script src="./js/scripts_imageNavigation.js" type="text/javascript">
+    <script src="./js/scripts.js" type="text/javascript">
       
     </script>
     <link href="http://fonts.googleapis.com/css?family=Crimson+Text:400,600,700,400italic,600italic,700italic" rel="stylesheet" type="text/css" />
-    <link href="./styles/beyond_imageNavigation.css" rel="stylesheet" type="text/css" />
+    <link href="./styles/beyond.css" rel="stylesheet" type="text/css" />
     <link href="http://fonts.googleapis.com/css?family=Raleway:800" rel="stylesheet" type="text/css" />
     <title>Beyond Social: Redesigning Business </title>
   </head>
@@ -92,6 +92,7 @@
       <div class="issueItem" id="issue_1">
         <div class="issue">
           <p>Issue 01: Redesigning Business</p>
+        </div>
         <!-- TESTING WITH IMAGES WITHIN THE LINE ELEMENTS -->
         <!-- UL/LI STRUCTURE IDENTICAL TO THE ORIGINAL LIST. THE ONLY DIFFERNCE IS THAT EACH THUMBNAIL BELONGING TO AN ARTICLE GET'S ITS OWN LI ELEMENT WITH FULL WRAPPER CONTAINING ALL INFO -->
         <ul class="imageNavigation"></ul>
