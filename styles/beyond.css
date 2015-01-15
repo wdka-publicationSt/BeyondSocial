@@ -368,7 +368,9 @@ figcaption a:link, figcaption a:visited, figcaption a:active {
 	margin-left:25%;
 }
 
-
+.content a{
+		word-break:break-all;
+}
 
 
 .selectIssue{
@@ -985,18 +987,18 @@ padding: 0;
 
 	.currentArticleUrl {
 		display:block;
+		word-break:break-all;
+	
 	}
 
 	.hrefPrint{
 		display: inline-block;
 		margin:0;
+		word-break:break-all;
 	}
 
 	.blankSpaceEnd{
 		display: block;
 	}
 
-	a{
-		word-break:break-all;
-	}
 }
