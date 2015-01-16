@@ -115,12 +115,12 @@
       <div class="top">
       </div>
       <div class="intro">
-        <p style="width:90%; float: left">
-          <b>Initiative:</b> Iris Schutten, Social PracticesWdKA
-          <b>Web Development:</b> André Castro, publication Station WdKA
-          <b>Visual Design/Web Development:</b> Marlon Harder & Lasse van den Bosch Christensen, <a href="http://template01.info">TEMPLATE</a>
-          <b>Contact:</b> Iris Schutten / Deanna Herst <a href="mailto:contact@beyond-social.or">contact@beyond-social.org </a>
-        </p>
+            <p style="width:90%; float: left">
+                <b>Initiative:</b> Iris Schutten, Social Practices WdKA
+                <b>Web Development:</b> André Castro, publication Station WdKA
+                <b>Visual Design/Web Development:</b> Marlon Harder & Lasse van den Bosch Christensen, <a href="http://template01.info">TEMPLATE</a>
+                <b>Contact:</b> Iris Schutten / Deanna Herst / Tabo Goudswaard <a href="mailto:contact@beyond-social.or">contact@beyond-social.org </a>
+            </p>
         <p style="float:right;">
           <a class='noStyleLink' href="http://wdka.nl"><img src="./img/wdkalogo.svg" width="auto" height="100px">
           </a>

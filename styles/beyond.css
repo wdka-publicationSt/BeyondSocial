@@ -227,7 +227,6 @@ body {
 	font-size: 20px;
 	letter-spacing: 1px;
 	font-weight: normal;
-
 }
 
 .intro b:not(:first-child){
@@ -320,7 +319,6 @@ figcaption a:link, figcaption a:visited, figcaption a:active {
 	color: rgba(200, 0, 0, 1);
 }
 
-
 .attachment figcaption {
 	font-size: 15px;
 	line-height: 25px;
@@ -341,8 +339,6 @@ figcaption a:link, figcaption a:visited, figcaption a:active {
 	width: 70%;
 	margin-left:15%;
 }
-
-
 
 .content figcaption {
 	font-size: 15px;
