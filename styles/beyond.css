@@ -294,6 +294,7 @@ strong, b {
     font-family: avenue;
     font-weight: normal;
     font-size: 20px;
+    letter-spacing: 1px;
 }
 
 .content p a:link, .content p a:visited, .content p a:active {
