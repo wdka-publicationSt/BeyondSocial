@@ -823,14 +823,17 @@ hr, dd {
 		padding: 0 !important;
 	}
 
+/* H2 is used for AUTHOR NAME in article */
+
 	h2 {	
 		font-size: 18px;
 		text-align: left;
 		page-break-inside: avoid;
 		page-break-before: avoid;
-		margin-bottom: -10px !important;
 		margin-top: 5px !important;
 	}
+
+/* H3, same size, no page break */
 
 	h3 {	
 		font-size: 18px;
@@ -838,9 +841,11 @@ hr, dd {
 		page-break-inside: avoid;
 		page-break-before: avoid;
 		margin-top: 5px !important;
-		margin-bottom: 0 !important;
+		margin-bottom: -10px !important;
 		padding: 0 !important;
 	}
+
+/* Sub-headings */
 
 	h4, h5, h6, strong, b {	
 		font-size: 16px;
