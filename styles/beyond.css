@@ -837,7 +837,7 @@ hr, dd {
 		text-align: left;
 		page-break-inside: avoid;
 		page-break-before: avoid;
-		margin-top: 0px;
+		margin-top: 5px !important;
 		margin-bottom: 0 !important;
 		padding: 0 !important;
 	}
@@ -852,12 +852,6 @@ hr, dd {
 		font-family: avenue !important;
 	}
 	
-	h2:first-of-type {
-		margin-top: 10px !important;
-		margin-bottom: 0 !important;
-		padding: 0 !important;
-	}
-
 	.content{
 		-moz-columns: 2 auto; -webkit-columns: 2 auto; columns: 2 auto;
 	 	margin-top: 50px;
@@ -873,7 +867,7 @@ hr, dd {
 		display: none;
 	}
 
-	.top{
+	.top {
 		width: auto;
 	}
 
@@ -889,7 +883,7 @@ hr, dd {
 		letter-spacing: 1px;			
 	}
 
-	.top p{
+	.top p {
 		font-family: avenue;
 		font-weight: normal;		
 		font-size: 12px !important;
@@ -898,7 +892,7 @@ hr, dd {
 		margin-left: 0 !important;
 	}
 
-	.title-back{
+	.title-back {
 		display: none;
 	}
 
@@ -914,7 +908,6 @@ hr, dd {
 		z-index: 11111111;
 		overflow: hidden;
 	}
-
 
 	.articleHeader p {
 		font-family: avenue;
@@ -937,7 +930,6 @@ hr, dd {
 	}
 	
 	.attachment {
-	
 		width: 25%;
 		/*overflow: auto;*/
 		height: 0px !important;
@@ -953,7 +945,6 @@ hr, dd {
 	.currentArticleUrl {
 		display:block;
 		word-break:break-all;
-	
 	}
 
 	.hrefPrint{
