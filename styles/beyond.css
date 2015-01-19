@@ -279,7 +279,7 @@ h3 {
 	font-size: 25px;
 	letter-spacing: 1px;
 	font-weight: normal;
-    margin-top: 60px;
+    margin-top: 50px;
     margin-bottom: -15px;
 }
 
@@ -287,7 +287,7 @@ h4, h5, h6, strong, b {
 	font-size: 20px;
 	letter-spacing: 1px;
 	font-weight: normal;
-    margin-top: 60px;
+    margin-top: 50px;
     margin-bottom: -15px;
     font-family: avenue;
 }
@@ -840,13 +840,9 @@ hr, dd {
 		text-align: left;
 		page-break-inside: avoid;
 		page-break-before: avoid;
-		margin-top: 15px !important;
+		margin-top: 5px !important;
 		margin-bottom: -10px !important;
 		padding: 0 !important;
-	}
-
-	h3:first-child {
-		margin-top: 5px !important;
 	}
 
 /* Sub-headings */
