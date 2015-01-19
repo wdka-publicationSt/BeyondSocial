@@ -267,7 +267,7 @@ h1 {
 	column-span: all;
 }
 
-h2, h3 {
+h2 {
 	font-size: 25px;
 	letter-spacing: 1px;
 	font-weight: normal;
@@ -275,12 +275,22 @@ h2, h3 {
     margin-bottom: -15px;
 }
 
-h4, h5, h6 {
+h3 {
+	font-size: 25px;
+	letter-spacing: 1px;
+	font-weight: normal;
+    margin-top: 60px;
+    margin-bottom: -15px;
+}
+
+h4, h5, h6, strong, b {
 	font-size: 20px;
 	letter-spacing: 1px;
 	font-weight: normal;
     margin-top: 60px;
     margin-bottom: -15px;
+    font-family: avenue;
+    font-weight: normal;
 }
 
 .content p a:link, .content p a:visited, .content p a:active {
@@ -814,7 +824,18 @@ hr, dd {
 		padding: 0 !important;
 	}
 
-	h2, h3 {	
+	h2 {	
+		font-size: 18px;
+		text-align: left;
+		/*line-height: 8px !important;*/
+		/*page-break-after: avoid;*/
+		page-break-inside: avoid;
+		page-break-before: avoid;
+		margin-bottom: -10px !important;
+		margin-top: 5px !important;
+	}
+
+	h3 {	
 		font-size: 18px;
 		text-align: left;
 		/*line-height: 8px !important;*/
@@ -824,7 +845,7 @@ hr, dd {
 		margin-bottom: -10px !important;
 	}
 
-	h4, h5, h6 {	
+	h4, h5, h6, strong, b {	
 		font-size: 16px;
 		text-align: left;
 		/*line-height: 8px !important;*/
@@ -832,12 +853,10 @@ hr, dd {
 		page-break-inside: avoid;
 		page-break-before: avoid;
 		margin-bottom: -10px !important;
+		font-weight: normal;
+		font-family: avenue !important;
 	}
 	
-	h2 {
-		margin-top: 5px !important;
-	}
-
 	h2:first-of-type {
 		margin-top: 10px !important;
 		margin-bottom: 0 !important;
