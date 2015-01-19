@@ -290,7 +290,6 @@ h4, h5, h6, strong, b {
     margin-top: 60px;
     margin-bottom: -15px;
     font-family: avenue;
-    font-weight: normal;
 }
 
 .content p a:link, .content p a:visited, .content p a:active {
@@ -827,8 +826,6 @@ hr, dd {
 	h2 {	
 		font-size: 18px;
 		text-align: left;
-		/*line-height: 8px !important;*/
-		/*page-break-after: avoid;*/
 		page-break-inside: avoid;
 		page-break-before: avoid;
 		margin-bottom: -10px !important;
@@ -838,11 +835,10 @@ hr, dd {
 	h3 {	
 		font-size: 18px;
 		text-align: left;
-		/*line-height: 8px !important;*/
-		/*page-break-after: avoid;*/
 		page-break-inside: avoid;
 		page-break-before: avoid;
-		margin-bottom: -10px !important;
+		margin-bottom: -20px !important;
+		margin-top: 50px !important;
 	}
 
 	h4, h5, h6, strong, b {	
