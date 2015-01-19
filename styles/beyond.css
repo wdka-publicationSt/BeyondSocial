@@ -837,7 +837,9 @@ hr, dd {
 		text-align: left;
 		page-break-inside: avoid;
 		page-break-before: avoid;
-		margin-bottom: -20px !important;
+		margin-top: 0px;
+		margin-bottom: 0 !important;
+		padding: 0 !important;
 	}
 
 	h4, h5, h6, strong, b {	
@@ -855,12 +857,6 @@ hr, dd {
 		margin-bottom: 0 !important;
 		padding: 0 !important;
 	}
-
-/*	h3 {
-		margin-top: 0px;
-		margin-bottom: 0 !important;
-		padding: 0 !important;
-	}*/
 
 	.content{
 		-moz-columns: 2 auto; -webkit-columns: 2 auto; columns: 2 auto;
