@@ -51,7 +51,7 @@ def replace_img_url(parent):
 
     for caption in captions:
         for ext in extensions_to_check:
-            if ext in caption.text:
+            if caption.text is not None and ext in caption.text:
                 caption.text = ''
 
 def replace_wikilink(link):
