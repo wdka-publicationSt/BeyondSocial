@@ -840,9 +840,13 @@ hr, dd {
 		text-align: left;
 		page-break-inside: avoid;
 		page-break-before: avoid;
-		margin-top: 5px !important;
+		margin-top: 10px !important;
 		margin-bottom: -10px !important;
 		padding: 0 !important;
+	}
+
+	h3:first-child(1) {
+		margin-top: 5px !important;
 	}
 
 /* Sub-headings */
