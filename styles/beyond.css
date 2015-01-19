@@ -840,12 +840,12 @@ hr, dd {
 		text-align: left;
 		page-break-inside: avoid;
 		page-break-before: avoid;
-		margin-top: 10px !important;
+		margin-top: 15px !important;
 		margin-bottom: -10px !important;
 		padding: 0 !important;
 	}
 
-	h3:first-child(1) {
+	h3:first-child {
 		margin-top: 5px !important;
 	}
 
