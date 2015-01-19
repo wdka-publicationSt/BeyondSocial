@@ -260,14 +260,22 @@ body {
 }
 
 
-.content h1 {
+h1 {
 	font-size: 40px;
 	margin-top: 50px;
 	font-weight: normal;
 	column-span: all;
 }
 
-.content h2,h3,h4,h5,h6 {
+h2, h3 {
+	font-size: 25px;
+	letter-spacing: 1px;
+	font-weight: normal;
+    margin-top: 60px;
+    margin-bottom: -15px;
+}
+
+h4, h5, h6 {
 	font-size: 20px;
 	letter-spacing: 1px;
 	font-weight: normal;
@@ -806,7 +814,17 @@ hr, dd {
 		padding: 0 !important;
 	}
 
-	h2, h3, h4, h5, h6 {	
+	h2, h3 {	
+		font-size: 18px;
+		text-align: left;
+		/*line-height: 8px !important;*/
+		/*page-break-after: avoid;*/
+		page-break-inside: avoid;
+		page-break-before: avoid;
+		margin-bottom: -10px !important;
+	}
+
+	h4, h5, h6 {	
 		font-size: 16px;
 		text-align: left;
 		/*line-height: 8px !important;*/
