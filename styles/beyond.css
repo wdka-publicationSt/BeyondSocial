@@ -784,9 +784,19 @@ hr, dd {
 		width: 100% !important;
 		letter-spacing: 1px;	
 	}
-
+/*
 	.blankImage {
+		opacity: 0;
+	}
+*/
+	.blankImageDiv {
 		border: 1px dashed black;
+		height: 150px;
+		width: 100%;
+		margin-bottom: 15px;
+	}
+
+	.videoPlaceholder {
 	}
 
 	.fullWidth {

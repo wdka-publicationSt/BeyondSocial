@@ -159,7 +159,7 @@ $('document').ready(function() {
 		    $('iframe').hide()
 		    $('figure').has('iframe').each(function(){
 
-		    	$(this).append("<img class='videoPlaceholder blankImage' src='../img/blank.png'/><figcaption class='videoPlaceholder'>Video available at: "+$(this).children('iframe').attr('src')+"</figcaption>")
+		    	$(this).append("<div class='blankImageDiv'></div><figcaption class='videoPlaceholder'>Video available at: "+$(this).children('iframe').attr('src')+"</figcaption>")
 		    })
 
 
