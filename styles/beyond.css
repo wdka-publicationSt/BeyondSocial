@@ -82,7 +82,7 @@ input{
 
 .content iframe{
 	margin: 0px auto;
-	display: mome;
+/*	display: mome;*/
 	width: 80% !important;
 	/*height: auto !important;*/
 }
@@ -720,7 +720,6 @@ hr, dd {
 	margin:0;
 }
 
-
 .blankSpaceEnd{
 	margin-top: 800px;
 	display: none;
@@ -784,6 +783,10 @@ hr, dd {
 		margin-left: 0 !important;
 		width: 100% !important;
 		letter-spacing: 1px;	
+	}
+
+	.blankImage {
+		border: 1px dashed black;
 	}
 
 	.fullWidth {

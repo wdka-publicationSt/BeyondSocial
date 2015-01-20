@@ -17,7 +17,7 @@ $('document').ready(function() {
 	})
 
     
-    $('.content').append('<figcaption class="currentArticleUrl" >Read online at:<br>'+window.location+'</figcaption>')
+    $('.content').append('<figcaption class="currentArticleUrl" >Read online at:<br>http://www.beyond-social.org</figcaption>')
 
     $('.content').append('<br class="blankSpaceEnd">')
 
@@ -29,7 +29,7 @@ $('document').ready(function() {
     		$(this).remove()
     	}
     	href = $(this).attr('href')
-    	$(this).append("<label class='hrefPrint'><a>("+href+")</a></label>")
+    	$(this).append("<a class='hrefPrint'> ("+href+")</a>")
     })
 	$('p.av').each(function(){
 	$(this).replaceWith($('<figcaption>' + this.innerHTML + '</figcaption>'));
@@ -156,6 +156,13 @@ $('document').ready(function() {
 
 		    $(window).resize()
 
+		    $('iframe').hide()
+		    $('figure').has('iframe').each(function(){
+
+		    	$(this).append("<img class='videoPlaceholder blankImage' src='../img/blank.png'/><figcaption class='videoPlaceholder'>Video available at: "+$(this).children('iframe').attr('src')+"</figcaption>")
+		    })
+
+
 			// $('.content').find('h3').each(function(){		
 				
 			// 	for (var i = 0; i < arrayValue.length; i++) {
@@ -172,6 +179,10 @@ $('document').ready(function() {
 		var afterPrint = function() {
 			$('html').css({"width":"auto"})
 			$(window).resize()
+
+			$('iframe').show()
+			$('.videoPlaceholder').remove()
+
 		};
 
 
