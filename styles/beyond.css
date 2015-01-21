@@ -265,10 +265,11 @@ h1 {
 }
 
 h2 {
-	font-size: 25px;
+	font-size: 20px;
 	letter-spacing: 1px;
 	font-weight: normal;
     margin-bottom: -15px;
+   	line-height: 30px;
 }
 
 h3 {
@@ -849,6 +850,7 @@ hr, dd {
 		page-break-before: avoid;
 		margin-top: 10px !important;
 		page-break-after: always;	
+		line-height: 20px;
 	}
 
 /* H3, same size, no page break */
