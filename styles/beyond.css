@@ -272,6 +272,23 @@ h2 {
    	line-height: 30px;
 }
 
+.authorName {
+	font-family: avenue !important;	
+	font-size:25px !important;
+	letter-spacing: 1px;
+	text-align: left;
+	page-break-inside: avoid;
+	page-break-before: avoid;
+	margin-top: -20px !important;	
+	line-height: 20px;
+	word-break: keep-all !important;
+	-webkit-hyphens: none !important;
+	-moz-hyphens: none !important;
+	-ms-hyphens: none !important;
+	hyphens: none !important;
+}
+
+
 h3 {
 	font-size: 25px;
 	letter-spacing: 1px;
@@ -797,6 +814,13 @@ hr, dd {
 	}
 
 	.videoPlaceholder {
+		margin-bottom: 5% !important;
+		margin-left: 5% !important;
+		margin-top: 5% !important;
+		margin-right: 5% !important;
+		width: 90% !important;
+		word-break:break-all;
+		/*padding: 15px;*/
 	}
 
 	.fullWidth {
@@ -841,10 +865,11 @@ hr, dd {
 		margin: 0;
 	}
 
-/* H2 is used for AUTHOR NAME in article */
+/* AUTHORNAME is used for AUTHOR NAME in article */
 
-	h2 {	
-		font-size: 16px;
+	.authorName {
+		font-family: avenue !important;	
+		font-size: 16px !important;
 		text-align: left;
 		page-break-inside: avoid;
 		page-break-before: avoid;
@@ -852,6 +877,21 @@ hr, dd {
 		page-break-after: always;	
 		line-height: 20px;
 	}
+
+
+/* H2 in article */
+
+	h2 {
+		font-family: avenue !important;	
+		font-size: 16px;
+		text-align: left;
+		page-break-inside: avoid;
+		page-break-before: avoid;
+		margin-top: 10px !important;	
+		line-height: 20px;
+	}
+
+
 
 /* H3, same size, no page break */
 
