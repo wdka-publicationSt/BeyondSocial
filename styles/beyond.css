@@ -47,6 +47,16 @@ opacity:1;
 
 /* End: Recommended Isotope styles */
 
+
+p.authorTitle{
+	font-family: avenue;
+	font-size: 20px;
+	letter-spacing: 1px;
+	font-weight: normal;
+	line-height: 30px;
+	margin-top: -10px;
+}
+
 a:active {
   outline: none;
 }

@@ -39,12 +39,20 @@ def api_request(action, pagename):
     return page_content
 
 
+def api_page_content(pagename):
+    print 'starting api_page_content', pagename
+    page = api_page(pagename, 'content')
+    print 'PAGE', pagename
+    content = ((page.get('revisions'))[0])['*']
+    return content
+
 
 def api_page(pagename, info):
     pagename = pagename.replace(" ", "_")
-    if info == 'content':        
-        url = endpoint + 'action=query&titles={}&prop=revisions&rvprop=content'.format(pagename)
-#        print 'CONTENT URL', url
+    if info == 'content':
+        api_response = api_request('action=query&titles={}&prop=revisions&rvprop=content', pagename)
+        page_content = ((api_response.get('revisions'))[0])['*']
+        
     elif info == 'meta':
         page_content = api_request('action=query&titles={}&prop=info', pagename)
 
@@ -121,6 +129,35 @@ def api_categoriesFromPage(page):
     return (topic, section, issue)
 
 
+def api_author(pagetitle):
+    content_mw = api_page(pagetitle, 'content') 
+    if content_mw:
+        content_list = content_mw.split('\n')
+        if 'Author: ' in content_list[0]:
+            author =  content_list[0].replace('Author:', '')
+            content_list.remove(content_list[0])
+
+        elif 'Authors: ' in content_list[0]:
+            author =  content_list[0].replace('Authors:', '')
+            content_list.remove(content_list[0])
+        else:
+            author = ''
+            
+        return author
+'''
+AUTHOR  Tabo Goudswaard, Deanna Herst & Iris Schutten
+AUTHOR == " Iris Schutten" ==
+AUTHOR 
+AUTHOR == " Annelys de Vet" ==
+AUTHOR == " Deanna Herst & Iris Schutten" ==
+AUTHOR == " Pieter Haasnoot" ==
+AUTHOR == " Lennart Pieters" ==
+AUTHOR == " André Schaminee" ==
+AUTHOR  Duzan Doepel
+AUTHOR == " Joost Beunderman" ==
+AUTHOR  Elise van Beurden, Niels Buwelda, Leon van Genderen, Richard Haag, Marleen Ooms, Leon Ragetlie, Zehra Sagay, David Verdonk & Deanna Herst
+    
+'''
 def api_PublishMe_pages():
     '''Finds all pages within 04_Publish_Me category and returns a dictionary with info on those pages'''
     dict_articles = {}
@@ -140,20 +177,23 @@ def api_PublishMe_pages():
         category_topic = categoriesFromPage[0]
         category_section = categoriesFromPage[1]
         category_issue = categoriesFromPage[2]
-
+        
+        author = api_author( page['title'])
+        
         dict_articles[ str(page['title']) ] = { 'pageid': article_meta['pageid'], 
-                                            'touched': str(article_meta['touched'])[:-1],
-                                            'topic': category_topic,
-                                            'section': category_section,
-                                            'issue': category_issue,
-                                            'all': [],
+                                                'touched': str(article_meta['touched'])[:-1],
+                                                'topic': category_topic,
+                                                'section': category_section,
+                                                'issue': category_issue,
+                                                'author': author,    
+                                                'all': [],
                                             } 
     return dict_articles
 
 
 
 
-def insert_element(parent_el, insert_el, articles_dict, article, navigation, thumb):
+def insert_element(parent_el, insert_el, articles_dict, article, navigation, thumb, author):
     child_li = ET.SubElement(parent_el, insert_el)
     child_li.set('data-name', article )
     child_li.set('data-touched', articles_dict[article]['touched'])
@@ -176,7 +216,12 @@ def insert_element(parent_el, insert_el, articles_dict, article, navigation, thu
     child_li.set('data-categories', all_categories )
     grandchild_a = ET.SubElement(child_li, 'a')
     grandchild_a.set('href', 'articles/'+((article.split('/'))[-1])+'.html' )
-    
+
+    if author is not None:
+        grandchild_author = ET.SubElement(child_li, 'p')
+        grandchild_author.text = author
+        grandchild_author.set('class', 'authorTitle')
+        
     if navigation is "text":        
         grandchild_a.text = (article).replace("_"," ")
         print article, ";", (articles_dict[article]['issue']).replace(" ","_"), ";", (articles_dict[article]['section']).replace(" ","_"), ";", " ".join(articles_dict[article]['topic'])
@@ -224,6 +269,7 @@ def edit_index(articles_dict, index_path ):
     
     for article in articles_dict.keys():  
     #       print "ARTICLE MISSING FROM INDEX", article
+        author =  articles_dict[article]['author']
         section =  articles_dict[article]['section']
         issue =  (articles_dict[article]['issue'].replace(" ","_")).lower()
         #print 'article', article, section, issue
@@ -231,12 +277,13 @@ def edit_index(articles_dict, index_path ):
         current_ul = (index_tree.findall('.//ul[@id="section_{}"]'.format(section)))[0]
         #print ET.tostring(current_ul)
         #print '------------'
-        insert_element(current_ul, 'li', articles_dict, article, 'text', None) #insert li into ul
+        insert_element(current_ul, 'li', articles_dict, article, 'text', None, author) #insert li into ul
+        
         thumbs_list  = find_imgs(article) # THUMBNAILS # WORKING ON
         if thumbs_list:            
             current_ul = (index_tree.findall('.//ul[@class="{}"]'.format('imageNavigation')))[0]
             for thumb in thumbs_list:
-                insert_element(current_ul, 'li', articles_dict, article, 'image', thumb) #insert li w/ images into ul.imageNavigation
+                insert_element(current_ul, 'li', articles_dict, article, 'image', thumb, None) #insert li w/ images into ul.imageNavigation
         
     write_html_file(ET.tostring(index_tree), 'index.html')
 
