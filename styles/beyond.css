@@ -268,7 +268,6 @@ h2 {
 	font-size: 25px;
 	letter-spacing: 1px;
 	font-weight: normal;
-    margin-top: 60px;
     margin-bottom: -15px;
 }
 
@@ -824,13 +823,6 @@ hr, dd {
 		page-break-inside: avoid;
 	}
 
-	.content h1 {	
-		font-size: 32px;
-		margin-top: 10px;
-		line-height: 35px;
-		margin: 0;
-		page-break-after: always;		
-	}
 
 	.articleUrl {
 		font-size: 12px !important;
@@ -841,6 +833,13 @@ hr, dd {
 		padding: 0 !important;
 	}
 
+	h1 {	
+		font-size: 32px;
+		margin-top: 10px;
+		line-height: 35px;
+		margin: 0;
+	}
+
 /* H2 is used for AUTHOR NAME in article */
 
 	h2 {	
@@ -849,6 +848,7 @@ hr, dd {
 		page-break-inside: avoid;
 		page-break-before: avoid;
 		margin-top: 5px !important;
+		page-break-after: always;	
 	}
 
 /* H3, same size, no page break */
