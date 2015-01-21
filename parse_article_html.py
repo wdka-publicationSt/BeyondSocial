@@ -134,8 +134,16 @@ def edit_article( article_path ):
 
     #remove author's name from article
     author = content.findall('.//p')[0] 
-    if 'Author:' or 'Authors' in author.text:
-        content.remove(author)
+    if 'Author:' in author.text:
+        author_text = author.text
+        author_name = author_text.replace('Author: ', '')
+        author.text =  author_name
+    elif 'Authors:' in author.text:
+        author_text = author.text
+        author_name = author_text.replace('Authors: ', '')
+        author.text =  author_name
+
+        
 
     
     for figure in content.findall('.//figure'):
