@@ -131,6 +131,22 @@ def edit_article( article_path ):
 
     content = tree.findall('.//div[@class="content"]')[0]
 
+
+    #remove author's name from article
+    author = content.findall('.//p')[0] 
+    if 'Author:' in author.text:
+        author_text = author.text
+        author_name = author_text.replace('Author: ', '')
+        author.text =  author_name
+        author.set('class',  'authorName')
+    elif 'Authors:' in author.text:
+        author_text = author.text
+        author_name = author_text.replace('Authors: ', '')
+        author.text =  author_name
+        author.set('class',  'authorName')
+        
+
+    
     for figure in content.findall('.//figure'):
         if figure.findall('.//img'):            
 #            print 'Replacing image'
