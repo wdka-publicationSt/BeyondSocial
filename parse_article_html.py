@@ -138,11 +138,12 @@ def edit_article( article_path ):
         author_text = author.text
         author_name = author_text.replace('Author: ', '')
         author.text =  author_name
+        author.set('class',  'authorName')
     elif 'Authors:' in author.text:
         author_text = author.text
         author_name = author_text.replace('Authors: ', '')
         author.text =  author_name
-
+        author.set('class',  'authorName')
         
 
     
