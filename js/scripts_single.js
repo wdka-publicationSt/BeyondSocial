@@ -35,6 +35,13 @@ $('document').ready(function() {
 	$(this).replaceWith($('<figcaption>' + this.innerHTML + '</figcaption>'));
 	})
 
+	$("h2:contains('Author:')").each(function(){
+	authorRemove = $(this).text().replace(/Author:/g, "By:");
+	quotesRemove = authorRemove.replace(/"/g, "");
+	$(this).text(quotesRemove)
+	})
+
+
 	$('.av').wrap("<figure></figure>")
 	$('iframe').wrap("<figure></figure>")
 
