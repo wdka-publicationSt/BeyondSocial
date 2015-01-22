@@ -5,11 +5,17 @@ $(document).ready(function(){
   var sectionSpacing = 7
   var thisSAVED;
   var scrollToIssue;
+  var stringa;
+  var delay=375;
+  var setTimeoutConst;
+
   var hashOptions = window.location.hash.replace('#', '')
   // var sortAreaOffset = $("#sortArea").offset().top;
   $(window).load(function() {
     var sortAreaOffset = $("#sortArea").offset().top;
   })
+
+
   
 
   $('p.authorTitle').css({"margin-bottom":"4px"})
@@ -141,23 +147,30 @@ $(document).ready(function(){
   function addTitleHoverImage(){
     $('.imageNavigation').children('li')
   .mouseover(function() {
-    stringa = $(this).attr('data-name')
-    // $(this).find('img').addClass('hoverImg')
-    // $(this).find('a').addClass('hoverImgLink')
+    thisSAVED01 = $(this)
+    stringa = thisSAVED01.attr('data-name')
 
-    $('.imageNavigation').children('li').each(function(){
-      if(stringa == $(this).attr('data-name')){
-        console.log('same')
-        $(this).find('img').addClass('hoverImg')
-        $(this).find('a').addClass('hoverImgLink')
-      }
-    })
+    setTimeoutConst = setTimeout(function(){
+          
+          thisSAVED01.find('img').addClass('hoverImg')
+          thisSAVED01.find('a').addClass('hoverImgLink')
 
-    $(this).append('<p class="title">'+stringa.replace(/_/g, ' ')+'</p>')
-    $('.imageNavigation').isotope()
+          $('.imageNavigation').children('li').each(function(){
+            if(stringa == $(this).attr('data-name')){
+              console.log('same')
+              $(this).find('img').addClass('hoverImg')
+              $(this).find('a').addClass('hoverImgLink')
+            }
+          })
+
+         thisSAVED01.append('<p class="title">'+stringa.replace(/_/g, ' ')+'</p>')
+          $('.imageNavigation').isotope()
+    }, delay);
+
     // alert('over')
   })
   .mouseout(function() {
+     clearTimeout(setTimeoutConst );
     // alert('out')
 
     $('.imageNavigation').children('li').each(function(){
@@ -168,7 +181,7 @@ $(document).ready(function(){
       }
     })
     
-    $(this).find('.title').remove()
+    thisSAVED01.find('.title').remove()
     $('.imageNavigation').isotope()
   });
 
