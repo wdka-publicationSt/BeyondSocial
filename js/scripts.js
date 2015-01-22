@@ -12,6 +12,8 @@ $(document).ready(function(){
   })
   
 
+  $('p.authorTitle').css({"margin-bottom":"4px"})
+
 // $('#textImage input').prop('checked', false);
 
 // $('#textImage .Text').prop('checked', true);
