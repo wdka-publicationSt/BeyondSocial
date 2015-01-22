@@ -202,6 +202,12 @@ body {
 	background-color: rgba(240, 240, 240, 1);
 }
 
+.colophon {
+
+	width:90%; 
+	float: left;
+}
+
 .intro {
 	width:auto;
 	display: block;
@@ -275,11 +281,11 @@ h1 {
 }
 
 h2 {
-	font-size: 20px;
+	font-size: 25px;
 	letter-spacing: 1px;
 	font-weight: normal;
-    margin-top: -15px;
-   	line-height: 30px;
+    margin-top: 50px;
+    margin-bottom: -15px;
 }
 
 .authorName {
@@ -769,6 +775,12 @@ hr, dd {
 		float: left;
 		width: 100%;
 	}
+
+	.colophon {
+
+	width: 85%; 
+	float: left;
+	}
 }
 
 @media screen and (min-width: 1650px) {
@@ -901,16 +913,14 @@ h1 {
 /* H2 in article */
 
 	h2 {
-		font-family: avenue !important;	
 		font-size: 16px;
 		text-align: left;
 		page-break-inside: avoid;
 		page-break-before: avoid;
-		margin-top: 10px !important;	
-		line-height: 20px;
+		margin-top: 5px !important;
+		margin-bottom: -10px !important;
+		padding: 0 !important;
 	}
-
-
 
 /* H3, same size, no page break */
 
