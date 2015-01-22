@@ -210,6 +210,7 @@ $(document).ready(function(){
       // $('.list').children('li').children('a:not(:has(*))').show()
       // $('.list').children('li').children('a:has(*)').hide()
       $('.list').children('li').find('a').fadeIn(500)
+      $('.list').children('li').find('p').fadeIn(500)
       $('.issue').removeClass('issueImage')
       $('.imageNavigation').hide()
 
