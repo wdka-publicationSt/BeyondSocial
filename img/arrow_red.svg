@@ -7,34 +7,10 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
    width="77.29686"
    height="49.014931"
-   id="svg3804"
-   inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="arrow_red.svg">
-  <sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1151"
-     id="namedview8"
-     showgrid="false"
-     inkscape:zoom="4.8148594"
-     inkscape:cx="2.9256837"
-     inkscape:cy="24.507465"
-     inkscape:window-x="0"
-     inkscape:window-y="29"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg3804" />
+   id="svg3804">
   <defs
      id="defs3806" />
   <metadata
@@ -45,21 +21,16 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <g
-     transform="translate(-362.63728,-523.48176)"
-     id="layer1"
-     style="stroke:#c80000;stroke-opacity:1">
-    <path
-       d="m 387.1842,526.98176 -21.04692,20.51892 21.04692,21.49601"
-       id="path3767-8"
-       style="fill:none;stroke:#c80000;stroke-width:7;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-    <path
-       d="m 371.12028,547.50068 65.31386,0"
-       id="path3769-1"
-       style="fill:none;stroke:#c80000;stroke-width:7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-  </g>
+  <path
+     d="M 23.768081,3.5 2.721161,24.01892 23.768081,45.51493"
+     id="path3767-8"
+     style="fill:none;stroke:#c80000;stroke-width:6;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+  <path
+     d="m 6.013057,24.01892 70.603016,0"
+     id="path3769-1"
+     style="fill:none;stroke:#c80000;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
 </svg>
