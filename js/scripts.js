@@ -6,7 +6,7 @@ $(document).ready(function(){
   var thisSAVED;
   var scrollToIssue;
   var stringa;
-  var delay=500;
+  var delay=375;
   var setTimeoutConst;
 
   var hashOptions = window.location.hash.replace('#', '')
