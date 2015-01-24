@@ -29,7 +29,7 @@ $('document').ready(function() {
     		$(this).remove()
     	}
     	href = $(this).attr('href')
-    	$(this).append("<a class='hrefPrint'> ("+href+")</a>")
+    	$(this).append("<a class='hrefPrint'>&nbsp;("+href+")</a>")
     })
 	$('p.av').each(function(){
 	$(this).replaceWith($('<figcaption>' + this.innerHTML + '</figcaption>'));

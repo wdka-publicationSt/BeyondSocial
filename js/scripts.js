@@ -8,9 +8,10 @@ $(document).ready(function(){
   var stringa;
   var delay=375;
   var setTimeoutConst;
-
+  var toTopsetTimeoutConst;
   var hashOptions = window.location.hash.replace('#', '')
-  // var sortAreaOffset = $("#sortArea").offset().top;
+
+
   $(window).load(function() {
     var sortAreaOffset = $("#sortArea").offset().top;
   })
@@ -20,9 +21,6 @@ $(document).ready(function(){
 
   $('p.authorTitle').css({"margin-bottom":"4px"})
 
-// $('#textImage input').prop('checked', false);
-
-// $('#textImage .Text').prop('checked', true);
 
   function adjustIssues(){
 
@@ -37,6 +35,20 @@ $(document).ready(function(){
 
   }
 
+  function toTop(){
+
+    $(window).resize(function() {
+        clearTimeout(toTopsetTimeoutConst);
+        toTopsetTimeoutConst = setTimeout(doneResizing, 300);
+        
+    });
+
+    function doneResizing(){
+      $("html, body").animate({ scrollTop: "0" },200);
+    }
+
+  }
+
 
   function textImageNavigator(){
     var $checkboxes_textImage = $('.themes #textImage input');
@@ -45,24 +57,20 @@ $(document).ready(function(){
 
             $('#textImage p').removeClass("underlineFilter")
             $('#textImage input').not(this).prop('checked', false);
-            // console.log($(this).prop('checked'))
             if($(this).prop('checked')==false){
               $('#textImage input').not(this).prop('checked', true);
               $('#textImage input').not(this).next("p").toggleClass("underlineFilter")
               $('input.'+$(this).attr("class")+'').next("p").toggleClass("underlineFilter")
             }
-            // $('#textImage input').not(this).prop('checked', false);
             $('input.'+$(this).attr("class")+'').next("p").toggleClass("underlineFilter")
 
             if($(window).width()>1024){
               setTimeout(function(){
                 $container.isotope({ 
                   itemSelector: 'li',
-                  // filter: hashOptions
                 })
                 $containerImage.isotope({ 
                   itemSelector: 'li',
-                  // filter: hashOptions
                 })
               },10)
 
@@ -92,7 +100,6 @@ $(document).ready(function(){
               setTimeout(function(){
                 $container.isotope({ 
                   itemSelector: 'li',
-                  // filter: hashOptions
                 })
               $containerImage.isotope({ 
                 itemSelector: 'li',
@@ -103,7 +110,6 @@ $(document).ready(function(){
               setTimeout(function(){
                 $container.isotope({ 
                   itemSelector: 'li',
-                  // filter: hashOptions
                 })
                 $containerImage.isotope({ 
                   itemSelector: 'li',
@@ -114,7 +120,6 @@ $(document).ready(function(){
               setTimeout(function(){
                 $container.isotope({ 
                   itemSelector: 'li',
-                  // filter: hashOptions
                 })
               $containerImage.isotope({ 
                 itemSelector: 'li',
@@ -125,25 +130,10 @@ $(document).ready(function(){
               calculateSection()
               calculateSectionNarrow()
             }
-
-
-         
-          //   if($(this).next("p").text() == 'Image'){
-          //     // alert('hi')
-          //     $('.section-div').remove()
-          //   }
-
-          // $('#textImage input:checked').each(function() {
-          //   chkArray.push($(this).val());
-          // });
-
-
-
     }); 
 
   }
 
-// console.log('hiiiiiiiiii')
   function addTitleHoverImage(){
     $('.imageNavigation').children('li')
   .mouseover(function() {
@@ -157,7 +147,6 @@ $(document).ready(function(){
 
           $('.imageNavigation').children('li').each(function(){
             if(stringa == $(this).attr('data-name')){
-              console.log('same')
               $(this).find('img').addClass('hoverImg')
               $(this).find('a').addClass('hoverImgLink')
             }
@@ -167,20 +156,16 @@ $(document).ready(function(){
           $('.imageNavigation').isotope()
     }, delay);
 
-    // alert('over')
   })
   .mouseout(function() {
      clearTimeout(setTimeoutConst );
-    // alert('out')
-
     $('.imageNavigation').children('li').each(function(){
       if(stringa == $(this).attr('data-name')){
-        console.log('same')
         $(this).find('a').removeClass('hoverImgLink')
         $(this).find('img').removeClass('hoverImg')
       }
     })
-    
+      
     thisSAVED01.find('.title').remove()
     $('.imageNavigation').isotope()
   });
@@ -188,6 +173,8 @@ $(document).ready(function(){
   }
 
   addTitleHoverImage()
+
+  toTop()
 
   function calculateSection(){
 
@@ -213,29 +200,11 @@ $(document).ready(function(){
 
   function calculateSectionWide(){
 
-      //$('.list').children('li').children('a').show()
-      // $('.list').children('li').children('a:has(*)').hide()
-
-
   if ($('#textImage input:checked').next('p').text() == "Title"){
-
-      // $('.list li').removeClass('liNoMargin')
-      // $('.list').removeClass('ulNoMargin')
-
-      // $('.list').children('li').children('a:not(:has(*))').show()
-      // $('.list').children('li').children('a:has(*)').hide()
       $('.list').children('li').find('a').fadeIn(500)
       $('.list').children('li').find('p').fadeIn(500)
       $('.issue').removeClass('issueImage')
       $('.imageNavigation').hide()
-
-              // setTimeout(function(){
-              //   $container.isotope({ 
-              //     itemSelector: 'li',
-              //     // filter: hashOptions
-              //   })
-              // },500)
-
       $('.section-narrow').css({"display":"none"})
 
       $container.each(function(){
@@ -247,7 +216,6 @@ $(document).ready(function(){
           section = $(this).attr("data-section")
           jsonVariable = {}
           jsonVariable[section] = $(this).height()
-          
           jsonHeight.push(jsonVariable);
         })
 
@@ -267,30 +235,14 @@ $(document).ready(function(){
 
         })
 
-        //$(".section-div").fadeIn(250)
-
       })
-      console.log('text')
-      //$('.section-wide').css({"display":"block"})
       $(".section-wide").fadeIn(500)
   
 
     } else{
-
-      console.log('image')
-
       $('.list').children('li').children().hide()
-      // $('.list').children('li').children('a:not(:has(*))').hide()
-      // $('.list').children('li').children('a:has(*)').show()
-      // $('.list').children('li').children('a:has(*)').show()
       $('.imageNavigation').fadeIn(500)
       $('.issue').addClass('issueImage')
-
-
-      // $('.list li').addClass('liNoMargin')
-      // $('.list').addClass('ulNoMargin')
-
-      // $('.list').children('li').children('a:not(:has(*))').hide()
       $(".section-div").remove()
     }
 
@@ -304,49 +256,20 @@ $(document).ready(function(){
       $('.list').children('li').find('a').fadeIn(1500)
       $('.issue').removeClass('issueImage')
       $('.imageNavigation').hide()
-
-      //$('.list').children('li').children('a').show()
-      // $('.list').children('li').children('a:has(*)').hide()
-
-
       $('.section-wide').css({"display":"none"})
       $(".section-narrow").fadeIn(500)
-      //$('.section-narrow').css({"display":"table"})
-      console.log('text')
 
           } else{
 
-          console.log('image')
-
           $('.list').children('li').children().hide()
-          // $('.list').children('li').children('a:not(:has(*))').hide()
-          // $('.list').children('li').children('a:has(*)').show()
-          // $('.list').children('li').children('a:has(*)').show()
           $('.imageNavigation').fadeIn(1500)
           $('.issue').addClass('issueImage')
-
-
-          // $('.list li').addClass('liNoMargin')
-          // $('.list').addClass('ulNoMargin')
-
-          // $('.list').children('li').children('a:not(:has(*))').hide()
           $(".section-div").remove()
         }
 
   }
-  //   } else{
-
-  //     console.log('image')
-  //     // $('.list').children('li').children('a:not(:has(*))').hide()
-  //     $(".section-div").remove()
-  //   }
-
- 
 
   setTimeout(function(){
-
-    // $('#textImage input').prop('checked', false);
-
    $('#textImage input').each(function(){
     if ($(this).prop('checked')==true){
       $(this).next("p").toggleClass("underlineFilter")
@@ -358,8 +281,6 @@ $(document).ready(function(){
   startfilterArray.shift()
 
   startfilterArray.forEach(function(afilter) {
-      // console.log('//////////////////////////////////////');
-      // console.log(afilter);
       $('input.'+afilter+'').next("p").toggleClass("underlineFilter")
       $('input.'+afilter+'').prop('checked', $(this).is(':checked'));
       $('input.'+afilter+'').prop( "checked", true )
@@ -396,33 +317,27 @@ $(document).ready(function(){
       setTimeout(function(){
         $container.isotope({ 
           itemSelector: 'li',
-          // filter: hashOptions
         })
         $containerImage.isotope({ 
           itemSelector: 'li',
-          //filter: hashOptions
         })
       },500)
 
       setTimeout(function(){
         $container.isotope({ 
           itemSelector: 'li',
-          // filter: hashOptions
         })
         $containerImage.isotope({ 
           itemSelector: 'li',
-          //filter: hashOptions
         })
       },1000)
 
       setTimeout(function(){
         $container.isotope({ 
           itemSelector: 'li',
-          // filter: hashOptions
         })
         $containerImage.isotope({ 
           itemSelector: 'li',
-          //filter: hashOptions
         })
       },2000)
 
@@ -455,8 +370,6 @@ $(document).ready(function(){
 
                 }
 
-
-        
         });
 
 
@@ -469,14 +382,8 @@ $(document).ready(function(){
           $('input.'+$(this).attr("class")+'').prop('checked', $(this).is(':checked'));
          
           var exclusives = [];
-          //var inclusives = [];
-
-          // inclusive filters from checkboxes
           $checkboxes.each( function( i, elem ) {
-            // if checkbox, use value if checked
             if ( elem.checked ) {
-              //  inclusives.push( elem.value );
-
               exclusives.push( elem.value );
             }
           });
@@ -507,11 +414,9 @@ $(document).ready(function(){
             setTimeout(function(){
               $container.isotope({ 
                 itemSelector: 'li',
-                // filter: hashOptions
               })
               $containerImage.isotope({ 
                   itemSelector: 'li',
-                  //filter: hashOptions
                 })
             },500)
 
@@ -520,33 +425,27 @@ $(document).ready(function(){
             setTimeout(function(){
               $container.isotope({ 
                 itemSelector: 'li',
-                // filter: hashOptions
               })
               $containerImage.isotope({ 
                   itemSelector: 'li',
-                  //filter: hashOptions
                 })
             },500)
 
             setTimeout(function(){
               $container.isotope({ 
                 itemSelector: 'li',
-                // filter: hashOptions
               })
               $containerImage.isotope({ 
                   itemSelector: 'li',
-                  //filter: hashOptions
                 })
             },1000)
 
             setTimeout(function(){
               $container.isotope({ 
                 itemSelector: 'li',
-                // filter: hashOptions
               })
               $containerImage.isotope({ 
                   itemSelector: 'li',
-                  //filter: hashOptions
                 })
             },2000)
 
@@ -558,7 +457,6 @@ $(document).ready(function(){
     }); 
 
     $(window).scroll(function(){
-        // console.log(sortAreaOffset)
         if ($(window).scrollTop() > sortAreaOffset) {
           $("#sortArea").addClass("fixedSort")
           $(".issueWrapper").css({"margin-top":$("#sortArea").outerHeight()+"px"})
@@ -577,10 +475,7 @@ $(document).ready(function(){
 
   $(window).resize(function(){
 
-    $("html, body").animate({ scrollTop: "0" },200);
-
-    sortAreaOffset = $("#sortArea").offset().top
-    // console.log(sortAreaOffset)
+    // sortAreaOffset = $("#sortArea").offset().top
 
     if($(window).width()>1024){
 
@@ -591,7 +486,6 @@ $(document).ready(function(){
     calculateSectionNarrow()
 
     }
-
 
     adjustIssues()
 
