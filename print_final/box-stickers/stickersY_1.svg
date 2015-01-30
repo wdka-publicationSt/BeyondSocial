@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.5 r10040"
-   sodipodi:docname="stickersY_2.pdf">
+   sodipodi:docname="stickersY_1.svg">
   <defs
      id="defs4">
     <clipPath
@@ -1062,10 +1062,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="687.6749"
+     inkscape:cx="502.6749"
      inkscape:cy="512.66839"
      inkscape:document-units="px"
-     inkscape:current-layer="layer5"
+     inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:snap-global="true"
      showguides="true"
@@ -1108,7 +1108,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -2803,7 +2803,7 @@
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="Layer#1"
-     style="display:inline">
+     style="display:none">
     <flowRoot
        xml:space="preserve"
        id="flowRoot56472-0"
@@ -2844,4 +2844,50 @@
          id="flowPara56502-3" /><flowPara
          style="font-size:27px;font-weight:normal;text-align:start;line-height:136.00000143%;text-anchor:start;-inkscape-font-specification:Arial"
          id="flowPara56488-8" /></flowRoot>  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="Layer#3">
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot56472-0-1"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Arial;-inkscape-font-specification:Arial"
+       transform="translate(0.6319895,54.794781)"><flowRegion
+         id="flowRegion56474-5-8"><rect
+           id="rect56476-2-6"
+           width="706.08685"
+           height="630.89423"
+           x="37.375645"
+           y="137.16397"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial" /></flowRegion><flowPara
+         id="flowPara56478-1-7"
+         style="font-size:27px;line-height:136.00000143%">Beyond Social: Redesigning Business</flowPara><flowPara
+         style="font-size:27px;line-height:136.00000143%"
+         id="flowPara56480-3-72" /><flowPara
+         style="font-size:27px;font-weight:bold;text-align:center;line-height:136.00000143%;text-anchor:middle;-inkscape-font-specification:Arial Bold"
+         id="flowPara56482-3-2">Introduction</flowPara><flowPara
+         style="font-size:27px;font-weight:normal;text-align:start;line-height:136.00000143%;text-anchor:start;-inkscape-font-specification:Arial"
+         id="flowPara3763">Want to join us?</flowPara><flowPara
+         style="font-size:27px;font-weight:normal;text-align:start;line-height:136.00000143%;text-anchor:start;-inkscape-font-specification:Arial"
+         id="flowPara56486-1-7" /><flowPara
+         style="font-size:27px;font-weight:bold;text-align:center;line-height:136.00000143%;text-anchor:middle;-inkscape-font-specification:Arial Bold"
+         id="flowPara56490-1-1">Projects</flowPara><flowPara
+         style="font-size:27px;font-weight:normal;text-align:start;line-height:136.00000143%;text-anchor:start;-inkscape-font-specification:Arial"
+         id="flowPara60367-4">The Sky is the Limit</flowPara><flowPara
+         style="font-size:27px;font-weight:normal;text-align:start;line-height:136.00000143%;text-anchor:start;-inkscape-font-specification:Arial"
+         id="flowPara3787">Sink Soap</flowPara><flowPara
+         style="font-size:27px;font-weight:normal;text-align:start;line-height:136.00000143%;text-anchor:start;-inkscape-font-specification:Arial"
+         id="flowPara3789">How to make it work</flowPara><flowPara
+         style="font-size:27px;font-weight:normal;text-align:start;line-height:136.00000143%;text-anchor:start;-inkscape-font-specification:Arial"
+         id="flowPara3793" /><flowPara
+         style="font-size:27px;font-weight:bold;text-align:center;line-height:136.00000143%;text-anchor:middle;-inkscape-font-specification:Arial"
+         id="flowPara3797">Proposals</flowPara><flowPara
+         style="font-size:27px;font-weight:normal;text-align:start;line-height:136.00000143%;text-anchor:start;-inkscape-font-specification:Arial"
+         id="flowPara3803">Mosslandscape</flowPara><flowPara
+         style="font-size:27px;font-weight:normal;text-align:start;line-height:136.00000143%;text-anchor:start;-inkscape-font-specification:Arial"
+         id="flowPara3795" /><flowPara
+         style="font-size:27px;font-weight:normal;text-align:start;line-height:136.00000143%;text-anchor:start;-inkscape-font-specification:Arial"
+         id="flowPara56502-3-7" /><flowPara
+         style="font-size:27px;font-weight:normal;text-align:start;line-height:136.00000143%;text-anchor:start;-inkscape-font-specification:Arial"
+         id="flowPara56488-8-0" /></flowRoot>  </g>
 </svg>

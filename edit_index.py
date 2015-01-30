@@ -187,7 +187,8 @@ def api_PublishMe_pages():
                                                 'issue': category_issue,
                                                 'author': author,    
                                                 'all': [],
-                                            } 
+                                            }
+
     return dict_articles
 
 
@@ -250,15 +251,18 @@ def check_index(articles_dict, index_path ):
     index_items = index_tree.findall('.//ul/li')
     li_data_name = [ (li.get('data-name')).encode('utf-8') for li in index_items]
     li_data_touched = [ (li.get('data-touched')).encode('utf-8') for li in index_items]
-    
+    edit = 0
+
     for article in articles_dict.keys():  # compare the api results to the contents of index.html
         if article in li_data_name:
             article_pos = li_data_name.index(article)
             if li_data_touched[article_pos] != articles_dict[article]['touched']: # FOR TESTS REPLACE != for == than all articles wil be updated 
-                edit_index(articles_issue_dic, 'index.html')
+                edit =1
         else:
-            edit_index(articles_issue_dic, 'index.html')
-
+            edit = 1
+        
+    if edit == 1:
+        edit_index(articles_issue_dic, 'index.html')        
     
 def edit_index(articles_dict, index_path ): 
     '''edits the index.html'''
@@ -266,9 +270,9 @@ def edit_index(articles_dict, index_path ):
     index_file = open(index_path, 'r') 
     index_tree = html5lib.parse(index_file, namespaceHTMLElements=False)
     uls = index_tree.findall('.//ul[@class="list"]')
-    
+
     for article in articles_dict.keys():  
-    #       print "ARTICLE MISSING FROM INDEX", article
+        #       print "ARTICLE MISSING FROM INDEX", article
         author =  articles_dict[article]['author']
         section =  articles_dict[article]['section']
         issue =  (articles_dict[article]['issue'].replace(" ","_")).lower()
