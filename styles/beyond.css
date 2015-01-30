@@ -867,6 +867,21 @@ hr, dd {
 		margin-right: 40px;
 	}
 
+	ol, ul {
+
+		padding-left: 15px;
+		list-style-type: square;
+	}
+
+	li {
+
+		font-size: 14px;
+		line-height: 20px;
+    	font-family: 'Crimson Text';
+    	text-align: left;
+    	padding-left: 10px; 
+	}
+
 	.content p {
 		font-size: 14px;
 		line-height: 20px;
