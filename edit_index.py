@@ -8,7 +8,7 @@
 #
 import xml.etree.ElementTree as ET
 import html5lib, urllib2, json, pprint, subprocess
-
+from urllib import quote as quote
 sid = '1234'
 useragent = "Mozilla/5.001 (windows; U; NT4.0; en-US; rv:1.0) Gecko/25250101"
 endpoint = "http://beyond-social.org/wiki/api.php?format=json&"
@@ -188,7 +188,7 @@ def api_PublishMe_pages():
                                                 'author': author,    
                                                 'all': [],
                                             }
-
+        
     return dict_articles
 
 
@@ -216,7 +216,9 @@ def insert_element(parent_el, insert_el, articles_dict, article, navigation, thu
     child_li.set('class', all_categories )
     child_li.set('data-categories', all_categories )
     grandchild_a = ET.SubElement(child_li, 'a')
-    grandchild_a.set('href', 'articles/'+((article.split('/'))[-1])+'.html' )
+    article = ((article.split('/'))[-1])
+    url = quote(article+'.html') 
+    grandchild_a.set('href', 'articles/'+url )
 
     if author is not None:
         grandchild_author = ET.SubElement(child_li, 'p')
