@@ -1062,8 +1062,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="502.6749"
-     inkscape:cy="512.66839"
+     inkscape:cx="505.53204"
+     inkscape:cy="1369.8112"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -1108,7 +1108,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -2862,12 +2862,6 @@
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial" /></flowRegion><flowPara
          id="flowPara56478-1-7"
          style="font-size:27px;line-height:136.00000143%">Beyond Social: Redesigning Business</flowPara><flowPara
-         style="font-size:27px;line-height:136.00000143%"
-         id="flowPara56480-3-72" /><flowPara
-         style="font-size:27px;font-weight:bold;text-align:center;line-height:136.00000143%;text-anchor:middle;-inkscape-font-specification:Arial Bold"
-         id="flowPara56482-3-2">Introduction</flowPara><flowPara
-         style="font-size:27px;font-weight:normal;text-align:start;line-height:136.00000143%;text-anchor:start;-inkscape-font-specification:Arial"
-         id="flowPara3763">Want to join us?</flowPara><flowPara
          style="font-size:27px;font-weight:normal;text-align:start;line-height:136.00000143%;text-anchor:start;-inkscape-font-specification:Arial"
          id="flowPara56486-1-7" /><flowPara
          style="font-size:27px;font-weight:bold;text-align:center;line-height:136.00000143%;text-anchor:middle;-inkscape-font-specification:Arial Bold"
@@ -2878,6 +2872,10 @@
          id="flowPara3787">Sink Soap</flowPara><flowPara
          style="font-size:27px;font-weight:normal;text-align:start;line-height:136.00000143%;text-anchor:start;-inkscape-font-specification:Arial"
          id="flowPara3789">How to make it work</flowPara><flowPara
+         style="font-size:27px;font-weight:normal;text-align:start;line-height:136.00000143%;text-anchor:start;-inkscape-font-specification:Arial"
+         id="flowPara3729">Making Beyond Social</flowPara><flowPara
+         style="font-size:27px;font-weight:normal;text-align:start;line-height:136.00000143%;text-anchor:start;-inkscape-font-specification:Arial"
+         id="flowPara3731">ONSbank</flowPara><flowPara
          style="font-size:27px;font-weight:normal;text-align:start;line-height:136.00000143%;text-anchor:start;-inkscape-font-specification:Arial"
          id="flowPara3793" /><flowPara
          style="font-size:27px;font-weight:bold;text-align:center;line-height:136.00000143%;text-anchor:middle;-inkscape-font-specification:Arial"
