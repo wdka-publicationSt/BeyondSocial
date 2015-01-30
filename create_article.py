@@ -10,7 +10,7 @@ import sys, urllib2, json, subprocess
 sid = '1234'
 useragent = "Mozilla/5.001 (windows; U; NT4.0; en-US; rv:1.0) Gecko/25250101"
 endpoint = "http://beyond-social.org/wiki/api.php?format=json&"
-issue_names = ["Test", "Beyond Social"] 
+issue_names = ["Test", "Redesigning Business"] 
 
 def api_page(pagename, info):
     if info == 'content':        

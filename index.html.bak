@@ -3,6 +3,21 @@
   <head>
     <meta charset="utf-8" />
     <meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type" />
+
+    <meta name="keywords" content="Beyond Social, research, publishing, magazine, wiki, social art, social design, design, art, Willem de Kooning Academy, University of Applied Sciences Rotterdam, Hogeschool Rotterdam, Rotterdam, The Netherlands, students, WdKA, Social Practice, Pulication Station,  Iris Schutten, Deanna Herst, Tabo Goudswaard, Redesigning Business." />
+    <meta name="author" content="Beyond Social" />
+    <meta name="application-name" content="Beyond Social | Magazine Investigating Social Art and Design" />
+    <meta property="description" content="Beyond Social is an international and collaborative research and publishing platform on social art and design. "  />
+    <!-- for Facebook -->
+    <meta property="og:image" content="http://beyond-social.org/img/BS.png"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:locale" content="nl"/>
+    <meta property="og:title" content="Beyond Social | Magazine Investigating Social Art and Design"/>
+    <meta property="og:site_name" content="Beyond Social | Magazine Investigating Social Art and Design" />
+    <meta property="og:url" content="http://beyond-social.org/"/>
+    <meta property="og:description" content="Beyond Social is an international and collaborative research and publishing platform on social art and design. "  />
+
+
     <script src="./js/jquery-1.11.1.min.js" type="text/javascript">
       
     </script>
