@@ -261,10 +261,11 @@ body {
 }
 
 .content code {
-	font-size: 12px;
-	line-height: auto;
+	font-size: 15px;
 	color: blue;
     font-family: 'monospace';
+    width: 100px;
+    overflow: auto;
 }
 
 .content ul{
@@ -959,6 +960,10 @@ h1 {
 		font-weight: normal !important;
 		font-family: avenue !important;
 	}
+
+	strong, b {	
+		line-height: 15px !important;
+	}
 	
 	.content{
 		-moz-columns: 2 auto; -webkit-columns: 2 auto; columns: 2 auto;
@@ -971,8 +976,12 @@ h1 {
 		color: rgba(200, 0, 0, 1);
 	}
 
-	.content code {
+	.content code, .content pre {
+
 		display: none;
+/*		font-size: 14px;
+		line-height: 20px !important;
+    	font-family: 'Crimson Text';*/
 	}
 
 	.top {
