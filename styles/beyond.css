@@ -54,7 +54,8 @@ p.authorTitle{
 	letter-spacing: 1px;
 	font-weight: normal;
 	line-height: 30px;
-	margin-top: -10px;
+	margin-top: -3px;
+/*	margin-bottom: 30px;*/
 }
 
 a:active {
@@ -620,7 +621,7 @@ a.arrow:hover {
 	height: auto;
 	float: left;
 	width: 82%;
-	line-height: 70px; 
+	line-height: 60px; 
 	/*margin-top: 10px;*/
 }
 
