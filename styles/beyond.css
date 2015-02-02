@@ -291,7 +291,7 @@ h2 {
 }
 
 .authorName {
-	font-family: avenue !important;	
+	font-family: avenue, arial !important;	
 	font-size:25px !important;
 	letter-spacing: 1px;
 	text-align: left;
@@ -917,7 +917,7 @@ h1 {
 /* AUTHORNAME is used for AUTHOR NAME in article */
 
 	.authorName {
-		font-family: avenue !important;	
+		font-family: avenue, arial !important;	
 		font-size: 16px !important;
 		text-align: left;
 		page-break-inside: avoid;
