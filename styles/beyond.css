@@ -259,7 +259,7 @@ body {
 .content p {
 	font-size: 27px;
 	line-height: 47px;
-    font-family: 'Crimson Text';
+	font-family: 'Crimson Text';
 }
 
 .content code {
@@ -275,6 +275,17 @@ body {
 	line-height: 47px;
     font-family: 'Crimson Text';
 }
+
+
+.content li {
+    font-size: 27px;
+    line-height: 30px;
+    font-family: "Crimson Text";
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
 
 h1 {
 	font-size: 40px;
@@ -774,6 +785,12 @@ hr, dd {
 }
 
 
+
+
+
+
+
+
 /* @MEDIA CSS */
 
 @media screen and (max-width: 1200px) {
@@ -877,6 +894,8 @@ hr, dd {
 		list-style: disc;
 	}
 
+
+	
 	li {
 
 		font-size: 14px;
