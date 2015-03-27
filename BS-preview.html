@@ -5,7 +5,7 @@
     <meta charset="utf-8"> 
   </head>
   <body>
-    <h1>Preview Beyond Social</h1>
+    <h1>Beyond Social preview</h1>
     <p>To preview your wiki page and how it will look in the front-end:
       <ul>
 	<li>add the wiki page URL to the field below</li>
@@ -26,24 +26,25 @@ $('input#submit').click(
         // if URI is decoded:
 	// Decode, compare to original. If it does differ, original is encoded. If it doesn't differ, original isn't encoded
 	var url =  $("#url").val();
-        console.log(url);
+	var url_list = url.split('/')
+	var page = (url_list.reverse())[0]
+	var preview_url = 'http://localhost/beyondsocial/preview/'+ page +'.html' 
+	$('a#preview').text(preview_url);
+	$('a#preview').attr('href', preview_url);
 
 	//Ajax POST
 	$.ajax({
 	    contentType:"application/json",
 	    type: "POST",
-	    data:JSON.stringify({'url': url}),
+	    data:JSON.stringify({'wikipage': page}),
 	    dataType:"json",
 	    url: "http://localhost/cgi-bin/bs_preview.cgi", //the url of the cgi script
 
 	    success: function(data){
 		console.log('success');
-		if(data){
-		    console.log(data.file, data.url);
-		    $('a#preview').text(data.url);
-		    $('a#preview').attr('href', data.url);
-		    
-		}
+		// if(data){
+		//     console.log(data.file, data.url);		    
+		// }
 
 	    }
 	})

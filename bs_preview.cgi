@@ -14,18 +14,14 @@ def create_preview(filename):
 method = os.environ.get("REQUEST_METHOD")
 if method == "POST":
    myjson =  json.load(sys.stdin) #receive JSON object send from Ajax call
-   url=myjson['url'] #in JSON look for value of key 'myquery'
-   url_parse = urlparse(url)
-   url_path = (url_parse.path).split('/')
-   filename = url_path[-1]#.encoded('utf-8')
-   preview_url = 'http://localhost/beyondsocial/preview/{}.html'.format(filename)
-
-   prev_url = create_preview(filename)
+   wikipage=myjson['wikipage'] #in JSON look for value of key 'myquery'
+   create_preview(wikipage)
+   #   prev_url = 
    
-   # JSON response
-   result = {'file':filename, 'url':preview_url}
-   print "Content-type: application/json\n\n"
-   print json.dumps(result)
+   # # JSON response
+   # result = {'file':filename, 'url':preview_url}
+   # print "Content-type: application/json\n\n"
+   # print json.dumps(result)
    
 
       
