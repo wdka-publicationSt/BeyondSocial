@@ -227,7 +227,7 @@ def insert_element(parent_el, insert_el, articles_dict, article, navigation, thu
         
     if navigation is "text":        
         grandchild_a.text = (article).replace("_"," ")
-        print article, ";", (articles_dict[article]['issue']).replace(" ","_"), ";", (articles_dict[article]['section']).replace(" ","_"), ";", " ".join(articles_dict[article]['topic'])
+        print "frontend", ";", article, ";", (articles_dict[article]['issue']).replace(" ","_"), ";", (articles_dict[article]['section']).replace(" ","_"), ";", " ".join(articles_dict[article]['topic'])
     elif navigation is "image":
         grandgrandchild_img = ET.SubElement(grandchild_a, 'img')
         grandgrandchild_img.set('src', thumb)

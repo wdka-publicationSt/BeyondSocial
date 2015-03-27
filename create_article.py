@@ -39,6 +39,12 @@ def api_page_content(pagename):
 
 def pandoc(mw_content, pagename, in_section, in_topic, in_issue, in_issuename ):
     '''uses pandoc to convert mediawiki syntax to html'''
+
+    if in_section is 'preview':
+        path = '/var/www/preview/' 
+    else:
+        path = 'articles/'
+        
     mw = open('articles/tmp_content.mw', 'w') 
     mw.write(mw_content.encode('utf-8'))
     mw.close()
@@ -49,7 +55,7 @@ def pandoc(mw_content, pagename, in_section, in_topic, in_issue, in_issuename ):
 --variable topics="{topics}" \
 --variable issueName="{iname}" \
 --variable issueNumber="{inum}" \
-"articles/tmp_content.mw" -o "articles/{htmlfile}.html"'.format(title=(pagename).replace("_"," "), section=in_section, topics=in_topic, iname=in_issuename, inum=in_issue, htmlfile=pagename)
+"articles/tmp_content.mw" -o "{articlepath}/{htmlfile}.html"'.format(articlepath=path, title=(pagename).replace("_"," "), section=in_section, topics=in_topic, iname=in_issuename, inum=in_issue, htmlfile=pagename)
     subprocess.call(pandoc, shell=True) # saved in tmp_content.html html
     html = open('tmp_content.html', 'r') #write mediawiki content to html in tmp_content.html
     html = html.read()
@@ -71,14 +77,19 @@ def wiki_2_html(mw_page, section , topic, issue):
 
 for line in sys.stdin.readlines():
     stdin_input = (line.replace("\n","")).split(" ; ")
-    article = stdin_input[0]
-    issue = stdin_input[1]
-    section = stdin_input[2]
-    topic = stdin_input[3]
-    
+    print "INPUT", stdin_input[0]
+    if stdin_input[0] == 'preview':
+        article = stdin_input[1]
+        print 'preview', article
+        wiki_2_html(article, 'preview' , 'preview', '0') 
 
-    print article
-    wiki_2_html(article, section , topic, issue) # ADD Article
+    elif stdin_input[0] == 'frontend':
+        article = stdin_input[1]
+        print 'frontend', article        
+        issue = stdin_input[2]
+        section = stdin_input[3]
+        topic = stdin_input[4]
+        wiki_2_html(article, section , topic, issue) # ADD Article
 
 
 
