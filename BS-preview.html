@@ -2,35 +2,56 @@
 <html>
   <head>
     <title>Beyond Social Preview</title>
-    <meta charset="utf-8"> 
+    <meta charset="utf-8">
+    <style type="text/css" media="screen">
+      input#url{ width: 50%;}
+    </style>
+
   </head>
   <body>
     <h1>Beyond Social preview</h1>
-    <p>To preview your wiki page and how it will look in the front-end:
+    <p>To create a preview of a Beyond Social wiki, and see how it will look like in the front-end:
       <ul>
 	<li>add the wiki page URL to the field below</li>
 	<li>submit</li>
       </ul>        
     </p>
     <form id="postform">
-	<input type="text" name="myquery" id="url" />
+	<input type="text" name="myquery" id="url"  placeholder="url"/>
     </form>
     <input id="submit" type="submit" name="submit" value="Submit">
-    <p id="url">Preview: <a id="preview"></a></p>
+    <p id="url"><a id="preview"></a></p>
     <script type="text/javascript" src="../jquery/jquery-1.11.2.min.js"></script>
     <script type="text/javascript">
 
-$('input#submit').click(
-    function(){
+    function sendurl(){
 
-        // if URI is decoded:
-	// Decode, compare to original. If it does differ, original is encoded. If it doesn't differ, original isn't encoded
 	var url =  $("#url").val();
+	console.log(url); 
+	var url_regex = /^http:\/\/beyond-social\.org\/wiki\//.exec(url)
+	if (url_regex === null) {
+	    $('p#url').css('color', 'red');
+	    $('p#url').text("What you have enter does not look like a Beyond Social's wiki URL");
+	    $('input#url').value('');
+	    
+	}
+	else {	    
 	var url_list = url.split('/')
 	var page = (url_list.reverse())[0]
-	var preview_url = 'http://localhost/beyondsocial/preview/'+ page +'.html' 
-	$('a#preview').text(preview_url);
-	$('a#preview').attr('href', preview_url);
+	// is page escaped?
+	// does page contain regex sequence %\d\d
+	var escaped = /%\d(\d|[A-Z])/.exec(page);
+	if (escaped === null) { 
+	    page = escape(page);
+	    
+	}
+
+	    var preview_url = 'http://localhost/beyondsocial/preview/'+ page +'.html' ;
+	    $('p#url').css('color', 'black');
+	    $('p#url').text('Preview: ');
+	    $('p#url').append('<a id="preview"></a>')
+	    $('a#preview').text(preview_url );
+	    $('a#preview').attr('href', preview_url);
 
 	//Ajax POST
 	$.ajax({
@@ -39,18 +60,26 @@ $('input#submit').click(
 	    data:JSON.stringify({'wikipage': page}),
 	    dataType:"json",
 	    url: "http://localhost/cgi-bin/bs_preview.cgi", //the url of the cgi script
-
 	    success: function(data){
-		console.log('success');
-		// if(data){
-		//     console.log(data.file, data.url);		    
-		// }
-
 	    }
 	})
-	
+	    
+	}
+	    
     }
+
+$('body').on('keypress', function(event) {
+    if(event.which === 13){
+	//Disable textbox to prevent multiple submit
+//	$('input#url').attr("disabled", "disabled");
+	sendurl();
+    }
+});
+
+$('input#submit').click(
+    function(){ sendurl(); }
 )
-  </script>
+
+</script>
 </body>
 </html>

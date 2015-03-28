@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-import sys, urllib2, json, subprocess
+import sys, urllib, urllib2, json, subprocess
 
 file_template='/var/www/beyondsocial/template_article.html'
 file_tmp='/var/www/beyondsocial/articles/tmp_content.mw'
@@ -39,6 +39,8 @@ def pandoc(savepath, mw_content, pagename, in_section, in_topic, in_issue, in_is
     mw = open(file_tmp, 'w') 
     mw.write(mw_content.encode('utf-8'))
     mw.close()
+    savepath = urllib.unquote(savepath)
+    pagename = urllib.unquote(pagename)
     pandoc = 'pandoc -s -f mediawiki -t html5 \
 --template {template} \
 --variable title="{title}" \
