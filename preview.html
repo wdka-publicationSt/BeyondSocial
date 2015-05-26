@@ -46,7 +46,7 @@
 	    
 	}
 
-	    var preview_url = 'http://localhost/beyondsocial/preview/'+ page +'.html' ;
+	    var preview_url = 'http://beyond-social.org/preview/'+ page +'.html' ;
 	    $('p#url').css('color', 'black');
 	    $('p#url').text('Preview: ');
 	    $('p#url').append('<a id="preview"></a>')
@@ -59,7 +59,9 @@
 	    type: "POST",
 	    data:JSON.stringify({'wikipage': page}),
 	    dataType:"json",
-	    url: "http://localhost/cgi-bin/bs_preview.cgi", //the url of the cgi script
+	    url: "/cgi-bin/bs_preview.cgi", 
+            //cgi-bin/bs_preview.cgi 
+            //the url of the cgi script
 	    success: function(data){
 	    }
 	})

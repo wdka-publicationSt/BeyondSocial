@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 import sys, urllib, urllib2, json, subprocess
 
-file_template='/var/www/beyondsocial/template_article.html'
-file_tmp='/var/www/beyondsocial/articles/tmp_content.mw'
+file_template='/var/www/beyond-social.org/html/template_article.html'
+file_tmp='/var/www/beyond-social.org/html/articles/tmp_content.mw'
 
 sid = '1234'
 useragent = "Mozilla/5.001 (windows; U; NT4.0; en-US; rv:1.0) Gecko/25250101"
@@ -60,7 +60,7 @@ def touch(savepath):
     
 def wiki_2_html(mw_pagename, section , topic, issue): 
     '''convert wiki pages to html files'''
-    savepath = '/var/www/beyondsocial/preview/{}.html'.format(mw_pagename)
+    savepath = '/var/www/beyond-social.org/html/preview/{}.html'.format(mw_pagename)
     content_mw = api_page_content(mw_pagename)
     if content_mw:
         issuenumber = int(issue[-1])
