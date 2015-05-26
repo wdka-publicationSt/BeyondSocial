@@ -6,7 +6,8 @@ from urlparse import urlparse
 
 
 def create_preview(filename):
-   create = 'python /home/andre/Documents/WdKA/BeyondSocial/development/preview_article.py {}'.format(filename)
+   script_path = '/home/andre/Documents/WdKA/BeyondSocial/development/preview_article.py'
+   create = 'python {} {}'.format(script_path,filename) ## ChHANGE TO CHICHI
    subprocess.call(create, shell=True) # saved in tmp_content.html html   
 #   return (preview_url)
 

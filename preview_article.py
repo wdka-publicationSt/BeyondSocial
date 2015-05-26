@@ -63,7 +63,6 @@ def wiki_2_html(mw_pagename, section , topic, issue):
     savepath = '/var/www/beyondsocial/preview/{}.html'.format(mw_pagename)
     content_mw = api_page_content(mw_pagename)
     if content_mw:
-        savepath = '/var/www/beyondsocial/preview/{}.html'.format(mw_pagename)
         issuenumber = int(issue[-1])
         issuename = issue_names[issuenumber]
         content_html = pandoc(savepath, content_mw, mw_pagename, section , topic, issue, issuename)
