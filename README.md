@@ -19,7 +19,6 @@ It will:
 * copy the html,js,css to ../beyond-social/
 
 
-
 ## scripts
 Uses the following scripts:
 * `edit_index.py` - responsible for updating the index with wiki articles tagged: 04_Publish_Me
@@ -50,12 +49,15 @@ and corresping articles
 
 
 
-# TODO 
-* in `index.html` and `edit_index.py`:
-   * replace old topics with current
-       * update javascript to work with it
-   * Andre: I am confused with in index.html {CATEGORY NAME}
-   
-* In `./create_article.py` 
-   * parse images and av media
+# Article Preview
+Working.
+* images and videos are still missing
+
+# Updade link
+
+
+# TODO Videos
+* widget
+
+
 

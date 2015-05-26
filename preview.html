@@ -36,15 +36,14 @@
 	    
 	}
 	else {	    
-	var url_list = url.split('/')
-	var page = (url_list.reverse())[0]
-	// is page escaped?
-	// does page contain regex sequence %\d\d
-	var escaped = /%\d(\d|[A-Z])/.exec(page);
-	if (escaped === null) { 
-	    page = escape(page);
-	    
-	}
+	    var url_list = url.split('/')
+	    var page = (url_list.reverse())[0]
+	    // is page escaped?
+	    // does page contain regex sequence %\d\d
+	    var escaped = /%\d(\d|[A-Z])/.exec(page);
+	    if (escaped === null) { 
+		page = escape(page);
+	    }
 
 	    var preview_url = 'http://beyond-social.org/preview/'+ page +'.html' ;
 	    $('p#url').css('color', 'black');

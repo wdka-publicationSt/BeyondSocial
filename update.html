@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Beyond Social - Website Update</title>
+    <meta charset="utf-8">
+    <style type="text/css" media="screen">
+      input#url{ width: 50%;}
+    </style>
+  </head>
+  <body>
+    <h1>Beyond Social  - Website Update</h1>
+    <p>To update Beyond Social website with new content from the wiki, click "Update"</p>
+    <p>(Only articles under the category: 04_Publish_me will be imported on to the website)</p>
+
+    <button id="update" type="update" name="update" value="Update">Update</button>
+
+    <script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(
+	function(){
+	    console.log('I am ready');
+	}
+    )
+
+
+    function updatesite(){
+	console.log('UPDATE'); 
+
+        //Ajax POST
+	$.ajax({
+	    contentType:"application/json",
+	    type: "POST",
+	    data:JSON.stringify({'action': 'update'}),
+	    dataType:"json",
+	    url: "/cgi-bin/bs_update.cgi", 
+	    success: function(data){
+	    }
+	})
+	    
+    }
+	    
+$('button#update').click(
+    function(){ updatesite(); }
+)
+
+</script>
+</body>
+</html>
