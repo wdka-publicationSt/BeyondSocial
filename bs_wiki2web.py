@@ -2,13 +2,15 @@
 # -*- coding: utf-8 -*-
 
 import xml.etree.ElementTree as ET
-import html5lib, pprint
+import html5lib, urllib, pprint
 from bs_modules import pandoc2html, replace_gallery, replace_video, index_addwork, write_html_file, mw_cats, mw_page_imgsurl, mw_img_url, mw_page_text, mwsite, mw_page_cats, mw_page, remove_cats, find_authors
 from argparse import ArgumentParser
 
 category_topic = ['Aesthetics', 'Bottom-up', 'Economics', 'Failures', 'Participation', 'Politics', 'Strategies', 'Transformation', 'Visions', 'Technology']
 category_section = ['Discourse', 'Introduction', 'Projects', 'Proposals' ]
 issue_names = {'1': 'Redesigning Business'} 
+issue_current = issue_names[issue_names.keys()[-1]]
+
 
 p = ArgumentParser()
 p.add_argument("--host", default="beyond-social.org")
@@ -27,65 +29,57 @@ else:
 
 print 'memberpages', memberpages
 #print args.page
-########
-# Templates
-########
-page_template = open("article-template.html", "r")
-#index_template = open('index-template.html', 'r') 
-#index_tree = html5lib.parse(index_template, namespaceHTMLElements=False)
-#index_container = index_tree.find(".//div[@class='isotope']") #maybe id is important, to destinguish it
-
 
 ########
 # Create Page 
 ########
+page_template = open("article-template.html", "r")
+indexdict = {} #parent dict: contains articledict instances
 for member in memberpages:
     print member
     page = mw_page(site, member)
     page_cats = mw_page_cats(site, page)
     page_text = mw_page_text(site, page)
 #    page_imgs = mw_page_imgsurl(site, page)    
-    workdict = {'Title': member, 'Content': page_text, 'Categories':page_cats}
+    articledict = {'Title': member, 'Content': page_text, 'Categories':page_cats}
 
-    if workdict['Content']:# clean and convert content to html
-        workdict['Authors'], workdict['Content'] = find_authors(workdict['Content'])
-        workdict['Content'] = remove_cats(workdict['Content'])
-        workdict['Content'] = pandoc2html(workdict['Content'])
-        workdict['Category Topics'] = [] #as to be appended in loop below
+    if articledict['Content']:# clean and convert content to html
+        articledict['Authors'], articledict['Content'] = find_authors(articledict['Content'])
+        articledict['Content'] = remove_cats(articledict['Content'])
+        articledict['Content'] = pandoc2html(articledict['Content'])
+        articledict['Category Topics'] = [] #as to be appended in loop below
         
         # todo: replace images src with full url # with html
-        for entry in workdict['Categories']:
+        for entry in articledict['Categories']:
             category =  (entry).replace('Category:', '')
             if 'Issue' in category:
-                workdict['Category Issue'] = category.replace('Issue ','')          
-                workdict['Category Issue'] = workdict['Category Issue']  +' '+ issue_names[workdict['Category Issue']]                                 
+                articledict['Category Issue'] = category.replace('Issue ','')          
+                articledict['Category Issue'] = articledict['Category Issue']  +' '+ issue_names[articledict['Category Issue']]
             elif category in category_topic:
-                workdict['Category Topics'].append(category)
+                articledict['Category Topics'].append(category)
             elif category in category_section:
-                workdict['Category Section']= category
-            
-        # pprint.pprint(workdict['Category Topics'])
-        # pprint.pprint(workdict['Category Issue'])
-        # print
+                articledict['Category Section']= category
+
+        articledict.pop('Categories') 
         
         # HTML tree
         # create work page
         page_tree = html5lib.parse(page_template, namespaceHTMLElements=False)
         page_title = page_tree.find('.//title')
         page_title_h1 = page_tree.find('.//h1[@title="title"]')
-        page_title.text = workdict['Title']
-        page_title_h1.text = workdict['Title']
+        page_title.text = articledict['Title']
+        page_title_h1.text = articledict['Title']
         page_issue =  page_tree.find('.//span[@id="issue"]')
-        page_issue.text = workdict['Category Issue']
+        page_issue.text = articledict['Category Issue']
         page_section = page_tree.find('.//span[@id="section"]')
-        page_section.text = workdict['Category Section']
+        page_section.text = articledict['Category Section']
         page_topics =  page_tree.find('.//span[@id="topics"]')
-        page_topics.text = " ".join(workdict['Category Topics'])
+        page_topics.text = " ".join(articledict['Category Topics'])
         
         # maybe this can be MADE + SIMPLY
         # but content comes wrapped in <html><body>
         page_content = page_tree.find('.//div[@class="content"]')
-        content =  html5lib.parse(workdict['Content'], namespaceHTMLElements=False)
+        content =  html5lib.parse(articledict['Content'], namespaceHTMLElements=False)
         bodycontent = content.findall('.//body/*') 
         for el in bodycontent:
             page_content.append(el)
@@ -97,12 +91,78 @@ for member in memberpages:
             img.set('src', img_fullurl)
         
 #        print ET.tostring(page_tree) 
-        work_filename = 'articles/{}.html'.format( workdict['Title'].replace(' ', '_'))
+        work_filename = 'articles/{}.html'.format( articledict['Title'].replace(' ', '_'))
+        articledict['Path'] = work_filename        
         write_html_file(page_tree, work_filename)
 
+        indexdict[articledict['Title']] = articledict
+        
+########
+# Index
+########
+index_template = open("index-template.html", "r") 
+index_tree = html5lib.parse(index_template, namespaceHTMLElements=False)
+index_imgs_section = index_tree.find('.//ul[@class="imageNavigation"]')
+
+for article in indexdict.keys():    
+    authors = indexdict[article]['Authors']
+    path = indexdict[article]['Path']
+    issue = indexdict[article]['Category Issue']
+    section = indexdict[article]['Category Section']
+    topics =  indexdict[article]['Category Topics']
+
+    index_section = index_tree.find('.//ul[@id="section_{}"]'.format(section.encode('utf-8')))
+    index_item = ET.SubElement(index_section, 'li',
+                               attrib={#'class': " ".join(topics)+" "+section,
+                                       # 'data-name': article,
+                                       'data-section':section,
+                                       'data-categories': " ".join(topics)+" "+section
+                                   })
+
+    article_link = ET.SubElement(index_item, 'a', attrib={'href':urllib.quote(path)})
+    article_link.text = article
+
+    article_author = ET.SubElement(index_item, 'p', attrib={'class':'authorTitle'})
+    article_author.text = authors
+    print 'UL', ET.tostring(index_section)
+
+
+    
+    
+    index_img_item = ET.SubElement(index_imgs_section, 'li',
+                               attrib={#'class': " ".join(topics)+" "+section,
+                                       # 'data-name': article,
+                                       'data-section':section,
+                                       'data-categories': " ".join(topics)+" "+section,
+                                   'style':'position: absolute; left: 0px; top: 0px;'
+                                   })
+
+    article_img_link = ET.SubElement(index_item, 'a', attrib={'href':urllib.quote(path)})
+    article_img_img = ET.SubElement(article_img_link, 'img', attrib={'src':'http://beyond-social.org/wiki/images/0/02/Jacco_van_Uden.jpg'})
+
+
+    
+title=index_tree.find('.//title')
+title.text = 'Beyond Social: ' + issue_current
+
+index_filename = 'index.html'
+write_html_file(index_tree, index_filename)
+
+#pprint.pprint(indexdict)
+
 
         
-
-
         
-        
+'''
+## imageNavigation
+
+<ul style="display: none; position: relative; height: 250px;" class="imageNavigation">
+<li style="position: absolute; left: 0px; top: 0px;"
+class="Issue 1 Discourse Economics Technology Transformation"
+data-categories="Issue 1 Discourse Economics Technology Transformation"
+data-issue="Issue 1"
+data-name="Paradigm_Shift"
+data-section="Discourse"
+data-touched="2015-01-29T09:57:35">
+<a href="articles/Paradigm_Shift.html"><img src="http://beyond-social.org/wiki/images/thumb/c/c2/Foto-web_1280x1280px-04b.jpg/300px-Foto-web_1280x1280px-04b.jpg"></a></li>
+'''
