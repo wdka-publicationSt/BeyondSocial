@@ -12,16 +12,21 @@ issue_names = {'1': 'Redesigning Business'}
 
 p = ArgumentParser()
 p.add_argument("--host", default="beyond-social.org")
-p.add_argument("--path", default="/wiki/", help="nb: should end with /")
-p.add_argument("--category", "-c", nargs="*", default=[['04 Publish Me']], action="append", help="category to query, use -c foo -c bar to intersect multiple categories")
+p.add_argument("--path", default="/wiki/", help="path: should end with /")
+p.add_argument("--category", "-c", nargs="*", default=[['04 Publish Me']], action="append", help="Category to query. Use: -c foo -c bar to intersect multiple categories")
+p.add_argument("--page", help='Page to query. Will override cateogory querying.Use: --page "Name Of Wiki Page"')
 args = p.parse_args()
-print args
+print 'args', args
 
 site = mwsite(args.host, args.path)
-memberpages=mw_cats(site, args)
-# memberpages = [u'Designing Change'] # for testing
-#print 'memberpages', memberpages
 
+if args.page:
+    memberpages = [args.page.encode('utf-8')]
+else:
+    memberpages=mw_cats(site, args)
+
+print 'memberpages', memberpages
+#print args.page
 ########
 # Templates
 ########
