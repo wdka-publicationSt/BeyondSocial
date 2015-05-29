@@ -40,16 +40,17 @@ for member in memberpages:
     page = mw_page(site, member)
     page_cats = mw_page_cats(site, page)
     page_text = mw_page_text(site, page)
-#    page_imgs = mw_page_imgsurl(site, page)    
-    articledict = {'Title': member, 'Content': page_text, 'Categories':page_cats}
-
+    page_imgs = mw_page_imgsurl(site, page)
+    page_imgs = { key.capitalize():value for key, value in page_imgs.items()} # capatalize keys, so can be called later
+    articledict = {'Title': member, 'Content': page_text, 'Categories':page_cats, 'Images': page_imgs}
+#    pprint.pprint(articledict['Images'])
+    
     if articledict['Content']:# clean and convert content to html
         articledict['Authors'], articledict['Content'] = find_authors(articledict['Content'])
         articledict['Content'] = remove_cats(articledict['Content'])
         articledict['Content'] = pandoc2html(articledict['Content'])
         articledict['Category Topics'] = [] #as to be appended in loop below
-        
-        # todo: replace images src with full url # with html
+              
         for entry in articledict['Categories']:
             category =  (entry).replace('Category:', '')
             if 'Issue' in category:
@@ -87,9 +88,22 @@ for member in memberpages:
         # imgs full url
         imgs = page_content.findall('.//img')
         for img in  imgs:
-            img_fullurl = mw_img_url(site, img.get('src'))
-            img.set('src', img_fullurl)
-        
+            # src -> imgname; imgname is a key in  articledict['Images'], which can provide url of img
+            # articledict['Images'] =
+            # {u'File:personalmeasure.jpg': u'http://beyond-social.org/wiki/images/7/75/PersonalMeasure.jpg',
+            #  u'File:vitruvian3.jpg': u'http://beyond-social.org/wiki/images/2/2e/Vitruvian3.jpg'}
+            
+            src = img.get('src')
+            imgname = ("File:"+(src.lower()).replace("_"," ")).decode('utf-8')
+            if imgname in articledict['Images'].keys():
+                src_fullurl = articledict['Images'][imgname]
+#                print 'imgname', imgname, type(imgname), src_fullurl
+            else:
+                src_fullurl  = mw_img_url(site, src) # find url of image
+#                print imgname,'************ NOT found in articledict["Images"] keys', src_fullurl
+              
+            img.set('src', src_fullurl)
+            
 #        print ET.tostring(page_tree) 
         work_filename = 'articles/{}.html'.format( articledict['Title'].replace(' ', '_'))
         articledict['Path'] = work_filename        
@@ -124,7 +138,7 @@ for article in indexdict.keys():
 
     article_author = ET.SubElement(index_item, 'p', attrib={'class':'authorTitle'})
     article_author.text = authors
-    print 'UL', ET.tostring(index_section)
+#    print 'UL', ET.tostring(index_section)
 
 
     
