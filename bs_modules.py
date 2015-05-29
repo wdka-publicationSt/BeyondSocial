@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import pprint, re, subprocess, shlex, urllib
+import pprint, re, subprocess, shlex
 import xml.etree.ElementTree as ET
 from mwclient import Site
 
@@ -124,18 +124,4 @@ def replace_video(content):
     return content
 
 
-# Index Creation
-def index_addwork(parent, workid, href, thumbnail, title, creator, date):
-    child_div = ET.SubElement(parent, 'div', attrib={'class':'item',
-                                                     'id':workid,
-                                                     'data-title':title,
-                                                     'data-creator':creator,
-                                                     'data-date':date})
 
-    grandchild_a = ET.SubElement(child_div, 'a', attrib={'href':href, 'class':'work'})
-    if thumbnail is '':
-        grandgrandchild_h3 = ET.SubElement(grandchild_a, 'h3', attrib={'class':'work', 'id':'thumbnail_replacement'})
-        grandgrandchild_h3.text=title
-    else:
-        grandgrandchild_img = ET.SubElement(grandchild_a, 'img', attrib={'class':'work', 'src':thumbnail})    
-    # need to add css width to div.item
