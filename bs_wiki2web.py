@@ -76,23 +76,22 @@ for member in memberpages:
         page_section.text = articledict['Category Section']
         page_topics =  page_tree.find('.//span[@id="topics"]')
         page_topics.text = " ".join(articledict['Category Topics'])
+        page_author = page_tree.find('.//p[@class="authorTitle"]')
+        page_author.text = articledict['Authors']
+
         
-        # maybe this can be MADE + SIMPLY
-        # but content comes wrapped in <html><body>
         page_content = page_tree.find('.//div[@class="content"]')
         content =  html5lib.parse(articledict['Content'], namespaceHTMLElements=False)
         bodycontent = content.findall('.//body/*') 
         for el in bodycontent:
             page_content.append(el)
+        # maybe above page_content can be ACCESSED + SIMPLY
+        # but content comes wrapped in <html><body>
 
+        
         # imgs full url
         imgs = page_content.findall('.//img')
         for img in  imgs:
-            # src -> imgname; imgname is a key in  articledict['Images'], which can provide url of img
-            # articledict['Images'] =
-            # {u'File:personalmeasure.jpg': u'http://beyond-social.org/wiki/images/7/75/PersonalMeasure.jpg',
-            #  u'File:vitruvian3.jpg': u'http://beyond-social.org/wiki/images/2/2e/Vitruvian3.jpg'}
-            
             src = img.get('src')
             imgname = ("File:"+(src.lower()).replace("_"," ")).decode('utf-8')
             if imgname in articledict['Images'].keys():
@@ -108,7 +107,6 @@ for member in memberpages:
         work_filename = 'articles/{}.html'.format( articledict['Title'].replace(' ', '_'))
         articledict['Path'] = work_filename        
         write_html_file(page_tree, work_filename)
-
         indexdict[articledict['Title']] = articledict
         
 ########
@@ -124,11 +122,11 @@ for article in indexdict.keys():
     issue = indexdict[article]['Category Issue']
     section = indexdict[article]['Category Section']
     topics =  indexdict[article]['Category Topics']
-
+    images = indexdict[article]['Images']
     index_section = index_tree.find('.//ul[@id="section_{}"]'.format(section.encode('utf-8')))
     index_item = ET.SubElement(index_section, 'li',
-                               attrib={#'class': " ".join(topics)+" "+section,
-                                       # 'data-name': article,
+                               attrib={'class': " ".join(topics)+" "+section,
+                                       'data-name': article,
                                        'data-section':section,
                                        'data-categories': " ".join(topics)+" "+section
                                    })
@@ -140,19 +138,18 @@ for article in indexdict.keys():
     article_author.text = authors
 #    print 'UL', ET.tostring(index_section)
 
+    for imgurl in images.values():
+        print 'imgurl', imgurl
+        index_img_item = ET.SubElement(index_imgs_section, 'li',
+                                   attrib={'class': " ".join(topics)+" "+section,
+                                           'data-name': article,
+                                           'data-section':section,
+                                           'data-categories': " ".join(topics)+" "+section,
+                                           'style':'position: absolute; left: 0px; top: 0px;'
+                                       })
 
-    
-    
-    index_img_item = ET.SubElement(index_imgs_section, 'li',
-                               attrib={#'class': " ".join(topics)+" "+section,
-                                       # 'data-name': article,
-                                       'data-section':section,
-                                       'data-categories': " ".join(topics)+" "+section,
-                                   'style':'position: absolute; left: 0px; top: 0px;'
-                                   })
-
-    article_img_link = ET.SubElement(index_item, 'a', attrib={'href':urllib.quote(path)})
-    article_img_img = ET.SubElement(article_img_link, 'img', attrib={'src':'http://beyond-social.org/wiki/images/0/02/Jacco_van_Uden.jpg'})
+        article_img_link = ET.SubElement(index_img_item, 'a', attrib={'href':urllib.quote(path)})
+        article_img_img = ET.SubElement(article_img_link, 'img', attrib={'src':imgurl})
 
 
     

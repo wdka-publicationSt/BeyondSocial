@@ -49,11 +49,11 @@ opacity:1;
 
 
 p.authorTitle{
-	font-family: avenue;
-	font-size: 20px;
+	font-family: avenue !important;
+	font-size: 20px !important;
 	letter-spacing: 1px;
 	font-weight: normal;
-	line-height: 30px;
+	line-height: 30px !important;
 	margin-top: 1px;
 	padding-bottom: 9px;
 	/*margin-bottom: 30px;*/
@@ -209,6 +209,8 @@ body {
 	width:90%; 
 	float: left;
 }
+
+
 
 .intro {
 	width:auto;
