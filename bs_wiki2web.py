@@ -101,9 +101,7 @@ def create_page(memberpages, mode):
             links = page_content.findall('.//a')
             for link in  links:
                 print 'Link', ET.tostring(link)
-                replace_img_a_tag(link)
-                
-
+                replace_img_a_tag(link)                
                 
             if mode is 'index':            
                 work_filename = 'articles/{}.html'.format( articledict['Title'].replace(' ', '_'))
