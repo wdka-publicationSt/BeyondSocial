@@ -123,5 +123,18 @@ def replace_video(content):
     content = re.sub(youtube_exp, "<iframe src='https://www.youtube.com/embed/\g<1>' width='600px' height='450px'> </iframe>", content)
     return content
 
+img_exp=re.compile('^.*?\.(?:jpg|jpeg|JPG|JPEG|png|gif)')
+
+def replace_img_a_tag(img_anchor):
+    # TO DO: remove <a> - requires finding the img_anchor
+    href = img_anchor.get('href')
+    if re.match(img_exp, href):
+        img_anchor.clear()
+        figure = ET.SubElement(img_anchor, 'figure')
+        img = ET.SubElement(figure, 'img', attrib={'src': href})
+#        figcaption = ET.SubElement(figure, 'figcaption')
+#        figcaption.text = href
 
 
+
+        

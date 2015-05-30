@@ -3,7 +3,7 @@
 
 import xml.etree.ElementTree as ET
 import html5lib, urllib, pprint
-from bs_modules import pandoc2html, write_html_file, mw_cats, mw_page_imgsurl, mw_img_url, mw_page_text, mwsite, mw_page_cats, mw_page, remove_cats, find_authors
+from bs_modules import pandoc2html, write_html_file, mw_cats, mw_page_imgsurl, mw_img_url, mw_page_text, mwsite, mw_page_cats, mw_page, remove_cats, find_authors, replace_video, replace_img_a_tag
 # unsued from bs_modules: replace_gallery, replace_video, index_addwork,
 from argparse import ArgumentParser
 
@@ -46,6 +46,7 @@ def create_page(memberpages, mode):
         if articledict['Content']:# clean and convert content to html
             articledict['Authors'], articledict['Content'] = find_authors(articledict['Content'])
             articledict['Content'] = remove_cats(articledict['Content'])
+            articledict['Content'] = replace_video(articledict['Content'])
             articledict['Content'] = pandoc2html(articledict['Content'])
             articledict['Category Topics'] = [] #as to be appended in loop below
             
@@ -95,6 +96,15 @@ def create_page(memberpages, mode):
 
                 img.set('src', src_fullurl)
 
+
+            # wiki remote images: convert <a> to <img>
+            links = page_content.findall('.//a')
+            for link in  links:
+                print 'Link', ET.tostring(link)
+                replace_img_a_tag(link)
+                
+
+                
             if mode is 'index':            
                 work_filename = 'articles/{}.html'.format( articledict['Title'].replace(' ', '_'))
             elif mode is 'preview':
@@ -104,6 +114,7 @@ def create_page(memberpages, mode):
             write_html_file(page_tree, work_filename)
             print 'write file', work_filename
             indexdict[articledict['Title']] = articledict
+            
     return indexdict
         
 
