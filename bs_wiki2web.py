@@ -99,8 +99,7 @@ def create_page(memberpages, mode):
 
             # wiki remote images: convert <a> to <img>
             links = page_content.findall('.//a')
-            for link in  links:
-                print 'Link', ET.tostring(link)
+            for link in  links:                
                 replace_img_a_tag(link)                
                 
             if mode is 'index':            
@@ -141,7 +140,6 @@ def create_index(indexdict):
         article_author.text = authors
         
         for imgurl in images.values():
-            print 'imgurl', imgurl
             index_img_item = ET.SubElement(index_imgs_section, 'li',
                                        attrib={'class': " ".join(topics)+" "+section,
                                                'data-name': article,
