@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import cgitb; cgitb.enable()
-import cgi, os, json, sys, subprocess, urllib
+import cgi, os, json, sys, subprocess, urllib, shlex
 from urlparse import urlparse
 
 
 def create_preview(filename):
-   create = 'python bs_wiki2web.py --preview "{}"'.format(filename) 
-   subprocess.call(create, cwd='/var/www/beyond-social.org/html/', shell=True)
-
-#create_preview('Lexicon') #test
+   create = shlex.split('/usr/bin/python ./bs_wiki2web.py --preview Lexicon' )
+   touch = shlex.split('/usr/bin/python ./test-touch.py' )
+   # shlex.split('touch ../preview/yyyyy')
+   p = subprocess.Popen(create, stdout=subprocess.PIPE)
+   
 
 method = os.environ.get("REQUEST_METHOD")
 if method == "POST":
@@ -21,6 +22,7 @@ if method == "POST":
    print "Content-type: application/json\n\n"
    print json.dumps(result)
    
+#create_preview('Friction_as_a_Formula')
 
 
 
