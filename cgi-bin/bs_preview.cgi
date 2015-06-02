@@ -6,10 +6,10 @@ from urlparse import urlparse
 
 
 def create_preview(filename):
-   script_path = 'preview_article.py'
-   create = 'python {} {}'.format(script_path,filename) ## ChHANGE TO CHICHI
-   subprocess.call(create, shell=True) # saved in tmp_content.html html   
+   create = 'python bs_wiki2web.py --preview "{}"'.format(filename) 
+   subprocess.call(create, cwd='/var/www/beyond-social.org/html/', shell=True)
 
+#create_preview('Lexicon') #test
 
 method = os.environ.get("REQUEST_METHOD")
 if method == "POST":
@@ -21,6 +21,9 @@ if method == "POST":
    print "Content-type: application/json\n\n"
    print json.dumps(result)
    
+
+
+
 
       
 

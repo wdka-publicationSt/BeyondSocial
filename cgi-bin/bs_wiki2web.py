@@ -26,7 +26,7 @@ p.add_argument("--category", "-c", nargs="*", default=[['04 Publish Me']], actio
 p.add_argument("--preview", help='Preview page. Will override category querying. Use: --page "Name Of Wiki Page"')
 #p.add_argument("--preview", action='store_true', help='Preview mode flag. Requires --page "Name Of Wiki Page" ') 
 args = p.parse_args()
-print 'args', args
+#print 'args', args
 
 ######
 # DEFS:  create_page create_index
@@ -35,7 +35,7 @@ def create_page(memberpages, mode):
     page_template = open("article-template.html", "r")
     indexdict = {} #parent dict: contains articledict instances
     for member in memberpages:
-        print member
+        #print member
         page = mw_page(site, member)
         page_cats = mw_page_cats(site, page)
         page_text = mw_page_text(site, page)
@@ -99,8 +99,7 @@ def create_page(memberpages, mode):
 
             # wiki remote images: convert <a> to <img>
             links = page_content.findall('.//a')
-            for link in  links:
-                print 'Link', ET.tostring(link)
+            for link in  links:                
                 replace_img_a_tag(link)                
                 
             if mode is 'index':            
@@ -110,7 +109,7 @@ def create_page(memberpages, mode):
 
             articledict['Path'] = work_filename        
             write_html_file(page_tree, work_filename)
-            print 'write file', work_filename
+            #print 'write file', work_filename
             indexdict[articledict['Title']] = articledict
             
     return indexdict
@@ -141,7 +140,6 @@ def create_index(indexdict):
         article_author.text = authors
         
         for imgurl in images.values():
-            print 'imgurl', imgurl
             index_img_item = ET.SubElement(index_imgs_section, 'li',
                                        attrib={'class': " ".join(topics)+" "+section,
                                                'data-name': article,
@@ -163,15 +161,15 @@ def create_index(indexdict):
 site = mwsite(args.host, args.path)
 
 if args.preview is not None:
-    print "** Page Preview Mode**"
+    #print "** Page Preview Mode**"
     memberpages = [args.preview.encode('utf-8')]
-    print 'memberpages:', memberpages
+    #print 'memberpages:', memberpages
     create_page(memberpages, 'preview')
     
 else:
-    print "** New Index Mode **"
+    #print "** New Index Mode **"
     memberpages=mw_cats(site, args)
-    print 'memberpages:', memberpages
+    #print 'memberpages:', memberpages
     indexdict = create_page(memberpages, 'index')
     #pprint.pprint(indexdict)
     create_index(indexdict)
