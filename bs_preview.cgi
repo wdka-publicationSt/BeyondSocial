@@ -11,10 +11,12 @@ from urlparse import urlparse
 
 def create_preview(filename):
    wd = '/home/andre/Documents/WdKA/BeyondSocial/development'
-   cmd = 'python {}/bs_wiki2web.py --preview Lexicon'.format(wd)
+   #cmd = 'python {}/bs_wiki2web.py --preview Lexicon'.format(wd)
+   cmd = 'python {}/touch.py'.format(wd)
    #create = shlex.split( cmd )
-   #touch = shlex.split('/usr/bin/python ./test-touch.py' )#works fine
-   # shlex.split('touch ../preview/yyyyy')
+   #touch = shlex.split('/usr/bin/python ./test-touch.py' )#works fine   
+   #cmd = 'touch {}/preview/xxxxy'.format(wd)
+
    subprocess.call(cmd, shell=True)
 
 
@@ -27,13 +29,15 @@ if method == "POST":
    result = {'success':'true', 'msg':wikipage + " was posted by you"}
    print "Content-type: application/json\n\n"
    print json.dumps(result)
-   
-create_preview('Lexicon')
 
+create_preview('foo')
 
+# find right preview dir!
 
+# it can write to, but needs to have full path
+# /usr/lib/cgi-bin/preview/xxxxy 
+# '/home/andre/Documents/WdKA/BeyondSocial/development'      
 
-      
-
-
+# Try #1: indicating the wd in bs_wiki2web.py
+# Try #2
 

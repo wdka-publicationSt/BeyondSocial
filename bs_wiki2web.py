@@ -15,6 +15,8 @@ category_section = ['Discourse', 'Introduction', 'Projects', 'Proposals' ]
 issue_names = {'1': 'Redesigning Business'} 
 issue_current = issue_names[issue_names.keys()[-1]]
 
+wd = '/home/andre/Documents/WdKA/BeyondSocial/development' #working directiory
+
 #####
 # Args
 ####
@@ -105,7 +107,7 @@ def create_page(memberpages, mode):
             if mode is 'index':            
                 work_filename = 'articles/{}.html'.format( articledict['Title'].replace(' ', '_'))
             elif mode is 'preview':
-                work_filename = 'preview/{}.html'.format( articledict['Title'].replace(' ', '_'))
+                work_filename = '{}/preview/{}.html'.format(wd, articledict['Title'].replace(' ', '_'))
 
             articledict['Path'] = work_filename        
             write_html_file(page_tree, work_filename)
