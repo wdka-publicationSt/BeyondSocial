@@ -18,7 +18,7 @@ args = p.parse_args()
 def pandoc2html(mw_content):
     '''convert individual mw sections to html'''
     mw_content = mw_content.encode('utf-8')
-    tmpfile = open('tmp_content.mw', 'w')
+    tmpfile = open('{}/tmp_content.mw'.format(wd), 'w')
     tmpfile.write(mw_content)
     tmpfile.close()
     args_pandoc = shlex.split( 'pandoc -f mediawiki -t html5 tmp_content.mw' )

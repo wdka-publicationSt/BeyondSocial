@@ -3,9 +3,14 @@
 
 import xml.etree.ElementTree as ET
 import html5lib, urllib, pprint
-from bs_modules import pandoc2html, write_html_file, mw_cats, mw_page_imgsurl, mw_img_url, mw_page_text, mwsite, mw_page_cats, mw_page, remove_cats, find_authors, replace_video, replace_img_a_tag
+from bs_modules import pandoc2html, write_html_file, mw_cats, mw_page_imgsurl, mw_img_url, mw_page_text, mwsite, mw_page_cats, mw_page, remove_cats, find_authors, replace_video, replace_img_a_tag, wd
 # unsued from bs_modules: replace_gallery, replace_video, index_addwork,
 from argparse import ArgumentParser
+
+##############
+# REQUIRES: defining wd in bs_modules.py with the full path of BS scripts dir
+# chmod a+w tmp_content.mw preview/
+#############
 
 #####
 # BS topics, section, issue names:
@@ -14,8 +19,6 @@ category_topic = ['Aesthetics', 'Bottom-up', 'Economics', 'Failures', 'Participa
 category_section = ['Discourse', 'Introduction', 'Projects', 'Proposals' ]
 issue_names = {'1': 'Redesigning Business'} 
 issue_current = issue_names[issue_names.keys()[-1]]
-
-wd = '/home/andre/Documents/WdKA/BeyondSocial/development' #working directiory
 
 #####
 # Args
@@ -34,7 +37,7 @@ args = p.parse_args()
 # DEFS:  create_page create_index
 ######
 def create_page(memberpages, mode):
-    page_template = open("article-template.html", "r")
+    page_template = open("{}/article-template.html".format(wd), "r")
     indexdict = {} #parent dict: contains articledict instances
     for member in memberpages:
         #print member
@@ -105,7 +108,7 @@ def create_page(memberpages, mode):
                 replace_img_a_tag(link)                
                 
             if mode is 'index':            
-                work_filename = 'articles/{}.html'.format( articledict['Title'].replace(' ', '_'))
+                work_filename = '{}/articles/{}.html'.format(wd, articledict['Title'].replace(' ', '_'))
             elif mode is 'preview':
                 work_filename = '{}/preview/{}.html'.format(wd, articledict['Title'].replace(' ', '_'))
 
@@ -118,7 +121,7 @@ def create_page(memberpages, mode):
         
 
 def create_index(indexdict):
-    index_template = open("index-template.html", "r") 
+    index_template = open("{}/index-template.html".format(wd), "r") 
     index_tree = html5lib.parse(index_template, namespaceHTMLElements=False)
     index_imgs_section = index_tree.find('.//ul[@class="imageNavigation"]')
     
@@ -153,7 +156,7 @@ def create_index(indexdict):
             article_img_img = ET.SubElement(article_img_link, 'img', attrib={'src':imgurl})            
     title=index_tree.find('.//title')
     title.text = 'Beyond Social: ' + issue_current
-    index_filename = 'index.html'
+    index_filename = '{}/index.html'.format(wd)
     write_html_file(index_tree, index_filename)
 
 

@@ -4,7 +4,10 @@
 import pprint, re, subprocess, shlex
 import xml.etree.ElementTree as ET
 from mwclient import Site
-
+##############
+# REQUIRES: defining wd  with the full path of BS scripts dir
+#############
+wd = '/home/andre/Documents/WdKA/BeyondSocial/development' #working directiory
 
 #########
 # Site Level
@@ -79,10 +82,10 @@ def write_html_file(html_tree, filename):
 def pandoc2html(mw_content):
     '''convert individual mw sections to html'''
     mw_content = mw_content.encode('utf-8')
-    tmpfile = open('tmp_content.mw', 'w')
+    tmpfile = open('{}/tmp_content.mw'.format(wd), 'w')
     tmpfile.write(mw_content)
     tmpfile.close()
-    args_pandoc = shlex.split( 'pandoc -f mediawiki -t html5 tmp_content.mw' )
+    args_pandoc = shlex.split( 'pandoc -f mediawiki -t html5 {}/tmp_content.mw'.format(wd) )
     pandoc = subprocess.Popen(args_pandoc, stdout=subprocess.PIPE)
     html = pandoc.communicate()[0]
     html = html.decode("utf-8")

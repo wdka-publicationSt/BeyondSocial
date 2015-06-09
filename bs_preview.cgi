@@ -11,8 +11,8 @@ from urlparse import urlparse
 
 def create_preview(filename):
    wd = '/home/andre/Documents/WdKA/BeyondSocial/development'
-   #cmd = 'python {}/bs_wiki2web.py --preview Lexicon'.format(wd)
-   cmd = 'python {}/touch.py'.format(wd)
+   cmd = 'python {}/bs_wiki2web.py --preview Lexicon'.format(wd)
+   #cmd = 'python {}/touch.py'.format(wd)
    #create = shlex.split( cmd )
    #touch = shlex.split('/usr/bin/python ./test-touch.py' )#works fine   
    #cmd = 'touch {}/preview/xxxxy'.format(wd)
