@@ -11,7 +11,7 @@ from urlparse import urlparse
 
 def create_preview(filename):
    wd = '/home/andre/Documents/WdKA/BeyondSocial/development'
-   cmd = 'python {}/bs_wiki2web.py --preview Lexicon'.format(wd)
+   cmd = 'python {}/bs_wiki2web.py --preview {}'.format(wd, filename)
    #cmd = 'python {}/touch.py'.format(wd)
    #create = shlex.split( cmd )
    #touch = shlex.split('/usr/bin/python ./test-touch.py' )#works fine   
@@ -26,11 +26,11 @@ if method == "POST":
    wikipage=myjson['wikipage'] #in JSON look for value of key 'myquery'
    create_preview(wikipage)
    # JSON response
-   result = {'success':'true', 'msg':wikipage + " was posted by you"}
+   result = {'success':'true', 'msg':wikipage + " was posted by you"}   
+   create_preview(wikipage)
    print "Content-type: application/json\n\n"
    print json.dumps(result)
 
-create_preview('foo')
 
 # find right preview dir!
 
