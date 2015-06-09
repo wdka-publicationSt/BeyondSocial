@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import xml.etree.ElementTree as ET
@@ -122,7 +122,7 @@ def create_index(indexdict):
     
     for article in indexdict.keys():    
         authors = indexdict[article]['Authors']
-        path = indexdict[article]['Path']
+        path = (indexdict[article]['Path'])[3:] #w/out '../'
         issue = indexdict[article]['Category Issue']
         section = indexdict[article]['Category Section']
         topics =  indexdict[article]['Category Topics']
