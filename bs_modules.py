@@ -7,7 +7,8 @@ from mwclient import Site
 ##############
 # REQUIRES: defining wd  with the full path of BS scripts dir
 #############
-wd = '/home/andre/Documents/WdKA/BeyondSocial/development' #working directiory
+wd = '/var/www/beyond-social.org/html' #working directiory
+#wd = '/home/andre/Documents/WdKA/BeyondSocial/development' #working directiory
 
 #########
 # Site Level

@@ -19,10 +19,10 @@ method = os.environ.get("REQUEST_METHOD")
 if method == "POST":
    myjson =  json.load(sys.stdin) #receive JSON object send from Ajax call
    wikipage=myjson['wikipage'] #in JSON look for value of key 'myquery'
-   wikipage=unquote(wikipage)
+#   wikipage=unquote(wikipage)
    # JSON response
    result = {'success':'true', 'msg':wikipage + " was posted by you"}   
-   create_preview(wikipage) #def w/ subprocess can only come after posting
+   create_preview('Colophon') #def w/ subprocess can only come after posting
    print "Content-type: application/json\n\n"
    print json.dumps(result)
 
