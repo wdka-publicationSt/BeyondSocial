@@ -103,9 +103,9 @@ def create_page(memberpages, mode):
                 replace_img_a_tag(link)                
                 
             if mode is 'index':            
-                work_filename = 'articles/{}.html'.format( articledict['Title'].replace(' ', '_'))
+                work_filename = '../articles/{}.html'.format( articledict['Title'].replace(' ', '_'))
             elif mode is 'preview':
-                work_filename = 'preview/{}.html'.format( articledict['Title'].replace(' ', '_'))
+                work_filename = '../preview/{}.html'.format( articledict['Title'].replace(' ', '_'))
 
             articledict['Path'] = work_filename        
             write_html_file(page_tree, work_filename)
@@ -151,7 +151,7 @@ def create_index(indexdict):
             article_img_img = ET.SubElement(article_img_link, 'img', attrib={'src':imgurl})            
     title=index_tree.find('.//title')
     title.text = 'Beyond Social: ' + issue_current
-    index_filename = 'index.html'
+    index_filename = '../index.html'
     write_html_file(index_tree, index_filename)
 
 
