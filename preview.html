@@ -25,28 +25,23 @@
     <script type="text/javascript">
 
     function sendurl(){
-
 	var url =  $("#url").val();
 	console.log('url', url); 
 	var url_regex = /^http:\/\/beyond-social\.org\/wiki\//.exec(url)
 	if (url_regex === null) {
 	    $('p#url').css('color', 'red');
 	    $('p#url').text("What you have enter does not look like a Beyond Social's wiki URL");
-	    $('input#url').value('');
-	    
+	    $('input#url').value('');	    
 	}
 	else {	    
 	    var url_list = url.split('/')
 	    var page = (url_list.reverse())[0]
-	    // is page escaped?
-	    // does page contain regex sequence %\d\d
 	    var escaped = /%\d(\d|[A-Z])/.exec(page);
 
 	    if (escaped === null) { 
 		page = escape(page);
 	    }
 
-	    console.log('page', page); 
 	    
 	    var preview_url = 'http://beyond-social.org/preview/'+ page +'.html' ;
 	    $('p#url').css('color', 'black');
@@ -62,8 +57,6 @@
 	    data:JSON.stringify({'wikipage': page}),
 	    dataType:"json",
 	    url: "/cgi-bin/bs_preview.cgi", 
-            //cgi-bin/bs_preview.cgi 
-            //the url of the cgi script
 	    success: function(data){
 	    }
 	})
@@ -71,14 +64,6 @@
 	}
 	    
     }
-
-$('body').on('keypress', function(event) {
-    if(event.which === 13){
-	//Disable textbox to prevent multiple submit
-//	$('input#url').attr("disabled", "disabled");
-	sendurl();
-    }
-});
 
 $('input#submit').click(
     function(){ sendurl(); }
