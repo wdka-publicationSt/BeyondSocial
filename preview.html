@@ -27,7 +27,7 @@
     function sendurl(){
 
 	var url =  $("#url").val();
-	console.log(url); 
+	console.log('url', url); 
 	var url_regex = /^http:\/\/beyond-social\.org\/wiki\//.exec(url)
 	if (url_regex === null) {
 	    $('p#url').css('color', 'red');
@@ -41,10 +41,13 @@
 	    // is page escaped?
 	    // does page contain regex sequence %\d\d
 	    var escaped = /%\d(\d|[A-Z])/.exec(page);
+
 	    if (escaped === null) { 
 		page = escape(page);
 	    }
 
+	    console.log('page', page); 
+	    
 	    var preview_url = 'http://beyond-social.org/preview/'+ page +'.html' ;
 	    $('p#url').css('color', 'black');
 	    $('p#url').text('Preview: ');

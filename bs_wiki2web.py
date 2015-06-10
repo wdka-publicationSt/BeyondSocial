@@ -8,7 +8,7 @@ from bs_modules import pandoc2html, write_html_file, mw_cats, mw_page_imgsurl, m
 from argparse import ArgumentParser
 
 ##############
-# REQUIRES: defining wd in bs_modules.py with the full path of BS scripts dir
+# REQUIRES: defining **wd** in bs_modules.py and bs_preview.cgi with the full path of BS scripts dir
 # chmod a+w tmp_content.mw preview/
 #############
 
@@ -42,11 +42,12 @@ def create_page(memberpages, mode):
     for member in memberpages:
         #print member
         page = mw_page(site, member)
+        page_name = page.name 
         page_cats = mw_page_cats(site, page)
         page_text = mw_page_text(site, page)
         page_imgs = mw_page_imgsurl(site, page)
         page_imgs = { key.capitalize():value for key, value in page_imgs.items()} # capatalize keys, so can be called later
-        articledict = {'Title': member, 'Content': page_text, 'Categories':page_cats, 'Images': page_imgs}
+        articledict = {'Title': page_name, 'Content': page_text, 'Categories':page_cats, 'Images': page_imgs}
 
         if articledict['Content']:# clean and convert content to html
             articledict['Authors'], articledict['Content'] = find_authors(articledict['Content'])
