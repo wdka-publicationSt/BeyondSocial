@@ -17,9 +17,10 @@ from argparse import ArgumentParser
 ####
 category_topic = ['Aesthetics', 'Bottom-up', 'Economics', 'Failures', 'Participation', 'Politics', 'Strategies', 'Transformation', 'Visions', 'Technology']
 category_section = ['Discourse', 'Introduction', 'Projects', 'Proposals' ]
-issue_names = {'1': 'Redesigning Business'} 
+issue_names = {'1': 'Redesigning Business', '2':'Exploring Social Art and Design Now'}
+#issue_names.reverse()
 issue_current = issue_names[issue_names.keys()[-1]]
-
+print 'current', issue_current
 #####
 # Args
 ####
@@ -123,19 +124,53 @@ def create_page(memberpages, mode):
     return indexdict
         
 
-def create_index(indexdict):
+def create_index(indexdict, issues):
     index_template = open("{}/index-template.html".format(wd), "r") 
     index_tree = html5lib.parse(index_template, namespaceHTMLElements=False)
+
+
+    # create a section for each issue
+    # each inside div.issuesContainer
+    # in file index-template.html
+    issues_keys = issues.keys()
+    issues_keys.reverse()
+    issuesContainer=index_tree.find('.//div[@class="issuesContainer"]')
+    for issue in issues_keys:
+        print issue_names[issue], issue
+        issueDiv = ET.SubElement(issuesContainer, 'div',
+                                 attrib={'class':'issueItem',
+                                         'id':'issue_{}'.format(issue)})
+
+        subissueDiv = ET.SubElement(issueDiv, 'div', attrib={'class':'issue'})
+        subissueDiv_p = ET.SubElement(subissueDiv, 'p')
+        subissueDiv_p.text = "Issue {}: {}".format(issue, issue_names[issue])
+        ul_imgNav = ET.SubElement(issueDiv, 'ul',
+                                  attrib={'class':'imageNavigation',
+                                          'style':'"display: none; position: relative; height: 250px;"'})
+        
+        ET.SubElement(issueDiv, 'ul',attrib={'class':'list', 'id':'section_Introduction'})
+        ET.SubElement(issueDiv, 'ul',attrib={'class':'list', 'id':'section_Discourse'})
+        ET.SubElement(issueDiv, 'ul',attrib={'class':'list', 'id':'section_Projects'})
+        ET.SubElement(issueDiv, 'ul',attrib={'class':'list', 'id':'section_Proposals'})
+
+
+
+    # create an list item for each article
+    # under the parent issue
+    # in file index-template.html
     index_imgs_section = index_tree.find('.//ul[@class="imageNavigation"]')
-    
     for article in indexdict.keys():    
         authors = indexdict[article]['Authors']
         path = (indexdict[article]['Path'])
         issue = indexdict[article]['Category Issue']
+        issue_numb = issue[0]
+        print 'issue', issue, issue_numb
         section = indexdict[article]['Category Section']
         topics =  indexdict[article]['Category Topics']
         images = indexdict[article]['Images']
-        index_section = index_tree.find('.//ul[@id="section_{}"]'.format(section.encode('utf-8')))
+        index_section = index_tree.find('.//div[@id="issue_{}"]/ul[@id="section_{}"]'.format(issue_numb, section.encode('utf-8')))
+        print 'index_section', len(index_section)
+ 
         index_item = ET.SubElement(index_section, 'li',
                                    attrib={'class': " ".join(topics)+" "+section,
                                            'data-name': article,
@@ -156,7 +191,8 @@ def create_index(indexdict):
                                                'style':'position: absolute; left: 0px; top: 0px;'
                                            })
             article_img_link = ET.SubElement(index_img_item, 'a', attrib={'href':urllib.quote(path)})
-            article_img_img = ET.SubElement(article_img_link, 'img', attrib={'src':imgurl})            
+            article_img_img = ET.SubElement(article_img_link, 'img', attrib={'src':imgurl})
+            
     title=index_tree.find('.//title')
     title.text = 'Beyond Social: ' + issue_current
     index_filename = '{}/index.html'.format(wd)
@@ -180,6 +216,6 @@ else:
     #print 'memberpages:', memberpages
     indexdict = create_page(memberpages, 'index')
     #pprint.pprint(indexdict)
-    create_index(indexdict)
+    create_index(indexdict, issue_names)
 
 
