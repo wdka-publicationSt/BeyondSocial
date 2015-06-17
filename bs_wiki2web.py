@@ -115,10 +115,10 @@ def create_page(memberpages, mode):
                 img = figure.find('.//img')            
                 figcaption = figure.find('.//figcaption')
                 if figcaption is not None:                    
-                    figcaption_text = figcaption.text
-                    if figcaption_text in img.get('src'):
-                        #print 'figcation RM:', figcaption.text, figcaption, ET.tostring(figcaption) 
-                        #print '---------------'
+                    figcaption_text = figcaption.text.upper()
+                    if figcaption_text in img.get('src').upper():
+                        print 'figcation RM:', figcaption.text, figcaption, ET.tostring(figcaption) 
+                        print '---------------'
                         figure.remove(figcaption)                 
                 
                 
