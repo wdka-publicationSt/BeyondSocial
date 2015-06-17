@@ -155,7 +155,14 @@ def create_index(indexdict, issues):
         ET.SubElement(issueDiv, 'ul',attrib={'class':'list', 'id':'section_Projects'})
         ET.SubElement(issueDiv, 'ul',attrib={'class':'list', 'id':'section_Proposals'})
 
+        # ATTENTION: ids are duplicated in //div#issue_N/ul#section_X
+        # ul#section_X = ul#section_Introduction, ul#section_...
+        # these <ul>s with same appear more than once. one for each item 
+        # change ul.list css to ul.section_Proposals, ul.section_...
 
+
+
+        
 
     # create an list (both in text & img navigation) item for each article
     # under the parent issue

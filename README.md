@@ -32,6 +32,8 @@ The workflow shall be:
 
 
 
-
-
+## TO DO
+* duplicated ids: bs_wiki2web.py line 159
+* image captions (like pzi, but also disregarding not only "thumbnail", but dimensions; and working with images in the same line )
+* author names - via template
 
