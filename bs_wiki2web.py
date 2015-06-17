@@ -20,7 +20,7 @@ category_section = ['Discourse', 'Introduction', 'Projects', 'Proposals' ]
 issue_names = {'1': 'Redesigning Business', '2':'Exploring Social Art and Design Now'}
 #issue_names.reverse()
 issue_current = issue_names[issue_names.keys()[-1]]
-print 'current', issue_current
+print 'current issue', issue_current
 #####
 # Args
 ####
@@ -63,7 +63,6 @@ def create_page(memberpages, mode):
                     articledict['Category Issue'] = category.replace('Issue ','')
                     articledict['Category Issue'] = articledict['Category Issue']  +' '+ issue_names[articledict['Category Issue']]
                     #.zfill()
-                    print 'Category Issue', articledict['Category Issue']
                 elif category in category_topic:
                     articledict['Category Topics'].append(category)
                 elif category in category_section:
@@ -105,11 +104,23 @@ def create_page(memberpages, mode):
 
                 img.set('src', src_fullurl)
 
-
             # wiki remote images: convert <a> to <img>
             links = page_content.findall('.//a')
             for link in  links:                
                 replace_img_a_tag(link)                
+
+                
+            figures = page_tree.findall('.//figure')
+            for figure in figures:
+                img = figure.find('.//img')            
+                figcaption = figure.find('.//figcaption')
+                if figcaption is not None:                    
+                    figcaption_text = figcaption.text
+                    if figcaption_text in img.get('src'):
+                        #print 'figcation RM:', figcaption.text, figcaption, ET.tostring(figcaption) 
+                        #print '---------------'
+                        figure.remove(figcaption)                 
+                
                 
             if mode is 'index':            
                 work_filename = '{}/articles/{}.html'.format(wd, articledict['Title'].replace(' ', '_'))
@@ -138,7 +149,7 @@ def create_index(indexdict, issues):
     issues_keys.reverse()
     issuesContainer=index_tree.find('.//div[@class="issuesContainer"]')
     for issue in issues_keys:
-        print issue_names[issue], issue
+        #print issue_names[issue], issue
         issueDiv = ET.SubElement(issuesContainer, 'div',
                                  attrib={'class':'issueItem',
                                          'id':'issue_{}'.format(issue)})
@@ -173,7 +184,6 @@ def create_index(indexdict, issues):
         path = (indexdict[article]['Path'])
         issue = indexdict[article]['Category Issue']
         issue_numb = issue[0]
-        print 'issue', issue, issue_numb
         section = indexdict[article]['Category Section']
         topics =  indexdict[article]['Category Topics']
         images = indexdict[article]['Images']
