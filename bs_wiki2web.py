@@ -62,6 +62,8 @@ def create_page(memberpages, mode):
                 if 'Issue' in category:
                     articledict['Category Issue'] = category.replace('Issue ','')
                     articledict['Category Issue'] = articledict['Category Issue']  +' '+ issue_names[articledict['Category Issue']]
+                    #.zfill()
+                    print 'Category Issue', articledict['Category Issue']
                 elif category in category_topic:
                     articledict['Category Topics'].append(category)
                 elif category in category_section:
@@ -155,10 +157,10 @@ def create_index(indexdict, issues):
 
 
 
-    # create an list item for each article
+    # create an list (both in text & img navigation) item for each article
     # under the parent issue
     # in file index-template.html
-    index_imgs_section = index_tree.find('.//ul[@class="imageNavigation"]')
+    
     for article in indexdict.keys():    
         authors = indexdict[article]['Authors']
         path = (indexdict[article]['Path'])
@@ -169,8 +171,8 @@ def create_index(indexdict, issues):
         topics =  indexdict[article]['Category Topics']
         images = indexdict[article]['Images']
         index_section = index_tree.find('.//div[@id="issue_{}"]/ul[@id="section_{}"]'.format(issue_numb, section.encode('utf-8')))
-        print 'index_section', len(index_section)
- 
+        index_imgs_section = index_tree.find('.//div[@id="issue_{}"]/ul[@class="imageNavigation"]'.format(issue_numb))
+        
         index_item = ET.SubElement(index_section, 'li',
                                    attrib={'class': " ".join(topics)+" "+section,
                                            'data-name': article,
@@ -181,6 +183,8 @@ def create_index(indexdict, issues):
         article_link.text = article
         article_author = ET.SubElement(index_item, 'p', attrib={'class':'authorTitle'})
         article_author.text = authors
+
+        # what is the parent on index_img_section
         
         for imgurl in images.values():
             index_img_item = ET.SubElement(index_imgs_section, 'li',
