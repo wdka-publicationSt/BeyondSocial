@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import xml.etree.ElementTree as ET
-import html5lib, urllib, pprint
+import html5lib, urllib, pprint, collections
 from bs_modules import pandoc2html, write_html_file, mw_cats, mw_page_imgsurl, mw_img_url, mw_page_text, mwsite, mw_page_cats, mw_page, remove_cats, find_authors, replace_video, replace_img_a_tag, wd
 # unsued from bs_modules: replace_gallery, replace_video, index_addwork,
 from argparse import ArgumentParser
@@ -17,9 +17,12 @@ from argparse import ArgumentParser
 ####
 category_topic = ['Aesthetics', 'Bottom-up', 'Economics', 'Failures', 'Participation', 'Politics', 'Strategies', 'Transformation', 'Visions', 'Technology']
 category_section = ['Discourse', 'Introduction', 'Projects', 'Proposals' ]
-issue_names = {'1': 'Redesigning Business', '2':'Exploring Social Art and Design Now'}
+issue_names = {'1': 'Redesigning Business', '2':'Radical Reframing', '3':'Education'}
+issue_names = collections.OrderedDict(sorted(issue_names.items()))
+issue_keys = issue_names.keys()
+print issue_names
 #issue_names.reverse()
-issue_current = issue_names[issue_names.keys()[-1]]
+issue_current = issue_names[issue_keys[-1]]
 print 'current issue', issue_current
 #####
 # Args
