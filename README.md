@@ -1,16 +1,16 @@
 # Beyond Social:  from wiki To front-end
 
-## clone this git
-`git clone https://gitlab.com/Castro0o/beyond-social.git`
-Files will be kept inside beyond-social.org/html/beyond-social
+## Clone Repository
+At the moment we are working with branch v1 of BS https://gitlab.com/Castro0o/beyond-social/tree/v1
+clone it with git clone https://gitlab.com/Castro0o/beyond-social.git -b v1
 
-You can now make git pull from within beyond-social.org/html/beyond-social to keep your cloned repository updated. 
-@Template: You cannot do `git push` from the server, only from you own machine!
-
-The workflow shall be:
-* Work on you local machine
-* Push from local machine to Gitlab
-* In the server: Pull updates 
+## Requirements
+* pandoc
+* python mwclient https://github.com/mwclient/mwclient 
+   * install$ sudo pip install mwclient
+## Run
+`./bs_wiki2web.py --local` will update the articles in 04_Publish_Me category.
+`./bs_wiki2web.py --local --category "03 Proof Me" --category "04 Publish Me" ` will update the articles in both "03 Proof Me" and "04 Publish Me" categories
 
 ## Update index and articles
 
