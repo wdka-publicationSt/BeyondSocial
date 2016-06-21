@@ -17,7 +17,7 @@ from argparse import ArgumentParser
 ####
 category_topic = ['Aesthetics', 'Bottom-up', 'Economics', 'Failures', 'Participation', 'Politics', 'Strategies', 'Transformation', 'Visions', 'Technology']
 category_section = ['Discourse', 'Introduction', 'Projects', 'Proposals' ]
-issue_names = {'1': 'Redesigning Business', '2':'Radical Reframing', '3':'Education'}
+issue_names = {'1': 'Redesigning Business', '2':'Education'}
 issue_names = collections.OrderedDict(sorted(issue_names.items()))
 issue_keys = issue_names.keys()
 print issue_names
@@ -132,7 +132,7 @@ def create_page(memberpages, mode):
                 for figure in figures:
                     img = figure.find('.//img')            
                     figcaption = figure.find('.//figcaption')
-                    if figcaption is not None:                    
+                    if figcaption is not None:
                         figcaption_text = figcaption.text.upper()
                         if figcaption_text in img.get('src').upper():
                             #print 'figcation RM:', figcaption.text, figcaption, ET.tostring(figcaption) 
@@ -251,7 +251,7 @@ if args.preview is not None:
 else:
     #print "** New Index Mode **"
     memberpages=mw_cats(site, args)
-    #print 'memberpages:', memberpages
+    print 'memberpages:', memberpages
     indexdict = create_page(memberpages, 'index')
     #pprint.pprint(indexdict)
     create_index(indexdict, issue_names)

@@ -14,17 +14,23 @@ def mwsite(host, path): #returns wiki site object
 def mw_cats(site, args): #returns pages member of args(categories)
     last_names = None
     for cats in args.category:
+            print 'cats', cats
             for ci, cname in enumerate(cats):
                     cat = site.Categories[cname]
                     pages = list(cat.members())
+                    #print 'pages', pages
                     # for p in pages:
                     # 	pages_by_name[p.name] = p
+                    print 'last_names', last_names
                     if last_names == None:
                             results = pages
                     else:
-                            results = [p for p in pages if p.name in last_names]                
+                            results = [p for p in pages if p.name in last_names]
+                            
                     last_names = set([p.name for p in pages])
+            results = pages                            
             results = list(results)
+            # print results
     return [p.name  for p in results]
 
     
@@ -51,6 +57,7 @@ def mw_page_imgsurl(site, page):
     #returns list of tuples (img.name, img.fullurl)
     imgs = page.images()
     imgs = list(imgs)
+    print imgs
     urls = { img.name: (img.imageinfo)['url'] for img in imgs}
     return urls
 
@@ -73,7 +80,7 @@ def write_html_file(html_tree, filename):
 
     basename = os.path.basename(filename) 
     directory = filename.replace(basename, '')
-    print 'directory', directory    
+
     if os.path.isdir(directory) is False:
         os.makedirs(directory)        
     edited = open(filename, 'w') #write
