@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 import xml.etree.ElementTree as ET
 import html5lib, urllib, pprint, collections
-from bs_modules import pandoc2html, write_html_file, mw_cats, mw_page_imgsurl, mw_img_url, mw_page_text, mwsite, mw_page_cats, mw_page, remove_cats, find_authors, replace_video, replace_img_a_tag, wd
 # unsued from bs_modules: replace_gallery, replace_video, index_addwork,
 from argparse import ArgumentParser
 
 ##############
-# REQUIRES: defining **wd** in bs_modules.py and bs_preview.cgi with the full path of BS scripts dir
-# chmod a+w tmp_content.mw preview/
+# REQUIRES:
+# * pandoc 
+# * python mwclient https://github.com/mwclient/mwclient 
+# ** install$ sudo pip install mwclient
 #############
 
 #####
@@ -24,19 +24,27 @@ print issue_names
 #issue_names.reverse()
 issue_current = issue_names[issue_keys[-1]]
 print 'current issue', issue_current
+
 #####
 # Args
 ####
 p = ArgumentParser()
 p.add_argument('-V', '--version', action='version', version='version 1.0')
+p.add_argument("--local", action='store_true', help="use local when running the script on local machine")
 p.add_argument("--host", default="beyond-social.org")
 p.add_argument("--path", default="/wiki/", help="path: should end with /")
 p.add_argument("--category", "-c", nargs="*", default=[['04 Publish Me']], action="append", help="Category to query. Use: -c foo -c bar to intersect multiple categories")
 p.add_argument("--preview", help='Preview page. Will override category querying. Use: --page "Name Of Wiki Page"')
 #p.add_argument("--preview", action='store_true', help='Preview mode flag. Requires --page "Name Of Wiki Page" ') 
 args = p.parse_args()
-#print 'args', args
+local = args.local
+if local is True:
+    wd = '.'
+else:
+    wd = '/var/www/beyond-social.org/html' #working directiory
 
+from bs_modules import pandoc2html, write_html_file, mw_cats, mw_page_imgsurl, mw_img_url, mw_page_text, mwsite, mw_page_cats, mw_page, remove_cats, find_authors, replace_video, replace_img_a_tag
+    
 ######
 # DEFS:  create_page create_index
 ######
@@ -64,6 +72,7 @@ def create_page(memberpages, mode):
                 category =  (entry).replace('Category:', '')
                 if 'Issue' in category:
                     articledict['Category Issue'] = category.replace('Issue ','')
+                    print 'articledict', articledict['Category Issue'], issue_names
                     articledict['Category Issue'] = articledict['Category Issue']  +' '+ issue_names[articledict['Category Issue']]
                     #.zfill()
                 elif category in category_topic:
@@ -72,71 +81,76 @@ def create_page(memberpages, mode):
                     articledict['Category Section']= category
             articledict.pop('Categories') 
 
-            # HTML tree  # create work page
-            page_tree = html5lib.parse(page_template, namespaceHTMLElements=False)
-            page_title = page_tree.find('.//title')
-            page_title_h1 = page_tree.find('.//h1[@title="title"]')
-            page_title.text = articledict['Title']
-            page_title_h1.text = articledict['Title']
-            page_issue =  page_tree.find('.//span[@id="issue"]')
-            page_issue.text = articledict['Category Issue']
-            page_section = page_tree.find('.//span[@id="section"]')
-            page_section.text = articledict['Category Section']
-            page_topics =  page_tree.find('.//span[@id="topics"]')
-            page_topics.text = " ".join(articledict['Category Topics'])
-            page_author = page_tree.find('.//p[@class="authorTitle"]')
-            page_author.text = articledict['Authors']
-            
-            page_content = page_tree.find('.//div[@class="content"]')
-            content =  html5lib.parse(articledict['Content'], namespaceHTMLElements=False)
-            bodycontent = content.findall('.//body/*') 
-            for el in bodycontent:
-                page_content.append(el)
-            # maybe above page_content can be ACCESSED + SIMPLY
-            # but content comes wrapped in <html><body>
+            if 'Category Issue' in articledict.keys() and 'Category Section' in articledict.keys():
+                # HTML tree  # create work page
+                page_tree = html5lib.parse(page_template, namespaceHTMLElements=False)
+                page_title = page_tree.find('.//title')
+                page_title_h1 = page_tree.find('.//h1[@title="title"]')
+                page_title.text = articledict['Title']
+                page_title_h1.text = articledict['Title']
+                print 'page_title:', articledict['Title']
+                page_issue =  page_tree.find('.//span[@id="issue"]')
 
-            # get imgs full url
-            imgs = page_content.findall('.//img')
-            for img in  imgs:
-                src = img.get('src')
-                imgname = ("File:"+(src.lower()).replace("_"," ")).decode('utf-8')
-                if imgname in articledict['Images'].keys():
-                    src_fullurl = articledict['Images'][imgname]
-                else: #NOT found in articledict["Images"] keys - search using mw_img_url
-                    src_fullurl  = mw_img_url(site, src) # find url of image
 
-                img.set('src', src_fullurl)
-
-            # wiki remote images: convert <a> to <img>
-            links = page_content.findall('.//a')
-            for link in  links:                
-                replace_img_a_tag(link)                
-
+                page_issue.text = articledict['Category Issue']
                 
-            figures = page_tree.findall('.//figure')
-            for figure in figures:
-                img = figure.find('.//img')            
-                figcaption = figure.find('.//figcaption')
-                if figcaption is not None:                    
-                    figcaption_text = figcaption.text.upper()
-                    if figcaption_text in img.get('src').upper():
-                        print 'figcation RM:', figcaption.text, figcaption, ET.tostring(figcaption) 
-                        print '---------------'
-                        figure.remove(figcaption)                 
-                
-                
-            if mode is 'index':            
-                work_filename = '{}/articles/{}.html'.format(wd, articledict['Title'].replace(' ', '_'))
-            elif mode is 'preview':
-                work_filename = '{}/preview/{}.html'.format(wd, articledict['Title'].replace(' ', '_'))
 
-            articledict['Path'] = work_filename.replace(wd+'/', '')        
-            write_html_file(page_tree, work_filename)
-            #print 'write file', work_filename
-            indexdict[articledict['Title']] = articledict
-#            articledict['Path'] = articledict['Path'].replace(wd,'')
+                page_section = page_tree.find('.//span[@id="section"]')
+                page_section.text = articledict['Category Section']
+                page_topics =  page_tree.find('.//span[@id="topics"]')
+                page_topics.text = " ".join(articledict['Category Topics'])
+                page_author = page_tree.find('.//p[@class="authorTitle"]')
+                page_author.text = articledict['Authors']
 
-            
+                page_content = page_tree.find('.//div[@class="content"]')
+                content =  html5lib.parse(articledict['Content'], namespaceHTMLElements=False)
+                bodycontent = content.findall('.//body/*') 
+                for el in bodycontent:
+                    page_content.append(el)
+                # maybe above page_content can be ACCESSED + SIMPLY
+                # but content comes wrapped in <html><body>
+
+                # get imgs full url
+                imgs = page_content.findall('.//img')
+                for img in  imgs:
+                    src = img.get('src')
+                    imgname = ("File:"+(src.lower()).replace("_"," ")).decode('utf-8')
+                    if imgname in articledict['Images'].keys():
+                        src_fullurl = articledict['Images'][imgname]
+                    else: #NOT found in articledict["Images"] keys - search using mw_img_url
+                        src_fullurl  = mw_img_url(site, src) # find url of image
+
+                    img.set('src', src_fullurl)
+
+                # wiki remote images: convert <a> to <img>
+                links = page_content.findall('.//a')
+                for link in  links:                
+                    replace_img_a_tag(link)                
+
+
+                figures = page_tree.findall('.//figure')
+                for figure in figures:
+                    img = figure.find('.//img')            
+                    figcaption = figure.find('.//figcaption')
+                    if figcaption is not None:                    
+                        figcaption_text = figcaption.text.upper()
+                        if figcaption_text in img.get('src').upper():
+                            #print 'figcation RM:', figcaption.text, figcaption, ET.tostring(figcaption) 
+                            figure.remove(figcaption)                 
+
+
+                if mode is 'index':            
+                    work_filename = '{}/articles/{}.html'.format(wd, articledict['Title'].replace(' ', '_'))
+                elif mode is 'preview':
+                    work_filename = '{}/preview/{}.html'.format(wd, articledict['Title'].replace(' ', '_'))
+
+                articledict['Path'] = work_filename.replace(wd+'/', '')        
+                write_html_file(page_tree, work_filename)
+                #print 'write file', work_filename
+                indexdict[articledict['Title']] = articledict
+    #            articledict['Path'] = articledict['Path'].replace(wd,'')
+    
+
     return indexdict
         
 
@@ -225,7 +239,7 @@ def create_index(indexdict, issues):
 
 #####
 # ACTION
-#####    
+# #####    
 site = mwsite(args.host, args.path)
 
 if args.preview is not None:

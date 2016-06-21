@@ -1,14 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
+from __main__ import *
 import pprint, re, subprocess, shlex
 import xml.etree.ElementTree as ET
 from mwclient import Site
-##############
-# REQUIRES: defining wd  with the full path of BS scripts dir
-#############
-wd = '/var/www/beyond-social.org/html' #working directiory
-#wd = '/home/andre/Documents/WdKA/BeyondSocial/development' #working directiory
+
 
 #########
 # Site Level
