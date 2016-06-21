@@ -1,5 +1,5 @@
 from __main__ import *
-import pprint, re, subprocess, shlex
+import pprint, re, subprocess, shlex, os
 import xml.etree.ElementTree as ET
 from mwclient import Site
 
@@ -70,6 +70,12 @@ def mw_img_url(site, img): #find full of an img
 def write_html_file(html_tree, filename):
     doctype = "<!DOCTYPE HTML>"
     html = doctype + ET.tostring(html_tree,  method='html', encoding='utf-8', ) 
+
+    basename = os.path.basename(filename) 
+    directory = filename.replace(basename, '')
+    print 'directory', directory    
+    if os.path.isdir(directory) is False:
+        os.makedirs(directory)        
     edited = open(filename, 'w') #write
     edited.write(html)
     edited.close()
