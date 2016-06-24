@@ -1,5 +1,10 @@
 /* Issue 2 */
 
+#headerLogos {
+	padding-left: 40px;
+	vertical-align: top;
+}
+
 .extra-beyond{
 	float: right;
 	color: black;
@@ -584,7 +589,7 @@ figcaption a:hover {
 .title-beyond {
 	float: left;
 	display: table;
-	padding-right: 50px;
+	/*padding-right: 50px;*/
 	vertical-align:text-bottom;
 	padding-bottom: 10px;
 }
