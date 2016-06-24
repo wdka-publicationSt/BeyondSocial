@@ -1,30 +1,4 @@
-  function newIssue(){
-    var currentIssueName = $('.issueItem').first().children('.issue:nth(1)').text()
-    var newIssue = `
-      <div id="newIssue"> 
-        <div>`+currentIssueName+`</div>
-      </div>
-    `
-    $('body').append(newIssue)
-
-    $('#newIssue div').each(function() {
-        $(this).bounce('start', {
-      'minSpeed'  : 1,
-      'maxSpeed'  : 5,
-      'zone'    : '#newIssue'
-        });
-    });
-
-  }
-  
-
 $(document).ready(function(){
-
- 
-
-  $('.issue').addClass('issueImage')
-  // $('.list').height(0)
-
 
   var $container = $('.list')
   var $containerImage = $('.imageNavigation')
@@ -36,128 +10,6 @@ $(document).ready(function(){
   var setTimeoutConst;
   var toTopsetTimeoutConst;
   var hashOptions = window.location.hash.replace('#', '')
-
-  function clickAbout(){
-    $(document).on('click','#toAbout', function(){
-      $("html, body").animate({ scrollTop: $(document).height() },200);
-    })
-  }
-
-
-  clickAbout()
-
-  function checkSectionLayout(){
-            if($(window).width()>1024){
-              setTimeout(function(){
-                $container.isotope({ 
-                  itemSelector: 'li',
-                })
-                $containerImage.isotope({ 
-                  itemSelector: 'li',
-                })
-              },10)
-
-              $container.isotope({ 
-                itemSelector: 'li',
-                filter: hashOptions
-              })
-              $containerImage.isotope({ 
-                itemSelector: 'li',
-                filter: hashOptions
-              })
-              calculateSection()
-              calculateSectionWide()
-
-
-
-            }else{
-
-
-              $container.isotope({ 
-                itemSelector: 'li',
-                filter: hashOptions
-              })
-              $containerImage.isotope({ 
-                itemSelector: 'li',
-                filter: hashOptions
-              })
-
-              setTimeout(function(){
-                $container.isotope({ 
-                  itemSelector: 'li',
-                })
-              $containerImage.isotope({ 
-                itemSelector: 'li',
-                filter: hashOptions
-              })
-              },500)
-
-              setTimeout(function(){
-                $container.isotope({ 
-                  itemSelector: 'li',
-                })
-                $containerImage.isotope({ 
-                  itemSelector: 'li',
-                  filter: hashOptions
-                })
-              },1000)
-
-              setTimeout(function(){
-                $container.isotope({ 
-                  itemSelector: 'li',
-                })
-              $containerImage.isotope({ 
-                itemSelector: 'li',
-                filter: hashOptions
-              })
-              },2000)
-
-              calculateSection()
-              calculateSectionNarrow()
-            }
-  }
-
-
-
-
-  function hidePrevIssues(){ 
-              $('.issueItem').not(':first').css({'opacity':'0', 'height':'0px', 'overflow':'hidden'})
-              checkSectionLayout()
-              if(!$('#togglePrevIssues').length){
-                $('.issueItem:first').append('<div class="issue"><p id="togglePrevIssues" style="padding-top:60px;"></p></div>')
-                $('.issueItem:first').prepend('<div class="issue"><p id="currentIssue" style="margin-bottom:30px;">Current issue</p></div>')
-
-              }
-              $('#togglePrevIssues').removeClass('showPrev').addClass('hidePrev').text('Show previous issues')
-
-  }
-  hidePrevIssues()
-
-  function showPrevIssues(){ 
-              $('.issueItem').not(':first').css({'opacity':'1', 'height':'auto'})
-              $('#togglePrevIssues').removeClass('hidePrev').addClass('showPrev').text('Hide previous issues')
-              checkSectionLayout()
-
-              setTimeout(function(){
-                calculateSection()
-              calculateSectionWide()
-              },1500)
-
-  }
-
-  function togglePrevIssues(){
-    $(document).on('click','#togglePrevIssues',function(){
-      if($(this).hasClass('hidePrev')){
-        showPrevIssues()
-      }else{
-        hidePrevIssues()
-         // $('section-div').remove()
-      }
-    })
-  }
-
-  togglePrevIssues()
-
 
 
   $(window).load(function() {
@@ -212,7 +64,72 @@ $(document).ready(function(){
             }
             $('input.'+$(this).attr("class")+'').next("p").toggleClass("underlineFilter")
 
-            checkSectionLayout()
+            if($(window).width()>1024){
+              setTimeout(function(){
+                $container.isotope({ 
+                  itemSelector: 'li',
+                })
+                $containerImage.isotope({ 
+                  itemSelector: 'li',
+                })
+              },10)
+
+              $container.isotope({ 
+                itemSelector: 'li',
+                filter: hashOptions
+              })
+              $containerImage.isotope({ 
+                itemSelector: 'li',
+                filter: hashOptions
+              })
+              calculateSection()
+              calculateSectionWide()
+
+            }else{
+
+
+              $container.isotope({ 
+                itemSelector: 'li',
+                filter: hashOptions
+              })
+              $containerImage.isotope({ 
+                itemSelector: 'li',
+                filter: hashOptions
+              })
+
+              setTimeout(function(){
+                $container.isotope({ 
+                  itemSelector: 'li',
+                })
+              $containerImage.isotope({ 
+                itemSelector: 'li',
+                filter: hashOptions
+              })
+              },500)
+
+              setTimeout(function(){
+                $container.isotope({ 
+                  itemSelector: 'li',
+                })
+                $containerImage.isotope({ 
+                  itemSelector: 'li',
+                  filter: hashOptions
+                })
+              },1000)
+
+              setTimeout(function(){
+                $container.isotope({ 
+                  itemSelector: 'li',
+                })
+              $containerImage.isotope({ 
+                itemSelector: 'li',
+                filter: hashOptions
+              })
+              },2000)
+
+              calculateSection()
+              calculateSectionNarrow()
+            }
     }); 
 
   }
@@ -222,7 +139,6 @@ $(document).ready(function(){
   .mouseover(function() {
     thisSAVED01 = $(this)
     stringa = thisSAVED01.attr('data-name')
-    section = thisSAVED01.attr('data-section')
 
     setTimeoutConst = setTimeout(function(){
           
@@ -236,9 +152,10 @@ $(document).ready(function(){
             }
           })
 
-         thisSAVED01.append('<p class="title">'+stringa.replace(/_/g, ' ')+'<br><span class="titleSection">Section: '+section+'</span></p>')
-          $('.imageNavigation').isotope({layoutMode: 'packery'})
-      },delay)
+         thisSAVED01.append('<p class="title">'+stringa.replace(/_/g, ' ')+'</p>')
+          $('.imageNavigation').isotope()
+    }, delay);
+
   })
   .mouseout(function() {
      clearTimeout(setTimeoutConst );
@@ -250,7 +167,7 @@ $(document).ready(function(){
     })
       
     thisSAVED01.find('.title').remove()
-    $('.imageNavigation').isotope({layoutMode: 'packery'})
+    $('.imageNavigation').isotope()
   });
 
   }
@@ -291,9 +208,6 @@ $(document).ready(function(){
       $('.section-narrow').css({"display":"none"})
 
       $container.each(function(){
-
-        console.log($(this).parent().attr('id'))
-
         
         //// GET TOTAL HEIGHT OF SECTION ////
         jsonHeight = []
@@ -381,29 +295,10 @@ $(document).ready(function(){
         itemSelector: 'li',
         filter: hashOptions
       })
-
-
-
-      $containerImage.imagesLoaded( function() {
-          $containerImage.isotope({ 
-          itemSelector: 'li',
-          layoutMode: 'packery',
-          filter: hashOptions
-        })
+      $containerImage.isotope({ 
+        itemSelector: 'li',
+        filter: hashOptions
       })
-
-      setTimeout(function(){
-        $container.isotope({ 
-          itemSelector: 'li',
-        })
-        $containerImage.isotope({ 
-          layoutMode: 'packery',
-          itemSelector: 'li',
-
-        })
-      },1000)
-
-
       calculateSection()
       calculateSectionWide()
 
@@ -416,7 +311,6 @@ $(document).ready(function(){
       })
       $containerImage.isotope({ 
         itemSelector: 'li',
-        layoutMode: 'packery',
         filter: hashOptions
       })
 
@@ -425,7 +319,6 @@ $(document).ready(function(){
           itemSelector: 'li',
         })
         $containerImage.isotope({ 
-          layoutMode: 'packery',
           itemSelector: 'li',
         })
       },500)
@@ -434,8 +327,7 @@ $(document).ready(function(){
         $container.isotope({ 
           itemSelector: 'li',
         })
-        $containerImage.isotope({
-          layoutMode: 'packery', 
+        $containerImage.isotope({ 
           itemSelector: 'li',
         })
       },1000)
@@ -444,8 +336,7 @@ $(document).ready(function(){
         $container.isotope({ 
           itemSelector: 'li',
         })
-        $containerImage.isotope({
-          layoutMode: 'packery',
+        $containerImage.isotope({ 
           itemSelector: 'li',
         })
       },2000)
@@ -515,7 +406,6 @@ $(document).ready(function(){
 
           $containerImage.isotope({ 
               itemSelector: 'li',
-              layoutMode: 'packery',
               filter: hashOptions
             })
 
@@ -526,7 +416,6 @@ $(document).ready(function(){
                 itemSelector: 'li',
               })
               $containerImage.isotope({ 
-                layoutMode: 'packery',
                   itemSelector: 'li',
                 })
             },500)
@@ -538,7 +427,6 @@ $(document).ready(function(){
                 itemSelector: 'li',
               })
               $containerImage.isotope({ 
-                layoutMode: 'packery',
                   itemSelector: 'li',
                 })
             },500)
@@ -548,7 +436,6 @@ $(document).ready(function(){
                 itemSelector: 'li',
               })
               $containerImage.isotope({ 
-                layoutMode: 'packery',
                   itemSelector: 'li',
                 })
             },1000)
@@ -558,7 +445,6 @@ $(document).ready(function(){
                 itemSelector: 'li',
               })
               $containerImage.isotope({ 
-                layoutMode: 'packery',
                   itemSelector: 'li',
                 })
             },2000)
@@ -583,7 +469,7 @@ $(document).ready(function(){
     });
 
 
-  },0);
+  },400);
   
   sortAreaOffset = $("#sortArea").offset().top
 
@@ -607,7 +493,5 @@ $(document).ready(function(){
 
   adjustIssues()
 
-
-     // newIssue()
 
 })
