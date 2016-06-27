@@ -1,14 +1,25 @@
 function introScene(){
-  $('#BeyondHeader').find('*').css({'opacity':'1'})
   setTimeout(function(){
-    $('*').css({'opacity':'1'})
-  },1500)
+    $('.issueWrapper').css({'opacity':'1'})
+  },2500)
+}
+
+function toggleFilter(){
+  $(document).on('click','#toggleFilter', function(){
+    // alert('e')
+    $('#sortArea').toggleClass('hideSortArea')
+    $('#toggleFilter').children('p').toggleClass('hideSortAreaHideText')
+    $('#toggleFilter').children('p').toggleClass('hideSortAreaShowText')
+
+
+  })
 }
 
 
 $(document).ready(function(){
 
- introScene()
+ // introScene()
+  toggleFilter()
 
   $('.issue').addClass('issueImage')
   // $('.list').height(0)
