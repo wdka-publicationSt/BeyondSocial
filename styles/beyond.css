@@ -4,11 +4,25 @@
 	padding-left: 40px;
 	vertical-align: top;
 	padding-top: 5px;
+	/*float: left;*/
 }
 
 #headerLogos img {
 	height: 75px;
     margin-right: 5px;
+}
+
+#footerLogos {
+	width: 10%;
+	overflow: hidden;
+    float: right;
+    margin-top: 8px;
+}
+
+#footerLogos img {
+	width: 100%;
+    /*height: 110px;*/
+
 }
 
 .extra-beyond{
@@ -311,12 +325,19 @@ body {
 }
 
 .colophon {
-	width:90%; 
+	width: 85%; 
 	float: left;
 }
 
+.intro hr {
+	border: 0;
+	border-bottom: 1px dashed black;
+	margin: 0;
+	width: 85%;
+}
+
 .intro {
-	width:auto;
+	width: 100%;
 	display: block;
 	float: left;
 }
@@ -325,7 +346,8 @@ body {
 	font-family: 'Crimson Text';
 	font-size: 25px;
 	font-weight: normal;
-	line-height: 1.5;
+	line-height: 1.4;
+	width: 85%;
 }
 
 .intro p a:link, .content p a:visited, .content p a:active {
@@ -940,26 +962,23 @@ dd {
 /* @MEDIA CSS */
 
 @media screen and (max-width: 800px) {
-
 	.title-beyond {
-		    width: 100%;
 	}
-	.title-beyond h1,
-	.title-beyond p {
-		/*display: block;*/
-		width: 50%;
-		margin: 0;
+
+	.title-beyond h1 {
+		width: 115px;
+    	margin: 0;
 	}
 
 	.articleHeader p {
 		float: left;
-		width: 100%;
 	}
 
 	.title-back,
 		a.backLink {
 		float: left !important;
 	}
+
 }
 
 @media screen and (max-width: 1200px) {
