@@ -1,0 +1,3 @@
+*:not(body):not(#BeyondHeader):not(html){
+	opacity: 0;
+}

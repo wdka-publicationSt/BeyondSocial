@@ -1,26 +1,14 @@
-  function newIssue(){
-    var currentIssueName = $('.issueItem').first().children('.issue:nth(1)').text()
-    var newIssue = `
-      <div id="newIssue"> 
-        <div>`+currentIssueName+`</div>
-      </div>
-    `
-    $('body').append(newIssue)
+function introScene(){
+  $('#BeyondHeader').find('*').css({'opacity':'1'})
+  setTimeout(function(){
+    $('*').css({'opacity':'1'})
+  },1500)
+}
 
-    $('#newIssue div').each(function() {
-        $(this).bounce('start', {
-      'minSpeed'  : 1,
-      'maxSpeed'  : 5,
-      'zone'    : '#newIssue'
-        });
-    });
-
-  }
-  
 
 $(document).ready(function(){
 
- 
+ introScene()
 
   $('.issue').addClass('issueImage')
   // $('.list').height(0)
