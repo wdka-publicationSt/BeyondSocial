@@ -3,6 +3,12 @@
 #headerLogos {
 	padding-left: 40px;
 	vertical-align: top;
+	padding-top: 5px;
+}
+
+#headerLogos img {
+	height: 75px;
+    margin-right: 5px;
 }
 
 .extra-beyond{
@@ -602,7 +608,7 @@ figcaption a:hover {
 	font-weight: normal;
 	line-height: 1.5;
 	margin: 0px !important;
-	vertical-align:bottom;
+	vertical-align: top;
 }
 
 .title-beyond h1{
@@ -934,13 +940,24 @@ dd {
 /* @MEDIA CSS */
 
 @media screen and (max-width: 800px) {
+
+	.title-beyond {
+		    width: 100%;
+	}
+	.title-beyond h1,
+	.title-beyond p {
+		/*display: block;*/
+		width: 50%;
+		margin: 0;
+	}
+
 	.articleHeader p {
 		float: left;
 		width: 100%;
 	}
 
-		.title-back,
-	a.backLink {
+	.title-back,
+		a.backLink {
 		float: left !important;
 	}
 }
