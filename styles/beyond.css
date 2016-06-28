@@ -77,12 +77,11 @@
 	padding-left: 40px;
 	vertical-align: top;
 	padding-top: 5px;
-	/*float: left;*/
+	float: left;
 }
 
 #headerLogos img {
 	height: 75px;
-    margin-right: 5px;
 }
 
 #footerLogos {
@@ -782,7 +781,9 @@ a.backLink:active {
 }
 
 a.backLink:hover {
-	border-bottom: 3px solid blue;
+        -webkit-box-shadow: 0px 3px 0px 0px rgba(0,0,255,1);
+    -moz-box-shadow: 0px 3px 0px 0px rgba(0,0,255,1);
+    box-shadow: 0px 3px 0px 0px rgba(0,0,255,1);
 	color: blue;
 }
 
@@ -1034,25 +1035,7 @@ dd {
 
 /* @MEDIA CSS */
 
-@media screen and (max-width: 800px) {
-	.title-beyond {
-	}
 
-	.title-beyond h1 {
-		width: 115px;
-    	margin: 0;
-	}
-
-	.articleHeader p {
-		float: left;
-	}
-
-	.title-back,
-		a.backLink {
-		float: left !important;
-	}
-
-}
 
 @media screen and (max-width: 1200px) {
 	.articleHeader p {
@@ -1086,6 +1069,104 @@ dd {
 	}
 }
 
+@media screen and (max-width: 800px) {
+
+    .title-beyond p,
+    .title-beyond h1 {
+        width: 80px;
+    }
+
+    label {
+        margin-bottom: 2px;
+    }
+
+    .content p,
+    .content img,
+    .content figcaption,
+    .content code, 
+    h4, h5 {
+        margin-left: initial !important;
+    }
+
+    .content p,
+    .content code {
+        font-size: 20px;
+    }
+
+    strong, b {
+        font-size: 17px;
+    }
+
+    #headerLogos {
+        padding: 0;
+    }
+
+    #headerLogos img {
+        height: 40px;
+    }
+
+    .title-beyond h1,
+    .title-beyond p,
+    .extra-beyond p,
+    .themes p,
+    .issue p,
+    .articleHeader p,
+    a.backLink, a.backLink:visited, a.backLink:active,
+    .top a, .top a:active, .top a:visited {
+        font-size: 17px !important;
+        letter-spacing: 1px !important;
+    }
+
+    i.fa.fa-file {
+        font-size: 14px;
+    }
+
+    .articleHeader p {
+        width: 100%;
+    }
+
+    .list a:link, a:visited, a:active,
+    [title="title"] {
+        font-size: 35px !important;
+        letter-spacing: -1px !important;
+    }
+    .extra-beyond {
+        float: right;
+        color: black;
+        width: 100%;
+        border-top: 1px dashed black;
+        padding: 5px 0;
+    }
+
+    .extra-beyond p {
+        text-align: left;
+    }
+
+    .extra-beyond br {
+        display: none;
+    }
+
+    .title-beyond h1 {
+        width: 115px;
+        margin: 0 !important;
+    }
+
+    .articleHeader p {
+        float: left;
+    }
+
+    .title-back,
+        a.backLink {
+        float: left !important;
+    }
+
+    #headerLogos {
+        float: right;
+        padding-top: initial;
+    }
+
+}
+
 @media screen and (max-width: 1440px) {
 	.content {
 		width: 85%;
@@ -1116,8 +1197,6 @@ dd {
 	}
 }
 
-
-
 @page  
 { 
     size: auto;
@@ -1127,6 +1206,10 @@ dd {
 @media print {
 
 	/* issue 2 add-ons */
+
+    #headerLogos {
+        display: none;
+    }
 
 	.extra-beyond {
 		display: none;
@@ -1140,8 +1223,7 @@ dd {
 		line-height: 1.1 !important;
 }
 
-	body  
-	{ 
+	body { 
 	    /* this affects the margin on the content before sending to printer */ 
 	    margin: 0px;  
 	} 
@@ -1152,7 +1234,7 @@ dd {
 		border-bottom: black;
 	}
 
-	figure{
+	figure {
 		page-break-inside: avoid;
 	}
 
@@ -1162,11 +1244,6 @@ dd {
 		width: 100% !important;
 	}
 
-/*
-	.blankImage {
-		opacity: 0;
-	}
-*/
 	.blankImageDiv {
 		border: 1px dashed black;
 		height: 150px;
@@ -1181,7 +1258,6 @@ dd {
 		margin-right: 5% !important;
 		width: 90% !important;
 		word-break:break-all;
-		/*padding: 15px;*/
 	}
 
 	.fullWidth {
@@ -1192,7 +1268,8 @@ dd {
 
 	.title-beyond{
 		padding: 0px;
-		margin-right: 40px;
+		margin-right: 55px;
+
 	}
 
 	.title-beyond h1 {
@@ -1200,15 +1277,12 @@ dd {
 	}
 
 	ol, ul {
-
 		padding-left: 15px;
 		list-style: disc;
 	}
 
 
-	
 	li {
-
 		font-size: 14px;
 		line-height: 20px;
     	font-family: 'Crimson Text';
@@ -1263,7 +1337,6 @@ dd {
 		line-height: 20px;
 		font-size: 20px !important;
 	}
-
 
 /* H2 in article */
 
