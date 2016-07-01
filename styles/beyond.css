@@ -62,7 +62,6 @@
     to   { opacity: 1; }
 }
 
-
 .hideSortAreaHideText::after{
 	content: 'Show Topics'
 }
@@ -74,8 +73,6 @@
 	height:33px;
 	overflow: hidden;
 }
-
-
 
 #headerLogos {
 	padding-left: 40px;
@@ -911,14 +908,12 @@ a.backLink:hover {
 .list img{
 	width: 15%;
 	/*position: absolute;*/
-	
 }
 
 .imageNavigation{
 	display: block;
 	list-style: none;
 	display: none;
-
 }
 
 .imageNavigation img{
@@ -927,6 +922,7 @@ a.backLink:hover {
     height: 100%;
     display: block;
     -webkit-filter: contrast(1.2) grayscale(1) opacity(0.9);
+    filter: contrast(1.2) grayscale(1) opacity(0.9);
  }
 
 .imageNavigation p:hover{
