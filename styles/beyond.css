@@ -392,6 +392,7 @@ audio{
 }
 
 body {
+	overflow-x: hidden;
 	font-family: avenue;
 	font-size: 40px;
 	margin: 8px;
@@ -745,7 +746,7 @@ figcaption a:hover {
 
 .title-back {
 	/*font-size: 40px;*/
-	float: right !important;
+	/*float: right !important;*/
 	margin: 0;
 }
 
@@ -820,6 +821,7 @@ a.backLink:hover {
 	overflow: hidden;
 	color: blue;
 	position: relative;
+	background-color: rgb(255, 255, 120);
 }
 
 .articleHeader p {
@@ -837,6 +839,60 @@ a.backLink:hover {
 	width: 200px;
 	margin: 5px 40px 5px 0;
 }
+
+.articleHeader .articleHeaderActions{
+	color: black;
+    float: right;
+    font-size: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.articleHeader .articleHeaderActions a:active {
+    font-size: inherit;
+	letter-spacing: inherit;
+ }
+
+.articleHeader .articleHeaderActions .floatRight{
+	float: right;
+	clear: both;
+}
+
+.articleHeader .articleHeaderActions p{
+	margin: 0;
+	width: auto;
+}
+
+.articleHeader .articleHeaderActions a{
+	text-decoration: none;
+	color: black;
+}
+
+
+@media screen and (max-width: 800px) {
+.articleHeader{
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.articleHeader .articleHeaderActions{
+    border-top: 1px dashed black;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	padding-top: 5px;
+	width: 100%;
+}
+.articleHeader .articleHeaderActions .floatRight{
+	float: left;
+}
+.articleHeader .articleHeaderActions{
+    float: left;
+    font-size: 17px;
+}
+
+
+}
+
+
 
 .fixedSort{
 	position: fixed;
@@ -903,6 +959,10 @@ a.backLink:hover {
 	-webkit-transition: 0.3s ease-in-out 0s;
 	transition: all 0.3s ease-in-out 0s;
 	margin-top: 0px;
+}
+
+.issueItem:not(:first-child){
+	opacity: 0;
 }
 
 .list img{
@@ -1068,6 +1128,22 @@ dd {
 	    width: 100% !important;
 	    overflow: hidden;
 	}
+}
+
+
+@media screen and (max-width: 400px) {
+
+    .title-beyond h1 {
+        width: 80px !important;
+    }
+
+	#headerLogos img {
+	    height: 40px;
+	    float: right;
+	    clear: both;
+	    padding-bottom: 10px;
+	}
+
 }
 
 @media screen and (max-width: 800px) {
@@ -1466,6 +1542,18 @@ dd {
 		text-align: left !important;
 		line-height: 16px !important;
 		letter-spacing: 1px;
+	}
+
+	.articleHeaderActions{
+		display: none;
+	}
+
+	#BeyondFooter{
+		display: none;
+	}
+
+	.content{
+		margin-top: 1cm !important;
 	}
 
 	figcaption a:link, figcaption a:visited, figcaption a:active {

@@ -11,7 +11,17 @@ function shareClick(){
   })
 
 }
+function clickAbout(){
+  $(document).on('click','#toAbout', function(){
+    $("html, body").animate({ scrollTop: $(document).height() },200);
+  })
+}
+
+
+
+
 
 $(document).ready(function(){
   shareClick()
+  clickAbout()
 })

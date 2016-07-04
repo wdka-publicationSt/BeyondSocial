@@ -21,6 +21,8 @@ $(document).ready(function(){
  // introScene()
   toggleFilter()
 
+
+
   $('.issue').addClass('issueImage')
   // $('.list').height(0)
 
@@ -36,14 +38,6 @@ $(document).ready(function(){
   var toTopsetTimeoutConst;
   var hashOptions = window.location.hash.replace('#', '')
 
-  function clickAbout(){
-    $(document).on('click','#toAbout', function(){
-      $("html, body").animate({ scrollTop: $(document).height() },200);
-    })
-  }
-
-
-  clickAbout()
 
   function checkSectionLayout(){
             if($(window).width()>1024){
@@ -121,7 +115,7 @@ $(document).ready(function(){
 
   function hidePrevIssues(){ 
               $('.issueItem').not(':first').css({'opacity':'0', 'height':'0px', 'overflow':'hidden'})
-              checkSectionLayout()
+              // checkSectionLayout()
               if(!$('#togglePrevIssues').length){
                 $('.issueItem:first').append('<div class="issue"><p id="togglePrevIssues" style="padding-top:60px;"></p></div>')
                 $('.issueItem:first').prepend('<div class="issue"><p id="currentIssue" style="margin-bottom:30px;">Current issue</p></div>')
@@ -135,12 +129,12 @@ $(document).ready(function(){
   function showPrevIssues(){ 
               $('.issueItem').not(':first').css({'opacity':'1', 'height':'auto'})
               $('#togglePrevIssues').removeClass('hidePrev').addClass('showPrev').text('Hide previous issues')
-              checkSectionLayout()
+              // checkSectionLayout()
 
-              setTimeout(function(){
-                calculateSection()
-              calculateSectionWide()
-              },1500)
+              // setTimeout(function(){
+              //   calculateSection()
+              //   calculateSectionWide()
+              // },1500)
 
   }
 
@@ -162,7 +156,9 @@ $(document).ready(function(){
   $(window).load(function() {
     var sortAreaOffset = $("#sortArea").offset().top;
   })
-
+  setTimeout(function(){
+    sortAreaOffset = $(".articleHeader").offset().top
+  },500)
 
   
 
