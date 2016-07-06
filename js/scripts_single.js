@@ -8,7 +8,56 @@
 var savedContent;
 var flip;
 
+
+function scrollFixMenu(){
+
+	sortAreaOffset = $(".articleHeader").offset().top
+	mobileChildrenCompensation=0
+	$('.articleHeader').children('p').each(function(){mobileChildrenCompensation += $(this).outerHeight(true)})
+
+	// sortAreaHeight = $(".articleHeader").height()
+	setTimeout(function(){
+		sortAreaOffset = $(".articleHeader").offset().top
+		mobileChildrenCompensation=0
+		$('.articleHeader').children('p').each(function(){mobileChildrenCompensation += $(this).outerHeight()})
+	},500)
+
+    $(window).scroll(function(){
+   	if($(window).width()<=800){
+
+	    if ($(window).scrollTop() > sortAreaOffset) {
+	    	console.log('more')
+	      $(".articleHeader").addClass("fixedSort").css({'top':'-'+mobileChildrenCompensation-25+'px'})
+	      $(".content").css({"margin-top":$(".articleHeader").outerHeight()+"px"})
+
+	    } else{
+	      $(".articleHeader").removeClass("fixedSort").css({'top':''})
+	      $(".content").css({"margin-top":"0px"})
+	    }
+
+   	}else{
+
+
+	    if ($(window).scrollTop() > sortAreaOffset) {
+	    	console.log('more')
+	      $(".articleHeader").addClass("fixedSort")
+	      $(".content").css({"margin-top":$(".articleHeader").outerHeight()+"px"})
+
+	    } else{
+	      $(".articleHeader").removeClass("fixedSort")
+	      $(".content").css({"margin-top":"0px"})
+	    }
+
+   	}
+
+
+
+});
+}
+
 $('document').ready(function() {
+
+	scrollFixMenu()
 
     $('a[title=wikilink]:contains("Category:")').hide(); // hide categories at bottom of page
 

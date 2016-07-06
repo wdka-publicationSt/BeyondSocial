@@ -1,8 +1,2 @@
-mmdc*.py
-images/*
-articles/tmp_content.mw
-index.html
-articles/*.html
-tmp_content.html
-Template/**
-*~
+tmp_content.mw
+*.pyc
