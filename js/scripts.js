@@ -186,9 +186,9 @@ $(document).ready(function(){
         
     });
 
-    function doneResizing(){
-      $("html, body").animate({ scrollTop: "0" },200);
-    }
+    // function doneResizing(){
+    //   $("html, body").animate({ scrollTop: "0" },200);
+    // }
 
   }
 
@@ -568,11 +568,11 @@ $(document).ready(function(){
     $(window).scroll(function(){
         if ($(window).scrollTop() > sortAreaOffset) {
           $("#sortArea").addClass("fixedSort")
-          $(".issueWrapper").css({"margin-top":$("#sortArea").outerHeight()+"px"})
+          // $(".issueWrapper").css({"margin-top":$("#sortArea").outerHeight()+"px"})
 
         } else{
           $("#sortArea").removeClass("fixedSort")
-          $(".issueWrapper").css({"margin-top":"0px"})
+          // $(".issueWrapper").css({"margin-top":"0px"})
         }
     
     });
@@ -581,6 +581,10 @@ $(document).ready(function(){
   },0);
   
   sortAreaOffset = $("#sortArea").offset().top
+
+  setTimeout(function(){
+     sortAreaOffset = $("#sortArea").offset().top
+  },500)
 
   $(window).resize(function(){
 
