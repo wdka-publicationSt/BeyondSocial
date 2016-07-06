@@ -17,6 +17,12 @@ function clickAbout(){
   })
 }
 
+function clickTop(){
+  $(document).on('click','#toTop', function(){
+    $("html, body").animate({ scrollTop:0},200);
+  })
+}
+
 
 
 
@@ -24,4 +30,5 @@ function clickAbout(){
 $(document).ready(function(){
   shareClick()
   clickAbout()
+  clickTop()
 })

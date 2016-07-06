@@ -1070,6 +1070,42 @@ dd {
 	border-top: 2px solid black;
 
 }
+#BeyondFooter .floatRight{
+	float: right;
+    width: 10%;
+    min-width: 100px;
+    text-align: right;
+    font-family: avenue;
+    font-size: 20px;
+}
+
+#BeyondFooter a{
+	border: 0px;
+}
+
+#BeyondFooter a:hover{
+	border-bottom: 3px solid blue;
+}
+#BeyondFooter a:active{
+	font-size: inherit;
+	letter-spacing: inherit;
+}
+
+@media screen and (max-width: 800px) {
+	#BeyondFooter .floatRight{
+		float: left !important;
+	    font-size: 17px;
+	    margin: 0px;
+	    clear: both;
+	    text-align: left;
+	}
+
+	#BeyondFooter a:active{
+		font-size: 17px !important;
+		letter-spacing: 0px !important;
+	}
+
+}
 
 #BeyondFooter {
 	margin-top: 10px;
