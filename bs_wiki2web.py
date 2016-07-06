@@ -20,10 +20,10 @@ category_section = ['Discourse', 'Introduction', 'Projects', 'Proposals' ]
 issue_names = {'1': 'Redesigning Business', '2':'Education'}
 issue_names = collections.OrderedDict(sorted(issue_names.items()))
 issue_keys = issue_names.keys()
-print issue_names
+#print issue_names
 #issue_names.reverse()
 issue_current = issue_names[issue_keys[-1]]
-print 'current issue', issue_current
+#print 'current issue', issue_current
 
 #####
 # Args
@@ -52,7 +52,7 @@ def create_page(memberpages, mode):
     page_template = open("{}/article-template.html".format(wd), "r")
     indexdict = {} #parent dict: contains articledict instances
     for member in memberpages:
-        #print member
+        print 'MEMBER PAGE', member
         page = mw_page(site, member)
         page_name = page.name 
         page_cats = mw_page_cats(site, page)
@@ -72,8 +72,11 @@ def create_page(memberpages, mode):
                 category =  (entry).replace('Category:', '')
                 if 'Issue' in category:
                     articledict['Category Issue'] = category.replace('Issue ','')
-                    print 'articledict', articledict['Category Issue'], issue_names
-                    articledict['Category Issue'] = articledict['Category Issue']  +' '+ issue_names[articledict['Category Issue']]
+                    #print 'articledict', articledict['Category Issue'], issue_names
+                    print type(articledict['Category Issue']), type( (issue_names[articledict['Category Issue']]).decode('utf-8'))
+                    print articledict['Category Issue']  + u' '+ (issue_names[articledict['Category Issue']]).decode('utf-8')
+                    articledict['Category Issue'] = articledict['Category Issue']  + u' '+ (issue_names[articledict['Category Issue']]).decode('utf-8')
+                    pprint.pprint( articledict )
                     #.zfill()
                 elif category in category_topic:
                     articledict['Category Topics'].append(category)
@@ -251,7 +254,7 @@ if args.preview is not None:
 else:
     #print "** New Index Mode **"
     memberpages=mw_cats(site, args)
-    print 'memberpages:', memberpages
+    #print 'memberpages:', memberpages
     indexdict = create_page(memberpages, 'index')
     #pprint.pprint(indexdict)
     create_index(indexdict, issue_names)

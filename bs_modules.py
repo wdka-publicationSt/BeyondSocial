@@ -14,14 +14,14 @@ def mwsite(host, path): #returns wiki site object
 def mw_cats(site, args): #returns pages member of args(categories)
     last_names = None
     for cats in args.category:
-            print 'cats', cats
+            #print 'cats', cats
             for ci, cname in enumerate(cats):
                     cat = site.Categories[cname]
                     pages = list(cat.members())
                     #print 'pages', pages
                     # for p in pages:
                     # 	pages_by_name[p.name] = p
-                    print 'last_names', last_names
+                    #print 'last_names', last_names
                     if last_names == None:
                             results = pages
                     else:
@@ -57,7 +57,7 @@ def mw_page_imgsurl(site, page):
     #returns list of tuples (img.name, img.fullurl)
     imgs = page.images()
     imgs = list(imgs)
-    print imgs
+    #print imgs
     urls = { img.name: (img.imageinfo)['url'] for img in imgs}
     return urls
 
@@ -118,7 +118,7 @@ def find_authors(content):
 def remove_cats(content):
     content = re.sub(cat_exp, '', content)
     return content
-    print 'NO CATS', content
+    #print 'NO CATS', content
 
 def replace_gallery(content):
     content = re.sub(imgfile_exp, '[[\g<1>]]', content) #add [[ ]] to File:.*?
