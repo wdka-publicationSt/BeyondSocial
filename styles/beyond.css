@@ -11,6 +11,11 @@
     animation: fadein 0.5s forwards;
     animation-delay: 1s;
 }*/
+#toTop,
+#toTop:active {
+    font-size: 20px;
+    letter-spacing: 1px !important;
+}
 
 .headerBack:hover .title-beyond h1:after{
   content: " ⟵";
@@ -151,7 +156,6 @@
 		-webkit-box-shadow: 0px 3px 0px 0px blue;
 	-moz-box-shadow: 0px 3px 0px 0px blue;
 	box-shadow: 0px 3px 0px 0px blue;
-	color: blue;
 }
 
 .top a,
@@ -429,6 +433,8 @@ body {
 	text-decoration: none;
 	border-bottom: 2px solid black;
 	color: black;
+    font-size: 25px;
+    letter-spacing: initial;
 }
  
 .intro p a:hover {
@@ -780,14 +786,6 @@ a.backLink:active {
 	text-decoration: none;
 	letter-spacing: 1px;
 	color: black;
-	float: right;
-}
-
-a.backLink:hover {
-        -webkit-box-shadow: 0px 3px 0px 0px rgba(0,0,255,1);
-    -moz-box-shadow: 0px 3px 0px 0px rgba(0,0,255,1);
-    box-shadow: 0px 3px 0px 0px rgba(0,0,255,1);
-	color: blue;
 }
 
 .themes {
@@ -806,14 +804,14 @@ a.backLink:hover {
 	font-size: 20px;
 	letter-spacing: 1px;
 	font-weight: normal;
-	line-height: 1.2;
+	line-height: 1.5;
 	margin: 0px !important;
 }
 
 .articleHeader {
 	border-bottom: 2px solid black;
 	border-top: 1px dashed black;
-	float: left;
+	/*float: left;*/
 	width: 100%;
 	padding-bottom: 10px;
 	padding-top: 10px;
@@ -829,10 +827,10 @@ a.backLink:hover {
 	font-size: 20px;
 	letter-spacing: 1px;
 	font-weight: normal;
-	line-height: 1.2;
+	line-height: 1.5;
 	margin: 5px 0;
 	float: left;
-	width: 35%;
+	width: 50%;
 }
 
 .articleHeader p:first-of-type {
@@ -847,6 +845,7 @@ a.backLink:hover {
     margin-top: 5px;
     margin-bottom: 5px;
     letter-spacing: 1px;
+    line-height: 1.5;
 }
 
 .articleHeader .articleHeaderActions a:active {
@@ -869,31 +868,37 @@ a.backLink:hover {
 	color: black;
 }
 
+.articleHeader .articleHeaderActions a:hover{
+    text-decoration: none;
+    color: blue;
+            -webkit-box-shadow: 0px 3px 0px 0px rgba(0,0,255,1);
+    -moz-box-shadow: 0px 3px 0px 0px rgba(0,0,255,1);
+    box-shadow: 0px 3px 0px 0px rgba(0,0,255,1);
+}
+
 
 @media screen and (max-width: 800px) {
-.articleHeader{
-	padding-top: 5px;
-	padding-bottom: 5px;
-}
-.articleHeader .articleHeaderActions{
-    border-top: 1px dashed black;
-	margin-bottom: 0px;
-	margin-top: 0px;
-	padding-top: 5px;
-	width: 100%;
-}
-.articleHeader .articleHeaderActions .floatRight{
-	float: left;
-}
-.articleHeader .articleHeaderActions{
-    float: left;
-    font-size: 17px;
-}
+    .articleHeader{
+    	padding-top: 5px;
+    	padding-bottom: 5px;
+    }
+    .articleHeader .articleHeaderActions{
+        border-top: 1px dashed black;
+    	margin-bottom: 0px;
+    	margin-top: 0px;
+    	padding-top: 5px;
+    	width: 100%;
+    }
+    .articleHeader .articleHeaderActions .floatRight{
+    	float: none;
+        margin-right: 5px;
+    }
+    .articleHeader .articleHeaderActions{
+        float: left;
+        font-size: 17px;
+    }
 
-
 }
-
-
 
 .fixedSort{
 	position: fixed;
@@ -1271,12 +1276,17 @@ dd {
 
     .title-back,
         a.backLink {
-        float: left !important;
+        /*float: left !important;*/
     }
 
     #headerLogos {
         float: right;
         padding-top: initial;
+    }
+
+    .headerBack:hover .title-beyond h1:after{
+      content: "";
+      font-size: 17px;
     }
 
 }
