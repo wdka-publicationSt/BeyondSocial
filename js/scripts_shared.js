@@ -11,6 +11,20 @@ function shareClick(){
   })
 
 }
+
+function addFBImage(){
+  if($('.content').find('img').length == true){
+    $('head').append('<link rel="image_src" type="image/jpeg" href="'+$('.content').find('img').first()[0].src+'" />')
+    // $('head').append('<link rel="image_src" type="image/jpeg" href="http://template01.info/index/media/aaaanB01.jpg" />')
+
+  }else{
+    $('head').append('<link rel="image_src" type="image/jpeg" href="'+$(document).find('img').first()[0].src+'" />')
+    // $('head').append('<link rel="image_src" type="image/jpeg" href="http://template01.info/index/media/aaaanB01.jpg" />')
+  // }
+  }
+}
+
+
 function clickAbout(){
   $(document).on('click','#toAbout', function(){
     $("html, body").animate({ scrollTop: $(document).height() },200);
@@ -31,4 +45,5 @@ $(document).ready(function(){
   shareClick()
   clickAbout()
   clickTop()
-})
+  addFBImage()
+}); 
