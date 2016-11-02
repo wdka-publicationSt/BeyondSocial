@@ -16,7 +16,7 @@ from argparse import ArgumentParser
 # BS topics, section, issue names:
 ####
 category_topic = ['Aesthetics', 'Bottom-up', 'Economics', 'Failures', 'Participation', 'Politics', 'Strategies', 'Transformation', 'Visions', 'Technology']
-category_section = ['Discourse', 'Introduction', 'Projects', 'Proposals' ]
+category_section = ['Discourse', 'Introduction', 'Projects', 'Proposals', 'Methods' ]
 issue_names = {'1': 'Redesigning Business', '2':'Education'}
 issue_names = collections.OrderedDict(sorted(issue_names.items()))
 issue_keys = issue_names.keys()
@@ -191,6 +191,8 @@ def create_index(indexdict, issues):
         ET.SubElement(issueDiv, 'ul',attrib={'class':'list', 'id':'section_Projects'})
         ET.SubElement(issueDiv, 'ul',attrib={'class':'list', 'id':'section_Proposals'})
 
+        ET.SubElement(issueDiv, 'ul',attrib={'class':'list', 'id':'section_Methods'})
+        
         # ATTENTION: ids are duplicated in //div#issue_N/ul#section_X
         # ul#section_X = ul#section_Introduction, ul#section_...
         # these <ul>s with same appear more than once. one for each item 
