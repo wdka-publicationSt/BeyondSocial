@@ -34,7 +34,7 @@ p.add_argument("--local", action='store_true', help="use local when running the 
 p.add_argument("--host", default="beyond-social.org")
 p.add_argument("--path", default="/wiki/", help="path: should end with /")
 p.add_argument("--category", "-c", nargs="*", default=[['04 Publish Me']], action="append", help="Category to query. Use: -c foo -c bar to intersect multiple categories")
-p.add_argument("--preview", help='Preview page. Will override category querying. Use: --page "Name Of Wiki Page"')
+p.add_argument("--preview", help='Preview a specific page. Will override category querying. Use: --page "Name Of Wiki Page"')
 #p.add_argument("--preview", action='store_true', help='Preview mode flag. Requires --page "Name Of Wiki Page" ') 
 args = p.parse_args()
 local = args.local
@@ -55,21 +55,22 @@ def create_page(memberpages, mode):
         print 'MEMBER PAGE', member
         page = mw_page(site, member)
         page_name = page.name 
-        page_cats = mw_page_cats(site, page)
+        page_cats = mw_page_cats(site, page) # [u'Category:Discourse', u'Category:Issue 1', u'Category:Economics', u'Category:Visions', u'Category:Transformation']
+        print 'PAGE_CATS >>> ', page_cats
         page_text = mw_page_text(site, page)
         page_imgs = mw_page_imgsurl(site, page)
-        page_imgs = { key.capitalize():value for key, value in page_imgs.items()} # capatalize keys, so can be called later
+        page_imgs = { key.capitalize():value for key, value in page_imgs.items()} # loop to capatalize keys, so can be called later
         articledict = {'Title': page_name, 'Content': page_text, 'Categories':page_cats, 'Images': page_imgs}
 
-        if articledict['Content']:# clean and convert content to html
+        if articledict['Content']: # if there is content --- clean and convert content to html
             articledict['Authors'], articledict['Content'] = find_authors(articledict['Content'])
             articledict['Content'] = remove_cats(articledict['Content'])
             articledict['Content'] = replace_video(articledict['Content'])
-            articledict['Content'] = pandoc2html(articledict['Content'])
-            articledict['Category Topics'] = [] #as to be appended in loop below
+            articledict['Content'] = pandoc2html(articledict['Content']) # future: here we will call mw render
+            articledict['Category Topics'] = [] # as to be appended in loop below
             
             for entry in articledict['Categories']:
-                category =  (entry).replace('Category:', '')
+                category = (entry).replace('Category:', '')
                 if 'Issue' in category:
                     articledict['Category Issue'] = category.replace('Issue ','')
                     #print 'articledict', articledict['Category Issue'], issue_names
@@ -244,19 +245,29 @@ def create_index(indexdict, issues):
 # ACTION
 # #####    
 site = mwsite(args.host, args.path)
+print site
 
 if args.preview is not None:
     #print "** Page Preview Mode**"
     memberpages = [args.preview.encode('utf-8')]
     #print 'memberpages:', memberpages
+
+    #'index' = mode, and if index is set as preview, the output is written to 'preview'
     create_page(memberpages, 'preview')
     
 else:
     #print "** New Index Mode **"
-    memberpages=mw_cats(site, args)
-    #print 'memberpages:', memberpages
-    indexdict = create_page(memberpages, 'index')
-    #pprint.pprint(indexdict)
+
+    # site is the Site objects
+    # args is here reading the args.category to only query the articles with the category "04 Publish Me"
+    memberpages=mw_cats(site, args) 
+    print 'memberpages:', memberpages
+
+    #memberpages = a list of all the page names that are categerized under "04 Publish Me"
+    #'index' = mode, and if index is set as mode, the output is written to 'articles'
+    indexdict = create_page(memberpages, 'index') 
+    pprint.pprint(indexdict)
+
     create_index(indexdict, issue_names)
 
 

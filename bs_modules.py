@@ -59,7 +59,7 @@ def mw_page_imgsurl(site, page):
     imgs = list(imgs)
     #print imgs
     urls = { img.name: (img.imageinfo)['url'] for img in imgs}
-    return urls
+    return urls #dictionary
 
 
 def mw_img_url(site, img): #find full of an img 
