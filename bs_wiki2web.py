@@ -74,8 +74,8 @@ def create_page(memberpages, mode):
                 if 'Issue' in category:
                     articledict['Category Issue'] = category.replace('Issue ','')
                     #print 'articledict', articledict['Category Issue'], issue_names
-                    print type(articledict['Category Issue']), type( (issue_names[articledict['Category Issue']]).decode('utf-8'))
-                    print articledict['Category Issue']  + u' '+ (issue_names[articledict['Category Issue']]).decode('utf-8')
+                    # print type(articledict['Category Issue']), type( (issue_names[articledict['Category Issue']]).decode('utf-8'))
+                    # print articledict['Category Issue']  + u' '+ (issue_names[articledict['Category Issue']]).decode('utf-8')
                     articledict['Category Issue'] = articledict['Category Issue']  + u' '+ (issue_names[articledict['Category Issue']]).decode('utf-8')
                     pprint.pprint( articledict )
                     #.zfill()
@@ -85,6 +85,7 @@ def create_page(memberpages, mode):
                     articledict['Category Section']= category
             articledict.pop('Categories') 
 
+            # only if a page has a section + issue, it is further processed
             if 'Category Issue' in articledict.keys() and 'Category Section' in articledict.keys():
                 # HTML tree  # create work page
                 page_tree = html5lib.parse(page_template, namespaceHTMLElements=False)
@@ -153,7 +154,7 @@ def create_page(memberpages, mode):
                 #print 'write file', work_filename
                 indexdict[articledict['Title']] = articledict
     #            articledict['Path'] = articledict['Path'].replace(wd,'')
-    
+
 
     return indexdict
         
@@ -171,6 +172,8 @@ def create_index(indexdict, issues):
     issuesContainer=index_tree.find('.//div[@class="issuesContainer"]')
     for issue in issues_keys:
         #print issue_names[issue], issue
+
+        # ET = XML python library
         issueDiv = ET.SubElement(issuesContainer, 'div',
                                  attrib={'class':'issueItem',
                                          'id':'issue_{}'.format(issue)})
@@ -182,6 +185,7 @@ def create_index(indexdict, issues):
                                   attrib={'class':'imageNavigation',
                                           'style':'"display: none; position: relative; height: 250px;"'})
         
+        # here again the sections are hardcoded
         ET.SubElement(issueDiv, 'ul',attrib={'class':'list', 'id':'section_Introduction'})
         ET.SubElement(issueDiv, 'ul',attrib={'class':'list', 'id':'section_Discourse'})
         ET.SubElement(issueDiv, 'ul',attrib={'class':'list', 'id':'section_Projects'})
@@ -193,8 +197,6 @@ def create_index(indexdict, issues):
         # change ul.list css to ul.section_Proposals, ul.section_...
 
 
-
-        
 
     # create an list (both in text & img navigation) item for each article
     # under the parent issue
@@ -224,6 +226,7 @@ def create_index(indexdict, issues):
 
         # what is the parent on index_img_section
         
+        # another loop for the visual index
         for imgurl in images.values():
             index_img_item = ET.SubElement(index_imgs_section, 'li',
                                        attrib={'class': " ".join(topics)+" "+section,
@@ -265,7 +268,9 @@ else:
 
     #memberpages = a list of all the page names that are categerized under "04 Publish Me"
     #'index' = mode, and if index is set as mode, the output is written to 'articles'
+    # indexdict contains a dict for every page, containing all the elements
     indexdict = create_page(memberpages, 'index') 
+    print 'INDEXDICT >>>'
     pprint.pprint(indexdict)
 
     create_index(indexdict, issue_names)
