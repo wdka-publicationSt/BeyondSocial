@@ -7,8 +7,8 @@ from mwclient import Site
 #########
 # Site Level
 #########
-def mwsite(host, path): #returns wiki site object
-    site = Site(host, path)
+def mwsite(host, wikipath): #returns wiki site object
+    site = Site(("http", host), path=wikipath)
     return site
 
 def mw_cats(site, args): #returns pages member of args(categories)
