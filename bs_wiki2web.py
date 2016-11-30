@@ -20,6 +20,11 @@ category_section = ['Discourse', 'Introduction', 'Projects', 'Proposals', 'Metho
 issue_names = {'1': 'Redesigning Business', '2':'Education'}
 issue_names = collections.OrderedDict(sorted(issue_names.items()))
 issue_keys = issue_names.keys()
+issue_templates = {'1':{'index':'templates/index-template-01.html', 'article':'templates/article-template-01.html'},
+                   '2':{'index':'templates/index-template-02.html', 'article':'templates/article-template-02.html'},
+                   '3':{'index':'templates/index-template-02.html', 'article':'templates/article-template-02.html'}}
+                   
+
 #print issue_names
 #issue_names.reverse()
 issue_current = issue_names[issue_keys[-1]]
@@ -49,14 +54,14 @@ from bs_modules import pandoc2html, write_html_file, mw_cats, mw_page_imgsurl, m
 # DEFS:  create_page create_index
 ######
 def create_page(memberpages, mode):
-    page_template = open("{}/article-template.html".format(wd), "r")
+
     indexdict = {} #parent dict: contains articledict instances
     for member in memberpages:
         print 'MEMBER PAGE', member
         page = mw_page(site, member)
         page_name = page.name 
         page_cats = mw_page_cats(site, page) # [u'Category:Discourse', u'Category:Issue 1', u'Category:Economics', u'Category:Visions', u'Category:Transformation']
-        print 'PAGE_CATS >>> ', page_cats
+        #print 'PAGE_CATS >>> ', page_cats
         page_text = mw_page_text(site, page)
         page_imgs = mw_page_imgsurl(site, page)
         page_imgs = { key.capitalize():value for key, value in page_imgs.items()} # loop to capatalize keys, so can be called later
@@ -87,8 +92,20 @@ def create_page(memberpages, mode):
 
             # only if a page has a section + issue, it is further processed
             if 'Category Issue' in articledict.keys() and 'Category Section' in articledict.keys():
+                issue=articledict['Category Issue'][0]
+                article_template_file = issue_templates[issue]['article']
+                print 
+                print article_template_file
+                print 
+                article_template = open("{}/{}".format(wd, article_template_file), "r") 
+
+                #page_template = open("{}/article-template.html".format(wd), "r")
+    
+
+
+                
                 # HTML tree  # create work page
-                page_tree = html5lib.parse(page_template, namespaceHTMLElements=False)
+                page_tree = html5lib.parse(article_template, namespaceHTMLElements=False)
                 page_title = page_tree.find('.//title')
                 page_title_h1 = page_tree.find('.//h1[@title="title"]')
                 page_title.text = articledict['Title']
@@ -160,17 +177,24 @@ def create_page(memberpages, mode):
         
 
 def create_index(indexdict, issues):
-    index_template = open("{}/index-template.html".format(wd), "r") 
-    index_tree = html5lib.parse(index_template, namespaceHTMLElements=False)
-
+    issues_keys = issues.keys()
+    issues_keys.reverse()
+    for issue in issues_keys:
+        index_template_file = issue_templates[issue]['index']
+        print 
+        print index_template_file
+        print 
+        index_template = open("{}/{}".format(wd, index_template_file), "r") 
+        index_tree = html5lib.parse(index_template, namespaceHTMLElements=False)
+        
+        issuesContainer=index_tree.find('.//div[@class="issuesContainer"]')
 
     # create a section for each issue
     # each inside div.issuesContainer
     # in file index-template.html
-    issues_keys = issues.keys()
-    issues_keys.reverse()
-    issuesContainer=index_tree.find('.//div[@class="issuesContainer"]')
-    for issue in issues_keys:
+
+
+
         #print issue_names[issue], issue
 
         # ET = XML python library
@@ -266,14 +290,14 @@ else:
     # site is the Site objects
     # args is here reading the args.category to only query the articles with the category "04 Publish Me"
     memberpages=mw_cats(site, args) 
-    print 'memberpages:', memberpages
+    #print 'memberpages:', memberpages
 
     #memberpages = a list of all the page names that are categerized under "04 Publish Me"
     #'index' = mode, and if index is set as mode, the output is written to 'articles'
     # indexdict contains a dict for every page, containing all the elements
     indexdict = create_page(memberpages, 'index') 
-    print 'INDEXDICT >>>'
-    pprint.pprint(indexdict)
+    #print 'INDEXDICT >>>'
+    #pprint.pprint(indexdict)
 
     create_index(indexdict, issue_names)
 
