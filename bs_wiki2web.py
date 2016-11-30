@@ -20,9 +20,9 @@ category_section = ['Discourse', 'Introduction', 'Projects', 'Proposals', 'Metho
 issue_names = {'1': 'Redesigning Business', '2':'Education'}
 issue_names = collections.OrderedDict(sorted(issue_names.items()))
 issue_keys = issue_names.keys()
-issue_templates = {'1':{'index':'templates/index-template-01.html', 'article':'templates/article-template-01.html'},
-                   '2':{'index':'templates/index-template-02.html', 'article':'templates/article-template-02.html'},
-                   '3':{'index':'templates/index-template-02.html', 'article':'templates/article-template-02.html'}}
+issue_templates = {'1':{'index':'templates/index-template-1.html', 'article':'templates/article-template-1.html'},
+                   '2':{'index':'templates/index-template-2.html', 'article':'templates/article-template-2.html'},
+                   '3':{'index':'templates/index-template-2.html', 'article':'templates/article-template-2.html'}}
                    
 
 #print issue_names
