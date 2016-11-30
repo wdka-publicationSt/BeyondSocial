@@ -1,8 +1,9 @@
-<!DOCTYPE HTML>
+<!DOCTYPE HTML> 
 <html>
   <head>
     <meta charset="utf-8" />
     <meta content="text/html; charset=ISO-8859-1" http-equiv="Content-Type" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
     <meta name="keywords" content="Beyond Social, research, publishing, magazine, wiki, social art, social design, design, art, Willem de Kooning Academy, University of Applied Sciences Rotterdam, Hogeschool Rotterdam, Rotterdam, The Netherlands, students, WdKA, Social Practice, Pulication Station,  Iris Schutten, Deanna Herst, Tabo Goudswaard, Redesigning Business." />
     <meta name="author" content="Beyond Social" />
@@ -25,41 +26,65 @@
     <script src="./js/isotope.js" type="text/javascript">
       
     </script>
-    <script src="./js/scripts.js" type="text/javascript">
-      
-    </script>
+    <script src="./js/packery-mode.pkgd.min.js" type="text/javascript"></script>
+    <script src="./js/imagesloaded.pkgd.min.js" type="text/javascript"></script>
+    <script src="./js/scripts.js" type="text/javascript"></script>
+    <script type="text/javascript" src="./js/scripts_shared.js"></script>
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="http://fonts.googleapis.com/css?family=Crimson+Text:400,600,700,400italic,600italic,700italic" rel="stylesheet" type="text/css" />
+
+
     <link href="./styles/beyond.css" rel="stylesheet" type="text/css" />
-    <link href="http://fonts.googleapis.com/css?family=Raleway:800" rel="stylesheet" type="text/css" />
+    
     <title></title>
   </head>
   <body>
     <div id="BeyondHeader">
       <div class="top">
         <div class="title-beyond">
-          <h1>Beyond<br />Social</h1>
+          <h1>Beyond Social</h1>
           <p>Magazine
-            <br />Investigating
-            <br />Social Art and Design</p>
+            <br>Investigating
+            <br>Social Art and Design</p>
+        </div>
+
+        <div id="headerLogos">
+          <a class="noStyleLink" href="http://wdka.nl"><img src="./img/wdkalogo_bw.svg" width="auto"></a> 
+          <img src="./img/wdkalogo_2.svg" width="auto">
+        </div>
+
+        <div class="extra-beyond">
+
+          <p><span id="toAbout">About <i class="fa fa-question-circle" aria-hidden="true"></i></span><br>
+          	<span id="toJoin"><a href="http://beyond-social.org/wiki/index.php/Want_to_join_us%3F " id="" target="_blank">Join Us <i class="fa fa-exclamation-circle" aria-hidden="true"></i></a></span><br>
+            <span id="shareButtons">Share <a class="twitter-share-button" target="_blank"  id="shareTwitter" href=""> <i class="fa fa-twitter-square" aria-hidden="true"></i></a> <a href="" id="shareFacebook" target="_blank"> <i class="fa fa-facebook-square" aria-hidden="true"></i></a></span>
+          </p>
         </div>
       </div>
+
     </div>
+
     <div class="issueWrapper">
       <!-- NEW WRAPPERS ADDED FOR SORTING: div textImage && div sortTopics -->
       <div class="themes" id="sortArea">
+        <div  id="toggleFilter">
+          <p class="hideSortAreaShowText"></p>
+        </div> 
         <div id="textImage">
           <label>
-            <p>Filter by: </p>
+            <p>Index by: </p>
           </label>
           <label>
-            <input class="Text" name="Text" type="checkbox" value=".Text" checked/>
+			<input class="Text" name="Text" type="checkbox" value=".Text" checked/>
             <p>Title</p>
+
           </label>
           <label>
             <input class="Image" name="Image" type="checkbox" value=".Image" />
             <p>Image</p>
           </label>
-        </div>
+	</div>
         <br>
         <div id="sortTopics">
           <label>
@@ -90,6 +115,10 @@
             <p>Politics</p>
           </label>
           <label>
+            <input class="Strategies" name="Strategies" type="checkbox" value=".Strategies" />
+            <p>Strategies</p>
+          </label>	  
+          <label>
             <input class="Transformation" name="Transformation" type="checkbox" value=".Transformation" />
             <p>Transformation</p>
           </label>
@@ -103,41 +132,44 @@
           </label>
         </div>
       </div>
-      <div class="issueItem" id="issue_1">
-        <div class="issue">
-          <p>Issue 01: Redesigning Business</p>
-        </div>
-
-        <ul class="imageNavigation" style="display: none; position: relative; height: 250px;" ></ul>
-
-        <ul class="list" id="section_Introduction"></ul>
-        <ul class="list" id="section_Discourse"></ul>
-        <ul class="list" id="section_Projects"></ul>
-        <ul class="list" id="section_Proposals"></ul>
       </div>
-      <div class="issueItem" id="issue_2">
-        <div class="issue">
-          <!-- 
-	       <p>Issue 02</p> -->
-        </div>
-        <ul class="list" id="list_issue_1">
-        </ul>
+
+      <div class="issueItem">      
+
+     <!-- <div class="issueItem"> 	 -->
+     <!--    <div class="issue">  -->
+     <!--      <p>Issue 01: Redesigning Business</p>  -->
+     <!--    </div>  -->
+     <!--    <ul class="imageNavigation" style="display: none; position: relative; height: 250px;" ></ul>  -->
+     <!--    <ul class="list" id="section_Introduction"></ul>  -->
+     <!--    <ul class="list" id="section_Discourse"></ul>  -->
+     <!--    <ul class="list" id="section_Projects"></ul>  -->
+     <!--    <ul class="list" id="section_Proposals"></ul>  -->
+     <!-- 		</div>		 -->
+     <!-- </div> -->
+
+
       </div>
-    </div>
+      
     <div id="BeyondFooter">
       <div class="top">
       </div>
       <div class="intro">
             <p class="colophon">
-                <b>Initiative:</b> Iris Schutten, Social Practices WdKA
-                <b>Web Development:</b> André Castro, publication Station WdKA
-                <b>Visual Design/Web Development:</b> Marlon Harder & Lasse van den Bosch Christensen, <a href="http://template01.info">TEMPLATE</a>
-                <b>Contact:</b> Iris Schutten / Deanna Herst / Tabo Goudswaard <a href="mailto:wdka.beyondsocial@hr.nl">wdka.beyondsocial@hr.nl </a>
+	      <b>Initiative:</b> Iris Schutten 
+	      <b>Guest Editor:</b> Sikko Cleveringa 
+	      <b>Editors:</b> Deanna Herst, Michelle Kasprzak 
+	      <b>Advice:</b> Jacqueline Peijke Final 
+	      <b>Editing:</b> Johanna Monk 
+	      <b>Publishing:</b> Aldje van Meer 
+	      <b>Web Development:</b> André Castro, WdKA Publication Station 
+	      <b>Visual Design/Web Development:<b/> Marlon Harder & Lasse van den Bosch Christensen - Template 
+		<b>Contact:</b> <a href="mailto:wdka.beyondsocial@hr.nl">wdka.beyondsocial@hr.nl </a>
             </p>
-        <p style="float:right;">
-          <a class='noStyleLink' href="http://wdka.nl"><img src="./img/wdkalogo.svg" width="auto" height="100px">
-          </a>
-        </p>
+            <p class="floatRight" class="">
+              <a id="toTop" class="" href="">To top <i class="fa fa-arrow-circle-up arrowBack" aria-hidden="true"></i> </a>
+            </p>
+
       </div>
     </div>
   </body>

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import xml.etree.ElementTree as ET
-import html5lib, urllib, pprint, collections
+import html5lib, urllib, pprint, collections, os
 # unsued from bs_modules: replace_gallery, replace_video, index_addwork,
 from argparse import ArgumentParser
 
@@ -20,9 +20,15 @@ category_section = ['Discourse', 'Introduction', 'Projects', 'Proposals', 'Metho
 issue_names = {'1': 'Redesigning Business', '2':'Education'}
 issue_names = collections.OrderedDict(sorted(issue_names.items()))
 issue_keys = issue_names.keys()
-issue_templates = {'1':{'index':'templates/index-template-1.html', 'article':'templates/article-template-1.html'},
-                   '2':{'index':'templates/index-template-2.html', 'article':'templates/article-template-2.html'},
-                   '3':{'index':'templates/index-template-2.html', 'article':'templates/article-template-2.html'}}
+issue_templates ={}
+dir_templates = os.path.abspath('templates')#templates dit
+for f in os.listdir(dir_templates): #generate issue_templates
+    n=f[0]
+    if n not in issue_templates.keys():
+        issue_templates[n]={}
+    issue_templates[n][(f.split('-'))[1]]=f
+
+
                    
 
 #print issue_names
@@ -97,7 +103,7 @@ def create_page(memberpages, mode):
                 print 
                 print article_template_file
                 print 
-                article_template = open("{}/{}".format(wd, article_template_file), "r") 
+                article_template = open("{}/{}".format(dir_templates, article_template_file), "r") 
 
                 #page_template = open("{}/article-template.html".format(wd), "r")
     
@@ -184,38 +190,30 @@ def create_index(indexdict, issues):
         print 
         print index_template_file
         print 
-        index_template = open("{}/{}".format(wd, index_template_file), "r") 
+        index_template = open("{}/{}".format(dir_templates, index_template_file), "r") 
         index_tree = html5lib.parse(index_template, namespaceHTMLElements=False)
         
-        issuesContainer=index_tree.find('.//div[@class="issuesContainer"]')
-
-    # create a section for each issue
-    # each inside div.issuesContainer
-    # in file index-template.html
-
-
+        issueItem=index_tree.find('.//div[@class="issueItem"]')
+        # create a section (div.issueItem) for issue articles 
+        # in file index-template file
 
         #print issue_names[issue], issue
 
         # ET = XML python library
-        issueDiv = ET.SubElement(issuesContainer, 'div',
-                                 attrib={'class':'issueItem',
-                                         'id':'issue_{}'.format(issue)})
-
-        subissueDiv = ET.SubElement(issueDiv, 'div', attrib={'class':'issue'})
+        subissueDiv = ET.SubElement(issueItem, 'div', attrib={'class':'issue'})
         subissueDiv_p = ET.SubElement(subissueDiv, 'p')
         subissueDiv_p.text = "Issue {}: {}".format(issue, issue_names[issue])
-        ul_imgNav = ET.SubElement(issueDiv, 'ul',
+        ul_imgNav = ET.SubElement(issueItem, 'ul',
                                   attrib={'class':'imageNavigation',
                                           'style':'"display: none; position: relative; height: 250px;"'})
         
         # here again the sections are hardcoded
-        ET.SubElement(issueDiv, 'ul',attrib={'class':'list', 'id':'section_Introduction'})
-        ET.SubElement(issueDiv, 'ul',attrib={'class':'list', 'id':'section_Discourse'})
-        ET.SubElement(issueDiv, 'ul',attrib={'class':'list', 'id':'section_Projects'})
-        ET.SubElement(issueDiv, 'ul',attrib={'class':'list', 'id':'section_Proposals'})
+        ET.SubElement(issueItem, 'ul',attrib={'class':'list', 'id':'section_Introduction'})
+        ET.SubElement(issueItem, 'ul',attrib={'class':'list', 'id':'section_Discourse'})
+        ET.SubElement(issueItem, 'ul',attrib={'class':'list', 'id':'section_Projects'})
+        ET.SubElement(issueItem, 'ul',attrib={'class':'list', 'id':'section_Proposals'})
 
-        ET.SubElement(issueDiv, 'ul',attrib={'class':'list', 'id':'section_Methods'})
+        ET.SubElement(issueItem, 'ul',attrib={'class':'list', 'id':'section_Methods'})
         
         # ATTENTION: ids are duplicated in //div#issue_N/ul#section_X
         # ul#section_X = ul#section_Introduction, ul#section_...
@@ -236,9 +234,10 @@ def create_index(indexdict, issues):
         section = indexdict[article]['Category Section']
         topics =  indexdict[article]['Category Topics']
         images = indexdict[article]['Images']
-        index_section = index_tree.find('.//div[@id="issue_{}"]/ul[@id="section_{}"]'.format(issue_numb, section.encode('utf-8')))
-        index_imgs_section = index_tree.find('.//div[@id="issue_{}"]/ul[@class="imageNavigation"]'.format(issue_numb))
-        
+        index_section = index_tree.find('.//div[@class="issueItem"]/ul[@id="section_{}"]'.format(section.encode('utf-8')))
+        index_imgs_section = index_tree.find('.//div[@class="issueItem"]/ul[@class="imageNavigation"]')
+        print 'Index Section', ET.tostring(index_section)
+
         index_item = ET.SubElement(index_section, 'li',
                                    attrib={'class': " ".join(topics)+" "+section,
                                            'data-name': article,
@@ -266,7 +265,7 @@ def create_index(indexdict, issues):
             
     title=index_tree.find('.//title')
     title.text = 'Beyond Social: ' + issue_current
-    index_filename = '{}/index.html'.format(wd)
+    index_filename = '{}/{}-index.html'.format(wd, issue[0])
     write_html_file(index_tree, index_filename)
 
 

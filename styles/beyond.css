@@ -967,9 +967,9 @@ a.backLink:active {
 	margin-top: 0px;
 }
 
-.issueItem:not(:first-child){
-	opacity: 0;
-}
+/*.issueItem:not(:first-child){
+	opacity: 1;
+}*/
 
 .list img{
 	width: 15%;
