@@ -28,13 +28,9 @@ for f in os.listdir(dir_templates): #generate issue_templates
         issue_templates[n]={}
     issue_templates[n][(f.split('-'))[1]]=f
 
-
+#pprint.pprint(issue_templates)
                    
 
-#print issue_names
-#issue_names.reverse()
-issue_current = issue_names[issue_keys[-1]]
-#print 'current issue', issue_current
 
 #####
 # Args
@@ -88,7 +84,7 @@ def create_page(memberpages, mode):
                     # print type(articledict['Category Issue']), type( (issue_names[articledict['Category Issue']]).decode('utf-8'))
                     # print articledict['Category Issue']  + u' '+ (issue_names[articledict['Category Issue']]).decode('utf-8')
                     articledict['Category Issue'] = articledict['Category Issue']  + u' '+ (issue_names[articledict['Category Issue']]).decode('utf-8')
-                    pprint.pprint( articledict )
+                    #pprint.pprint( articledict )
                     #.zfill()
                 elif category in category_topic:
                     articledict['Category Topics'].append(category)
@@ -212,7 +208,6 @@ def create_index(indexdict, issues):
         ET.SubElement(issueItem, 'ul',attrib={'class':'list', 'id':'section_Discourse'})
         ET.SubElement(issueItem, 'ul',attrib={'class':'list', 'id':'section_Projects'})
         ET.SubElement(issueItem, 'ul',attrib={'class':'list', 'id':'section_Proposals'})
-
         ET.SubElement(issueItem, 'ul',attrib={'class':'list', 'id':'section_Methods'})
         
         # ATTENTION: ids are duplicated in //div#issue_N/ul#section_X
@@ -225,48 +220,54 @@ def create_index(indexdict, issues):
     # create an list (both in text & img navigation) item for each article
     # under the parent issue
     # in file index-template.html
+
     
-    for article in indexdict.keys():    
-        authors = indexdict[article]['Authors']
-        path = (indexdict[article]['Path'])
-        issue = indexdict[article]['Category Issue']
-        issue_numb = issue[0]
-        section = indexdict[article]['Category Section']
-        topics =  indexdict[article]['Category Topics']
-        images = indexdict[article]['Images']
-        index_section = index_tree.find('.//div[@class="issueItem"]/ul[@id="section_{}"]'.format(section.encode('utf-8')))
-        index_imgs_section = index_tree.find('.//div[@class="issueItem"]/ul[@class="imageNavigation"]')
-        print 'Index Section', ET.tostring(index_section)
+        for article in indexdict.keys():
+            article_issue = indexdict[article]['Category Issue']
+            article_issue_numb = article_issue[0]
+            print 'ISSUE',article_issue_numb, article_issue[0]
 
-        index_item = ET.SubElement(index_section, 'li',
-                                   attrib={'class': " ".join(topics)+" "+section,
-                                           'data-name': article,
-                                           'data-section':section,
-                                           'data-categories': " ".join(topics)+" "+section
-                                       })
-        article_link = ET.SubElement(index_item, 'a', attrib={'href':urllib.quote(path)})
-        article_link.text = article
-        article_author = ET.SubElement(index_item, 'p', attrib={'class':'authorTitle'})
-        article_author.text = authors
-
-        # what is the parent on index_img_section
-        
-        # another loop for the visual index
-        for imgurl in images.values():
-            index_img_item = ET.SubElement(index_imgs_section, 'li',
-                                       attrib={'class': " ".join(topics)+" "+section,
-                                               'data-name': article,
-                                               'data-section':section,
-                                               'data-categories': " ".join(topics)+" "+section,
-                                               'style':'position: absolute; left: 0px; top: 0px;'
-                                           })
-            article_img_link = ET.SubElement(index_img_item, 'a', attrib={'href':urllib.quote(path)})
-            article_img_img = ET.SubElement(article_img_link, 'img', attrib={'src':imgurl})
             
-    title=index_tree.find('.//title')
-    title.text = 'Beyond Social: ' + issue_current
-    index_filename = '{}/{}-index.html'.format(wd, issue[0])
-    write_html_file(index_tree, index_filename)
+            if article_issue_numb == issue: #so that articles from issue N are only listed in index N
+
+                authors = indexdict[article]['Authors']
+                path = (indexdict[article]['Path'])
+                section = indexdict[article]['Category Section']
+                topics =  indexdict[article]['Category Topics']
+                images = indexdict[article]['Images']
+                index_section = index_tree.find('.//div[@class="issueItem"]/ul[@id="section_{}"]'.format(section.encode('utf-8')))
+                index_imgs_section = index_tree.find('.//div[@class="issueItem"]/ul[@class="imageNavigation"]')
+                print 'Index Section', ET.tostring(index_section)
+
+                index_item = ET.SubElement(index_section, 'li',
+                                           attrib={'class': " ".join(topics)+" "+section,
+                                                   'data-name': article,
+                                                   'data-section':section,
+                                                   'data-categories': " ".join(topics)+" "+section
+                                               })
+                article_link = ET.SubElement(index_item, 'a', attrib={'href':urllib.quote(path)})
+                article_link.text = article
+                article_author = ET.SubElement(index_item, 'p', attrib={'class':'authorTitle'})
+                article_author.text = authors
+
+                # what is the parent on index_img_section
+
+                # another loop for the visual index
+                for imgurl in images.values():
+                    index_img_item = ET.SubElement(index_imgs_section, 'li',
+                                               attrib={'class': " ".join(topics)+" "+section,
+                                                       'data-name': article,
+                                                       'data-section':section,
+                                                       'data-categories': " ".join(topics)+" "+section,
+                                                       'style':'position: absolute; left: 0px; top: 0px;'
+                                                   })
+                    article_img_link = ET.SubElement(index_img_item, 'a', attrib={'href':urllib.quote(path)})
+                    article_img_img = ET.SubElement(article_img_link, 'img', attrib={'src':imgurl})
+
+                title=index_tree.find('.//title')
+                title.text = 'Beyond Social: ' + article_issue_numb 
+                index_filename = '{}/{}-index.html'.format(wd, article_issue_numb)
+                write_html_file(index_tree, index_filename)
 
 
 #####
