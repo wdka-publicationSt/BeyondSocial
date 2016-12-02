@@ -17,19 +17,18 @@ from argparse import ArgumentParser
 ####
 category_topic = ['Aesthetics', 'Bottom-up', 'Economics', 'Failures', 'Participation', 'Politics', 'Strategies', 'Transformation', 'Visions', 'Technology']
 category_section = ['Discourse', 'Introduction', 'Projects', 'Proposals', 'Methods' ]
-issue_names = {'1': 'Redesigning Business', '2':'Education'}
+issue_names = {'1': 'Redesigning Business', '2':'Education', '3':'Radical Reframing'}
 issue_names = collections.OrderedDict(sorted(issue_names.items()))
 issue_keys = issue_names.keys()
-issue_templates ={}
-dir_templates = os.path.abspath('templates')#templates dit
+issue_templates = {}
+dir_templates = os.path.abspath('templates') #templates dir
 for f in os.listdir(dir_templates): #generate issue_templates
-    n=f[0]
+    n = f[0]
     if n not in issue_templates.keys():
-        issue_templates[n]={}
-    issue_templates[n][(f.split('-'))[1]]=f
+        issue_templates[n] = {}
+    issue_templates[n][(f.split('-'))[1]] = f
 
 #pprint.pprint(issue_templates)
-                   
 
 
 #####
@@ -94,7 +93,7 @@ def create_page(memberpages, mode):
 
             # only if a page has a section + issue, it is further processed
             if 'Category Issue' in articledict.keys() and 'Category Section' in articledict.keys():
-                issue=articledict['Category Issue'][0]
+                issue = articledict['Category Issue'][0]
                 article_template_file = issue_templates[issue]['article']
                 print 
                 print article_template_file
@@ -103,8 +102,6 @@ def create_page(memberpages, mode):
 
                 #page_template = open("{}/article-template.html".format(wd), "r")
     
-
-
                 
                 # HTML tree  # create work page
                 page_tree = html5lib.parse(article_template, namespaceHTMLElements=False)
@@ -172,7 +169,7 @@ def create_page(memberpages, mode):
                 write_html_file(page_tree, work_filename)
                 #print 'write file', work_filename
                 indexdict[articledict['Title']] = articledict
-    #            articledict['Path'] = articledict['Path'].replace(wd,'')
+    			#articledict['Path'] = articledict['Path'].replace(wd,'')
 
 
     return indexdict
@@ -289,7 +286,7 @@ else:
 
     # site is the Site objects
     # args is here reading the args.category to only query the articles with the category "04 Publish Me"
-    memberpages=mw_cats(site, args) 
+    memberpages = mw_cats(site, args) 
     #print 'memberpages:', memberpages
 
     #memberpages = a list of all the page names that are categerized under "04 Publish Me"

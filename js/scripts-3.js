@@ -111,53 +111,11 @@ $(document).ready(function(){
   }
 
 
-
-
-  function hidePrevIssues(){ 
-              $('.issueItem').not(':first').css({'opacity':'0', 'height':'0px', 'overflow':'hidden'})
-              // checkSectionLayout()
-              if(!$('#togglePrevIssues').length){
-                $('.issueItem:first').append('<div class="issue"><p id="togglePrevIssues" style="padding-top:60px;"></p></div>')
-                $('.issueItem:first').prepend('<div class="issue"><p id="currentIssue" style="margin-bottom:30px;">Current issue</p></div>')
-
-              }
-              $('#togglePrevIssues').removeClass('showPrev').addClass('hidePrev').text('Show previous issues')
-
-  }
-  // hidePrevIssues()
-
-  function showPrevIssues(){ 
-              $('.issueItem').not(':first').css({'opacity':'1', 'height':'auto'})
-              $('#togglePrevIssues').removeClass('hidePrev').addClass('showPrev').text('Hide previous issues')
-              // checkSectionLayout()
-
-              // setTimeout(function(){
-              //   calculateSection()
-              //   calculateSectionWide()
-              // },1500)
-
-  }
-
-  function togglePrevIssues(){
-    $(document).on('click','#togglePrevIssues',function(){
-      if($(this).hasClass('hidePrev')){
-        showPrevIssues()
-      }else{
-        hidePrevIssues()
-         // $('section-div').remove()
-      }
-    })
-  }
-
-  // togglePrevIssues()
-
-
-
   $(window).load(function() {
     var sortAreaOffset = $("#sortArea").offset().top;
   })
   setTimeout(function(){
-    sortAreaOffset = $(".articleHeader").offset().top
+    sortAreaOffset = $(".articleHeader").offset().top;
   },500)
 
   
