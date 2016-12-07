@@ -266,7 +266,7 @@ def create_index(indexdict, issues):
 
                 title=index_tree.find('.//title')
                 title.text = 'Beyond Social: ' + article_issue_numb 
-                index_filename = '{}/{}-index.html'.format(wd, article_issue_numb)
+                index_filename = '{}/issue-{}.html'.format(wd, article_issue_numb)
                 write_html_file(index_tree, index_filename)
 
 
