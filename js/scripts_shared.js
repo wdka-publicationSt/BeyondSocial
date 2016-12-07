@@ -27,7 +27,8 @@ function addFBImage(){
 
 function clickAbout(){
   $(document).on('click','#toAbout', function(){
-    $("html, body").animate({ scrollTop: $(document).height() },200);
+    window.location.href = 'http://beyond-social.org/wiki/index.php/About';
+    // $("html, body").animate({ scrollTop: $(document).height() },200);
   })
 }
 
