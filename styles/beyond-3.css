@@ -17,9 +17,12 @@
     letter-spacing: 1px !important;
 }
 
-.headerBack:hover .title-beyond h1:after{
+.headerBack .title-beyond h1:after{
   content: " ⟵";
   font-size: 30px;
+  position: absolute;
+  top: 55px;
+  left:3px;
 }
 
 #toggleFilter{
@@ -31,11 +34,11 @@
 
 #toggleFilter p:hover {
 	text-decoration: none;
-	color: #BF5000;
-		-webkit-box-shadow: 0px 3px 0px 0px #BF5000;
-	-moz-box-shadow: 0px 3px 0px 0px #BF5000;
-	box-shadow: 0px 3px 0px 0px #BF5000;
-	color: #BF5000;
+	color: #F00;
+		-webkit-box-shadow: 0px 3px 0px 0px #F00;
+	-moz-box-shadow: 0px 3px 0px 0px #F00;
+	box-shadow: 0px 3px 0px 0px #F00;
+	color: #F00;
 }
 
 @keyframes fadein {
@@ -123,13 +126,13 @@
 
 #togglePrevIssues{
 	cursor: pointer;
-	border-bottom: 8px double #BF5000;
-	color: #BF5000;
+	border-bottom: 8px double #F00;
+	color: #F00;
 }
 
 #currentIssue{
-	border-bottom: 8px double #BF5000;
-	color: #BF5000;
+	border-bottom: 8px double #F00;
+	color: #F00;
 }
 
 #newIssue{
@@ -152,10 +155,10 @@
 
 #toAbout:hover {
 	text-decoration: none;
-	color: #BF5000;
-		-webkit-box-shadow: 0px 3px 0px 0px #BF5000;
-	-moz-box-shadow: 0px 3px 0px 0px #BF5000;
-	box-shadow: 0px 3px 0px 0px #BF5000;
+	color: #F00;
+		-webkit-box-shadow: 0px 3px 0px 0px #F00;
+	-moz-box-shadow: 0px 3px 0px 0px #F00;
+	box-shadow: 0px 3px 0px 0px #F00;
 }
 
 .top a,
@@ -170,8 +173,8 @@
 }
 
 .top a:hover {
-	color: #BF5000;
-	border-bottom: 3px solid #BF5000;
+	color: #F00;
+	border-bottom: 3px solid #F00;
 }
 
 i.fa.fa-file {
@@ -179,7 +182,7 @@ i.fa.fa-file {
 }
 
 i.fa {
-	color: #BF5000;
+	color: #F00;
 }
 
 #toAbout>i.fa:hover,
@@ -273,18 +276,18 @@ label *{
 
 #sortTopics label:hover:not(:first-child){
 	cursor:pointer;
-	color: #BF5000;
-	-webkit-box-shadow: 0px 3px 0px 0px #BF5000;
-	-moz-box-shadow: 0px 3px 0px 0px #BF5000;
-	box-shadow: 0px 3px 0px 0px #BF5000;
+	color: #F00;
+	-webkit-box-shadow: 0px 3px 0px 0px #F00;
+	-moz-box-shadow: 0px 3px 0px 0px #F00;
+	box-shadow: 0px 3px 0px 0px #F00;
 }
 
 #textImage label:hover:not(:first-child){
 	cursor:pointer;
-	color: #BF5000;
-	-webkit-box-shadow: 0px 3px 0px 0px #BF5000;
-	-moz-box-shadow: 0px 3px 0px 0px #BF5000;
-	box-shadow: 0px 3px 0px 0px #BF5000;
+	color: #F00;
+	-webkit-box-shadow: 0px 3px 0px 0px #F00;
+	-moz-box-shadow: 0px 3px 0px 0px #F00;
+	box-shadow: 0px 3px 0px 0px #F00;
 }
 
 input{
@@ -372,10 +375,10 @@ audio{
 }
 
 .underlineFilter{
-	-webkit-box-shadow: 0px 3px 0px 0px #BF5000;;
-	-moz-box-shadow: 0px 3px 0px 0px #BF5000;;
-	box-shadow: 0px 3px 0px 0px #BF5000;;
-	color: #BF5000;;
+	-webkit-box-shadow: 0px 3px 0px 0px #F00;;
+	-moz-box-shadow: 0px 3px 0px 0px #F00;;
+	box-shadow: 0px 3px 0px 0px #F00;;
+	color: #F00;;
 }
 
 .issueWrapper{
@@ -400,7 +403,7 @@ body {
 	font-family: avenue;
 	font-size: 40px;
 	margin: 8px;
-	background-color: rgba(0, 19, 234, 0.51);
+	background-color: rgb(199, 214, 255);
 }
 
 .colophon {
@@ -439,8 +442,8 @@ body {
  
 .intro p a:hover {
 	text-decoration: none;
-	color: #BF5000;
-	border-bottom: 2px solid #BF5000;
+	color: #F00;
+	border-bottom: 2px solid #F00;
 }
 
 .noStyleLink{
@@ -475,7 +478,7 @@ body {
 
 .content code {
 	font-size: 23px;
-	color: #BF5000;
+	color: #F00;
     font-family: 'Avenue';
     width: 100px;
     overflow: auto;
@@ -581,8 +584,8 @@ strong, b {
 
 .content p a:hover {
 	text-decoration: none;
-	color: #BF5000;
-	border-bottom: 2px solid #BF5000;
+	color: #F00;
+	border-bottom: 2px solid #F00;
 }
 
 .fullWidth {
@@ -605,8 +608,8 @@ figcaption a:link, figcaption a:visited, figcaption a:active {
 
 figcaption a:hover {
 	text-decoration: none;
-	border-bottom: 3px solid #BF5000;
-	color: #BF5000;
+	border-bottom: 3px solid #F00;
+	color: #F00;
 }
 
 /* IMAGES <1024 */
@@ -673,7 +676,7 @@ figcaption a:hover {
 }
 
 .articleBody {
-	background: rgb(255, 255, 120);
+	background: rgb(199, 214, 255);
 }
 
 .article {
@@ -692,7 +695,7 @@ figcaption a:hover {
 
 .latest a:hover {
 	text-decoration: none;
-	color: #BF5000;
+	color: #F00;
 }
 
 .title-beyond {
@@ -795,7 +798,7 @@ a.backLink:active {
 	width: 100%;
 	padding-bottom: 10px;
 	padding-top: 10px;
-	/*background-color: rgb(255, 255, 120);*/
+	background-color: rgb(199, 214, 255);
 	z-index: 11111111;
 }
 
@@ -817,9 +820,9 @@ a.backLink:active {
 	padding-top: 10px;
 	z-index: 11111111;
 	overflow: hidden;
-	color: #BF5000;
+	color: #F00;
 	position: relative;
-	/*background-color: rgb(255, 255, 120);*/
+	background-color: rgb(199, 214, 255);
 }
 
 .articleHeader p {
@@ -870,10 +873,10 @@ a.backLink:active {
 
 .articleHeader .articleHeaderActions a:hover{
     text-decoration: none;
-    color: #BF5000;
-            -webkit-box-shadow: 0px 3px 0px 0px #BF5000;
-    -moz-box-shadow: 0px 3px 0px 0px #BF5000;
-    box-shadow: 0px 3px 0px 0px #BF5000;
+    color: #F00;
+            -webkit-box-shadow: 0px 3px 0px 0px #F00;
+    -moz-box-shadow: 0px 3px 0px 0px #F00;
+    box-shadow: 0px 3px 0px 0px #F00;
 }
 
 
@@ -922,11 +925,11 @@ a.backLink:active {
 }
 
 .list a:hover{
-	color: #BF5000;
-	/*border-bottom: 6px solid #BF5000;*/
-	-webkit-box-shadow: 0px 5px 0px 0px #BF5000;
-	-moz-box-shadow: 0px 5px 0px 0px #BF5000;
-	box-shadow: 0px 5px 0px 0px #BF5000;
+	color: #F00;
+	/*border-bottom: 6px solid #F00;*/
+	-webkit-box-shadow: 0px 5px 0px 0px #F00;
+	-moz-box-shadow: 0px 5px 0px 0px #F00;
+	box-shadow: 0px 5px 0px 0px #F00;
 	margin-bottom: 100px;
 }
 
@@ -1022,7 +1025,7 @@ a.backLink:active {
 	-moz-transition: all 0.3s ease-in-out 0s;
 	-webkit-transition: 0.3s ease-in-out 0s;
 	transition: all 0.3s ease-in-out 0s;
-	background-color:#BF5000;
+	background-color:#F00;
 }
 
 .imageNavigation p{
@@ -1040,13 +1043,13 @@ p.title{
 }
 
 p.title>.titleSection{
-	color: #BF5000;
+	color: #F00;
 	display: inline-block;
 	margin-top: 10px;
 }
 
 .category {
-	border-right: 6px solid #BF5000;
+	border-right: 6px solid #F00;
 	height: 400px;
 	background-color: ;
 	float: left;
@@ -1089,7 +1092,7 @@ dd {
 }
 
 #BeyondFooter a:hover{
-	border-bottom: 3px solid #BF5000;
+	border-bottom: 3px solid #F00;
 }
 #BeyondFooter a:active{
 	font-size: inherit;
@@ -1148,7 +1151,7 @@ dd {
 
 	.title-back,
 	a.backLink {
-		/*float: left !important;*/
+		float: left !important;
 	}
 
 	.colophon {
@@ -1232,7 +1235,7 @@ dd {
     .articleHeader p,
     a.backLink, a.backLink:visited, a.backLink:active,
     .top a, .top a:active, .top a:visited {
-        font-size: 17px !important;
+        font-size: 20px !important;
         letter-spacing: 1px !important;
     }
 
@@ -1391,6 +1394,7 @@ dd {
 	}
 
 	.title-beyond{
+		top:0px;
 		padding: 0px;
 		margin-right: 55px;
 
