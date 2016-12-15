@@ -180,7 +180,7 @@ def create_page(memberpages, mode):
 
 def create_index(indexdict, issues):
     issues_keys = issues.keys()
-    issues_keys.reverse()
+    issues_keys.reverse() 
     for issue in issues_keys:
         index_template_file = issue_templates[issue]['index']
         print 
@@ -221,8 +221,10 @@ def create_index(indexdict, issues):
     # under the parent issue
     # in file index-template.html
 
-    
-        for article in indexdict.keys():
+        indexkeys = indexdict.keys()
+        indexkeys.sort() # sorting article titles
+        
+        for article in indexkeys:
             article_issue = indexdict[article]['Category Issue']
             article_issue_numb = article_issue[0]
             print 'ISSUE',article_issue_numb, article_issue[0]
